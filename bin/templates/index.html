@@ -1,5 +1,9 @@
-<div layout:decorator="layout/main" layout:fragment="content">
-	<a th:href="@{/registration}" sec:authorize="isAnonymous()">Register</a>
-	<a th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
-	<a th:href="@{/users}" sec:authorize="isAuthenticated()">View List of Users</a>
+
+<div layout:decorator="layout/main" layout:fragment="content" class="container jumbotron">
+	<h1>Hello</h1>
+	
+<h2>Welcome to UnitedWeGame. A website for Gamers who Game.</h2>
+
+	<a th:href="@{/registration}" sec:authorize="isAnonymous()" class="btn btn-primary">Register</a>
+	<a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-primary">Login</a>
 </div>
