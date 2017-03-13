@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>UnitedWeGame</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Hello</h1>
+ <p sec:authorize="isAuthenticated()">
+ 	You are logged in as 
+ 	<span sec:authorize="isAuthenticated()" sec:authentication="name"><a th:href="@{/login?logout}" sec:authorize="isAuthenticated()">Logout</a></span>
+ </p>
+<h2>Welcome to UnitedWeGame. A website for Gamers who Game.</h2>
+
+<div layout:fragment="content"></div>
+
+</body>
+</html>
