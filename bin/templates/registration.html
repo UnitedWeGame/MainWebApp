@@ -1,0 +1,12 @@
+<form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+	<p>Username</p>
+	<input type="text" th:field="*{username}"></input><br/>
+	<p>Email</p>
+	<input type="text" th:field="*{email}"></input><br/>
+	<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+	<p>Password</p>
+	<input type="password" th:field="*{password}"></input><br/>
+	<p>Password Confirmation</p>
+	<input type="password" th:field="*{passwordConfirm}"></input><br/><br/>
+	<input type="submit">Submit</input>
+</form>
