@@ -14,5 +14,6 @@
 <h2>Welcome to UnitedWeGame. A website for Gamers who Game.</h2>
 <a th:href="@{/registration}" sec:authorize="isAnonymous()">Register</a>
 <a th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
+<a th:href="@{/users}" sec:authorize="isAuthenticated()">View List of Users</a>
 </body>
 </html>
