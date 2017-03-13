@@ -1,3 +1,4 @@
+<div layout:decorator="layout/main" layout:fragment="content">
 <p th:if="${param.error}">Invalid Username/Password</p>
 <p th:if="${param.logout}">You have been successfully logged out</p>
 <p th:if="${param.registered}">You have successfully registered, please login now</p>
@@ -9,3 +10,4 @@
 	<input type="password" id="password" name="password"/>
 	<button type="submit">Sign In</button>
 </form>
+</div>

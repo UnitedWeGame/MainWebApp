@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-
-    <title>UnitedWeGame</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-</head>
-<body>
-<h1>Hello</h1>
- <p sec:authorize="isAuthenticated()">
- 	You are logged in as 
- 	<span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
- </p>
-<h2>Welcome to UnitedWeGame. A website for Gamers who Game.</h2>
-<a th:href="@{/registration}" sec:authorize="isAnonymous()">Register</a>
-<a th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
-<a th:href="@{/users}" sec:authorize="isAuthenticated()">View List of Users</a>
-<a th:href="@{/login?logout}" sec:authorize="isAuthenticated()">Logout</a>
-</body>
-</html>
+<div layout:decorator="layout/main" layout:fragment="content">
+	<a th:href="@{/registration}" sec:authorize="isAnonymous()">Register</a>
+	<a th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
+	<a th:href="@{/users}" sec:authorize="isAuthenticated()">View List of Users</a>
+</div>

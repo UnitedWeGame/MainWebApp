@@ -1,3 +1,4 @@
+<div layout:decorator="layout/main" layout:fragment="content">
 <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
 	<p>Username</p>
 	<input type="text" th:field="*{username}"></input><br/>
@@ -8,5 +9,6 @@
 	<input type="password" th:field="*{password}"></input><br/>
 	<p>Password Confirmation</p>
 	<input type="password" th:field="*{passwordConfirm}"></input><br/><br/>
-	<input type="submit"></input>
+	<input type="submit"></input><br/>
 </form>
+</div>
