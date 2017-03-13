@@ -7,8 +7,12 @@
 </head>
 <body>
 <h1>Hello</h1>
-
+ <p sec:authorize="isAuthenticated()">
+ 	You are logged in as 
+ 	<span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+ </p>
 <h2>Welcome to UnitedWeGame. A website for Gamers who Game.</h2>
 <a th:href="@{/registration}">Register</a>
+<a th:href="@{/login}">Login</a>
 </body>
 </html>
