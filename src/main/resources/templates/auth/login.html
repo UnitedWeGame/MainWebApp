@@ -1,0 +1,11 @@
+<p th:if="${param.error}">Invalid Username/Password</p>
+<p th:if="${param.logout}">You have been successfully logged out</p>
+<p th:if="${param.registered}">You have successfully registered, please login now</p>
+
+<form th:action="@{/login}" method="post">
+	<p>Username</p>
+	<input type="text" id="username" name="username"/><br/>
+	<p>Password</p>
+	<input type="password" id="password" name="password"/>
+	<button type="submit">Sign In</button>
+</form>
