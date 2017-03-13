@@ -26,16 +26,16 @@ public class RegistrationController {
 	@GetMapping("/registration")
 	public String registration(Model model) {
 		model.addAttribute("user", new User());
-		return "registration";
+		return "registration/register";
 	}
 	
 	@PostMapping("/registration")
 	public String registration(@Valid @ModelAttribute User user, BindingResult bindingResult) {
 		userValidator.validate(user, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "registration";
+			return "registration/register";
 		}
 		userService.saveUser(user);
-		return "redirect:/test";
+		return "redirect:/users";
 	}
 }
