@@ -9,7 +9,8 @@
 <h1>Hello</h1>
  <p sec:authorize="isAuthenticated()">
  	You are logged in as 
- 	<span sec:authorize="isAuthenticated()" sec:authentication="name"><a th:href="@{/login?logout}" sec:authorize="isAuthenticated()">Logout</a></span>
+ 	<span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+ 	<a th:href="@{/login?logout}" sec:authorize="isAuthenticated()">Logout</a>
  </p>
 <h2>Welcome to UnitedWeGame. A website for Gamers who Game.</h2>
 
