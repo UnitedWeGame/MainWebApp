@@ -1,2 +1,6 @@
-<p>Usernames:</p>
-<p th:each="user : ${users}" th:text="${user.username}"></p>
+<p>Users:</p>
+
+<div th:each="user : ${users}">
+	<p>Username:  <span th:text="${user.username}"></span></p>
+	<p>Email:  <span th:text="${user.email}"></span></p>
+</div><br/>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.UnitedWeGame.models.Role;
@@ -21,6 +22,8 @@ public class UserService implements UserDetailsService {
 	UserRepository userRepo;
 	@Autowired
 	RoleRepository roleRepo;
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public List<User> allUsers() {
 		return (List<User>) userRepo.findAll();
@@ -34,6 +37,7 @@ public class UserService implements UserDetailsService {
 		Set<Role> roles = user.getRoles();
 		roles.add(role);
 		user.setRoles(roles);
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userRepo.save(user);
 	}
 
