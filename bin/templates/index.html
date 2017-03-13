@@ -15,5 +15,6 @@
 <a th:href="@{/registration}" sec:authorize="isAnonymous()">Register</a>
 <a th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
 <a th:href="@{/users}" sec:authorize="isAuthenticated()">View List of Users</a>
+<a th:href="@{/login?logout}" sec:authorize="isAuthenticated()">Logout</a>
 </body>
 </html>
