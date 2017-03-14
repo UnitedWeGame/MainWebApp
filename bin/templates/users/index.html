@@ -2,7 +2,7 @@
 <p>Users:</p>
 
 <div th:each="user : ${users}">
-	<p>Username:  <span th:text="${user.username}"></span></p>
+	<p>Username:  <a th:href="@{/users/} + ${user.username}"><span th:text="${user.username}"></span></a></p>
 	<p>Email:  <span th:text="${user.email}"></span></p>
 </div><br/>
 </div>

@@ -1,0 +1,12 @@
+<div layout:decorator="layout/main" layout:fragment="content">
+	<h2>Edit Profile</h2>
+	<div class="alert alert-success" th:if="${success}">
+		<span th:text="${success}"></span>
+	</div>
+	<form action="#" th:action="@{/edit-profile}" th:object="${profile}"
+		method="post">
+		<p>About Me</p>
+		<input type="text" th:field="*{aboutMe}"></input><br />
+		<br /> <input type="submit" class="btn btn-success"></input><br />
+	</form>
+</div>
