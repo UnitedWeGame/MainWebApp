@@ -15,6 +15,7 @@ public class Profile {
 	@OneToOne
 	private User user;
 	
+	//Used for copying one profile to another. Could probably use some cloning, will look into later..
 	public void updateAttributes(Profile profile) {
 		this.aboutMe = profile.getAboutMe();
 	}

@@ -41,12 +41,14 @@ public class RegistrationController {
 		if (bindingResult.hasErrors()) {
 			return "registration/register";
 		}
-
 		userService.saveUser(user);
+		
+		//Manually log user in
 		UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
 		Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
 				userDetails.getPassword(), userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
+		
 		redirectAttrib.addFlashAttribute("success",
 				"You have successfully registered. Feel free to edit your profile now!");
 		return "redirect:/edit-profile";
