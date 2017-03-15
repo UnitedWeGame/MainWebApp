@@ -53,4 +53,11 @@ public class RegistrationController {
 				"You have successfully registered. Feel free to edit your profile now!");
 		return "redirect:/edit-profile";
 	}
+	
+	@GetMapping("/logout")
+	public String logout(RedirectAttributes redirectAttrib) {
+		SecurityContextHolder.clearContext();
+		redirectAttrib.addFlashAttribute("success", "You have been successfully logged out.");
+		return "redirect:/login";
+	}
 }

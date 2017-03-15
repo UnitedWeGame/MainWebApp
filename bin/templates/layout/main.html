@@ -35,11 +35,7 @@
 					<p sec:authorize="isAuthenticated()" class="navbar-text">
 						You are logged in as <span sec:authorize="isAuthenticated()"
 							sec:authentication="name"></span>
-					<form sec:authorize="isAuthenticated()" id="frmlogout"
-						th:action="@{/logout}" method="post" style="display: inline;">
-						| <a href="javascript:{}"
-							onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
-					</form>
+					<a th:href="@{/logout}"> | logout</a>
 					</p>
 				</ul>
 

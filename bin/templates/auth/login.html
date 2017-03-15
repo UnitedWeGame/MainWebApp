@@ -1,7 +1,10 @@
 <div layout:decorator="layout/main" layout:fragment="content">
-<p th:if="${param.error}">Invalid Username/Password</p>
-<p th:if="${param.logout}">You have been successfully logged out</p>
-<p th:if="${param.registered}">You have successfully registered, please login now</p>
+	<div class="alert alert-success" th:if="${success}">
+		<span th:text="${success}"></span>
+	</div>
+<div class="alert alert-warning" th:if="${param.error}">
+	<p th:if="${param.error}">Invalid Username/Password</p>
+</div>
 
 <form th:action="@{/login}" method="post">
 	<p>Username</p>
