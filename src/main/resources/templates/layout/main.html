@@ -34,8 +34,8 @@
 				<ul class="nav navbar-nav navbar-right">
 					<p sec:authorize="isAuthenticated()" class="navbar-text">
 						You are logged in as <span sec:authorize="isAuthenticated()"
-							sec:authentication="name"></span>
-					<a th:href="@{/logout}"> | logout</a>
+							sec:authentication="name"></span>&nbsp;|&nbsp; 
+					<a th:href="@{/logout}">logout</a>
 					</p>
 				</ul>
 

@@ -1,14 +1,31 @@
 <div layout:decorator="layout/main" layout:fragment="content">
-<form action="#" th:action="@{/registration}" th:object="${user}" method="post">
-	<p>Username</p>
-	<input type="text" th:field="*{username}"></input><br/><br/>
-	<p>Email</p>
-	<input type="text" th:field="*{email}"></input><br/><br/>
-	<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-	<p>Password</p>
-	<input type="password" th:field="*{password}"></input><br/><br/>
-	<p>Password Confirmation</p>
-	<input type="password" th:field="*{passwordConfirm}"></input><br/><br/>
-	<input type="submit" class="btn btn-success"></input><br/>
-</form>
+
+	<div class="row">
+		<div class="well col-md-6">
+			<h2>Registration</h2>
+			<form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+				<div class="form-group">
+					<label for="username">Username</label>
+					<input id="username" type="text" th:field="*{username}" class="form-control"></input>
+				</div>
+				
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input id="email" class="form-control" type="text" th:field="*{email}"></input>
+				</div>
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" th:field="*{password}" class="form-control"></input>
+				</div>
+				
+				<div class="form-group">
+					<label for="passsword-confirm">Password Confirmation</label>
+					<input id="password-confirm" type="password" 
+						th:field="*{passwordConfirm}" class="form-control"></input>
+				</div>
+				<input type="submit" class="btn btn-success"></input><br/>
+			</form>
+		</div>
+	</div>
 </div>

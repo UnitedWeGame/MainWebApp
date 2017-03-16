@@ -1,12 +1,31 @@
-<div layout:decorator="layout/main" layout:fragment="content">
-	<h2>Edit Profile</h2>
-	<div class="alert alert-success" th:if="${success}">
-		<span th:text="${success}"></span>
+<div layout:decorator="layout/main" layout:fragment="content">	
+	<div class="row">
+		<div class="col-md-6">
+			<div class="alert alert-success" th:if="${success}">
+				<span th:text="${success}"></span>
+			</div>
+			<div class="panel panel-primary">
+		    <div class="panel-heading">Edit Profile</div>
+		    <div class="panel-body">
+				<form action="#" th:action="@{/edit-profile}" th:object="${profile}"
+					method="post">
+					<p>About Me</p>
+					<textarea rows="4" cols="50" th:field="*{aboutMe}"></textarea><br />
+					<br /><button type="submit" class="btn btn-success">Submit</button><br />
+				</form>
+			</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+			<div class="panel-heading">Preview</div>
+			<div class="panel-body">
+				<div class="panel panel-default">
+					<div class="panel-heading">About Me</div>
+					<div class="panel-body"><p th:text="${profile.aboutMe}"></p></div>
+				</div>
+			</div>
+			</div>
+		</div>
 	</div>
-	<form action="#" th:action="@{/edit-profile}" th:object="${profile}"
-		method="post">
-		<p>About Me</p>
-		<input type="text" th:field="*{aboutMe}"></input><br />
-		<br /> <input type="submit" class="btn btn-success"></input><br />
-	</form>
 </div>
