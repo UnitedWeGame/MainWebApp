@@ -1,3 +1,13 @@
+//import com.moowork.gradle.node.task.NodeTask
+//
+//task webpack(type: NodeTask, dependsOn: 'npmInstall') {
+//	script = project.file('node_modules/.bin/webpack')
+//}
+//
+//processResources.dependsOn 'webpack'
+//
+//clean.delete << file('src/main/webapp/dist')
+
 buildscript {
 	ext {
 		springBootVersion = '1.5.2.RELEASE'
