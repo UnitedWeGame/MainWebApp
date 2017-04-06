@@ -1,0 +1,20 @@
+[
+  {
+    "gamerTag": "weetermachine",
+    "ID": "123",
+    "game": "Donkey Kong Country",
+    "platform": "Super Nintendo"
+  },
+  {
+    "gamerTag": "logangsta",
+    "ID": "124",
+    "game": "Snake",
+    "platform": "TI-89"
+  },
+  {
+    "gamerTag": "jacksonHenriettaMurphysGamerTag",
+    "ID": "125",
+    "game": "Mario 64",
+    "platform": "You should know this"
+  }
+]

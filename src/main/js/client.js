@@ -7,5 +7,9 @@ import Profile from "./pages/Profile";
 const app = document.getElementById('app');
 
 ReactDOM.render(
-    <Profile/>,
+    <Router history={hashHistory}>
+        <Route path="/" component={Profile}>
+            <IndexRoute component={Profile}></IndexRoute>
+        </Route>
+    </Router>,
     app);
