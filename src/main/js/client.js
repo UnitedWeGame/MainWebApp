@@ -1,15 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import { BrowserRouter, Route, IndexRoute, hashHistory } from "react-router-dom";
 
+import Layout from "./pages/Layout";
 import Profile from "./pages/Profile";
 
 const app = document.getElementById('app');
 
 ReactDOM.render(
-    <Router history={hashHistory}>
-        <Route path="/" component={Profile}>
+    <BrowserRouter history={hashHistory}>
+        <Route path="/" component={Layout}>
             <IndexRoute component={Profile}></IndexRoute>
         </Route>
-    </Router>,
+    </BrowserRouter>,
     app);
