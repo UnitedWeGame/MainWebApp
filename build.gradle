@@ -35,6 +35,9 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	dev
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -44,4 +47,11 @@ dependencies {
 	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
 	runtime('com.h2database:h2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	dev("org.springframework.boot:spring-boot-devtools")
+
+}
+
+bootRun {
+	// Use Spring Boot DevTool only when we run Gradle bootRun task
+	classpath = sourceSets.main.runtimeClasspath + configurations.dev
 }
