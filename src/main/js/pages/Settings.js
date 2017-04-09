@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Groups extends React.Component {
+export default class Settings extends React.Component {
     render() {
         return (
             <div>
