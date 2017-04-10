@@ -26,10 +26,12 @@ export default class Activity extends React.Component {
                             <NowPlaying/>
 
                         </div>
-                        <div class="col-md-8 well">
+                        <div class="col-md-6 well">
 
                             <PostCreator/>
 
+                        </div>
+                        <div class="col-md-2">
                         </div>
                     </div>
                 </div>

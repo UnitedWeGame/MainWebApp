@@ -30,7 +30,9 @@ export default class NowPlaying extends React.Component {
     render() {
         const friends = this.state.friendList.map((person) => <FriendPlaying key={person.ID} {...person}/> );
         return (
-            <div>{friends}</div>
+            <div>
+                <div>{friends}</div>
+            </div>
         );
     }
 }
