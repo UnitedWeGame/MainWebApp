@@ -1,6 +1,7 @@
 var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 var path = require('path');
+var fetch = require('node-fetch');
 
 module.exports = {
     context: path.join(__dirname, "src"),

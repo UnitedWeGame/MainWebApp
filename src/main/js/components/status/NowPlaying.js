@@ -1,6 +1,6 @@
 import React from "react";
 import FriendPlaying from "./FriendPlaying";
-import FriendStore from "../stores/FriendStore";
+import FriendStore from "../../stores/FriendStore";
 
 export default class NowPlaying extends React.Component {
     constructor(){

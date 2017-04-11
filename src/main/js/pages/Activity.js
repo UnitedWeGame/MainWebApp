@@ -1,6 +1,6 @@
 import React from "react";
-import NowPlaying from "../components/NowPlaying";
-import PostCreator from "../components/PostCreator";
+import NowPlaying from "../components/status/NowPlaying";
+import PostCreator from "../components/activity/PostCreator";
 
 
 export default class Activity extends React.Component {
