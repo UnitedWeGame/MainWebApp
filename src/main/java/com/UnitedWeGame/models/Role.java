@@ -2,11 +2,12 @@ package com.UnitedWeGame.models;
 
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Role {
@@ -14,6 +15,8 @@ public class Role {
 	@GeneratedValue
 	private int id;
 	private String name;
+	
+	@JsonBackReference
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
 	

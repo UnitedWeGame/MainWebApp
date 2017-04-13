@@ -16,6 +16,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity 
 @Table(name = "users")
 public class User {
@@ -25,14 +28,22 @@ public class User {
 	@Column(unique = true, nullable = false)
 	private String username;
 	private String email;
+	@JsonIgnore
 	private String password;
 	@OneToOne
 	private Profile profile;
 
+	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<Role>();
 	
+	@JsonManagedReference
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_library", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
+	private Set<Game> games = new HashSet<Game>();
+	
+	@JsonIgnore
 	@Transient
 	private String passwordConfirm;
 	
@@ -81,4 +92,12 @@ public class User {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
+	public Set<Game> getGames() {
+		return games;
+	}
+	public void setGames(Set<Game> games) {
+		this.games = games;
+	}
+	
+	
 }
