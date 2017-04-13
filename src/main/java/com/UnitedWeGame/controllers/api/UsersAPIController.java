@@ -30,9 +30,9 @@ public class UsersAPIController {
 		return userService.allUsers();
 	}
 	
-	@RequestMapping("/users/{username}")
-	public User getProfile(@PathVariable String username) {
-		return userService.getUserByUsername(username);
+	@RequestMapping("/users/{userId}")
+	public User getProfile(@PathVariable Long userId) {
+		return userService.findById(userId);
 	}
 	
 	@RequestMapping(value="/users", method=RequestMethod.PUT)

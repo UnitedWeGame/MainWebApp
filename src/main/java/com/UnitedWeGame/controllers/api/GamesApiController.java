@@ -34,10 +34,10 @@ public class GamesApiController {
 		return gameService.allGames();
 	}
 	
-	@RequestMapping("/addToLibrary/{gameTitle}")
-	public void addGameToUser(@PathVariable String gameTitle) {
+	@RequestMapping("/addToLibrary/{gameId}")
+	public void addGameToUser(@PathVariable Long gameId) {
 		User user = userService.getLoggedInUser();
-		Game game = gameService.findByTitle(gameTitle);
+		Game game = gameService.findById(gameId);
 		
 		Set<Game> games = user.getGames();
 		System.out.println(game);
@@ -56,9 +56,9 @@ public class GamesApiController {
 		return game;
 	}
 	
-	@RequestMapping("/addPlatform/{gameTitle}/{platformTitle}")
-	public Game addPlatformToGame(@PathVariable String gameTitle, @PathVariable String platformTitle) {
-		Game game = gameService.findByTitle(gameTitle);
+	@RequestMapping("/addPlatform/{gameId}/{platformTitle}")
+	public Game addPlatformToGame(@PathVariable Long gameId, @PathVariable String platformTitle) {
+		Game game = gameService.findById(gameId);
 		Platform platform = platformService.findPlatform(platformTitle);
 		Set<Platform> gamePlatforms = game.getPlatforms();
 		gamePlatforms.add(platform);
