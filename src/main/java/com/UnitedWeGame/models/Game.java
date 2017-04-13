@@ -22,6 +22,7 @@ public class Game {
 	@GeneratedValue
 	private long id;
 	private String title;
+	private String pictureUrl;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "game_platform", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "platform_id"))

@@ -35,7 +35,7 @@ public class UsersAPIController {
 		return userService.getUserByUsername(username);
 	}
 	
-	@RequestMapping(value="/users/{username}", method=RequestMethod.PUT)
+	@RequestMapping(value="/users", method=RequestMethod.PUT)
 	public Profile updateProfile(@RequestBody Profile profile) {
 		Profile oldProfile = profileService.getLoggedInProfile();
 		oldProfile.updateAttributes(profile);
