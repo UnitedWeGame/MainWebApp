@@ -31,6 +31,10 @@ public class Game {
 	@JsonBackReference
 	@ManyToMany(mappedBy = "games")
 	private Set<User> users;
+	
+	public Long getId() {
+		return id;
+	}
 
 	public String getTitle() {
 		return title;
