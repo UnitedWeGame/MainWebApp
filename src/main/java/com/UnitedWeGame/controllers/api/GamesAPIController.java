@@ -4,14 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Subqueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +17,7 @@ import com.UnitedWeGame.models.Platform;
 import com.UnitedWeGame.models.User;
 import com.UnitedWeGame.services.GameService;
 import com.UnitedWeGame.services.PlatformService;
+import com.UnitedWeGame.services.TwilioService;
 import com.UnitedWeGame.services.UserService;
 
 @RestController
@@ -38,13 +32,15 @@ public class GamesAPIController {
 	PlatformService platformService;
 	@Autowired
 	SessionFactory sessionFactory;
+	@Autowired
+	TwilioService textService;
 	
 	@RequestMapping("/")
 	public List<Game> index() {
 		return gameService.allGames();
 	}
 	
-	@RequestMapping("/addToLibrary/{gameId}")
+	@RequestMapping("/{gameId}/addToLibrary")
 	public void addGameToUser(@PathVariable Long gameId) {
 		User user = userService.getLoggedInUser();
 		Game game = gameService.findById(gameId);
@@ -76,24 +72,22 @@ public class GamesAPIController {
 		return game;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping("/{gameId}/friendsOwn")
 	public List<User> friendsOwn(@PathVariable Long gameId) {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
+		return userService.gameOwnedByFriends(gameId);
+	}
+	
+	@RequestMapping("/{gameId}/groupNotification")
+	public String friendsGroupNotification(@PathVariable Long gameId) {
+		String username = userService.getLoggedInUser().getUsername();
+		Game game = gameService.findById(gameId);
+		List<User> users = userService.gameOwnedByFriends(gameId);
+		String body = String.format("Hello, your friend %s would like to play %s", username, game.getTitle());
+		body += ". Generated SMS sent from Addiction Recovery, HA WE HACKED YOUR SITE";
+		for (User user : users) {
+			if (user.getPhoneNum() != null && !user.getPhoneNum().equals(""))
+				textService.sendSMS(user.getPhoneNum(), body);
 		}
-		Long userId = userService.getLoggedInUser().getId();
-		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
-				.createAlias("users.friends", "friends")
-				.add(Restrictions.eq("users.id", userId))
-				.setProjection(Projections.property("friends.id"));
-		Criteria query = session.createCriteria(User.class, "users2")
-				.createAlias("users2.games", "gamesAlias")
-				.add(Restrictions.eq("gamesAlias.id", gameId))
-				.add(Subqueries.propertyIn("users2.id", subquery));
-		return query.list();
+		return "Text messages sent.";
 	}
 }

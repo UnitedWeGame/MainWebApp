@@ -3,6 +3,14 @@ package com.UnitedWeGame.services;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +38,8 @@ public class UserService implements UserDetailsService {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	ProfileRepository profileRepo;
+	@Autowired
+	SessionFactory sessionFactory;
 	
 	public List<User> allUsers() {
 		return (List<User>) userRepo.findAll();
@@ -77,5 +87,24 @@ public class UserService implements UserDetailsService {
 		}
 		
 		return new UserDetailsImpl(user);
+	}
+	
+	public List<User> gameOwnedByFriends(Long gameId) {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		Long userId = getLoggedInUser().getId();
+		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
+				.createAlias("users.friends", "friends")
+				.add(Restrictions.eq("users.id", userId))
+				.setProjection(Projections.property("friends.id"));
+		Criteria query = session.createCriteria(User.class, "users2")
+				.createAlias("users2.games", "gamesAlias")
+				.add(Restrictions.eq("gamesAlias.id", gameId))
+				.add(Subqueries.propertyIn("users2.id", subquery));
+		return query.list();
 	}
 }

@@ -33,6 +33,7 @@ public class User {
 	private String password;
 	@OneToOne
 	private Profile profile;
+	private String phoneNum;
 
 	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -108,6 +109,12 @@ public class User {
 	}
 	public void setFriends(Set<User> friends) {
 		this.friends = friends;
+	}
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
 	}
 	
 }

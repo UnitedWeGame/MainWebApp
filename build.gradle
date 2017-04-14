@@ -32,6 +32,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.springframework.boot:spring-boot-starter-security")
 	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
+	compile('com.twilio.sdk:twilio-java-sdk:4.4.5')
 	compile('org.postgresql:postgresql:9.4.1212')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
