@@ -7,9 +7,16 @@ export default class LibraryItem extends React.Component {
         const {url} = this.props;
         const {title} = this.props;
         const titleTextStyle = {};
+        const coverStyle = {
+            cursor: "pointer"
+        }
+        const itemStyle = {
+            margin: 25,
+        };
+
 
         const popoverClickRootClose = (
-            <Popover id="popover-trigger-click-root-close" title="">
+            <Popover id="popover-trigger-click-root-close" title={title}>
                 <ButtonGroup vertical>
                     <Button bsStyle="success" block>Invite friends via text</Button>
                     <Button>Game information</Button>
@@ -22,16 +29,13 @@ export default class LibraryItem extends React.Component {
 
         return (
 
-            <div>
+            <span style={itemStyle}>
 
-                <img src={url} alt="Game cover"/>
-                <div>
                     <OverlayTrigger trigger="click" rootClose placement="right" overlay={popoverClickRootClose}>
-                        <Button bsStyle="link" id="titleTextStyle">{title}</Button>
+                        <img src={url} style={coverStyle} alt="Game cover"/>
+                        {/*<Button bsStyle="link" id="titleTextStyle">{title}</Button>*/}
                     </OverlayTrigger>
-                </div>
-                <hr/>
-            </div>
+            </span>
 
         );
     }

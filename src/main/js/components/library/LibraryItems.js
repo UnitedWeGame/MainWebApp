@@ -29,9 +29,10 @@ export default class LibraryItems extends React.Component {
 
     render() {
         const games = this.state.gameList.map((g) => <LibraryItem key={g.id} {...g}/> );
+        console.log("Rendering " + games.length + " games");
         return (
-            <div class="row">
-                <div>{games}</div>
+            <div>
+                {games}
             </div>
         );
     }

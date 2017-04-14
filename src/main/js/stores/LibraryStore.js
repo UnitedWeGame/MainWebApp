@@ -8,14 +8,24 @@ class LibraryStore extends EventEmitter{
         //this.test = [];
         this.games = [
             {
-                "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/l3n0zuklmgkloi1udslt.png",
+                "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/kln2xrk7av3dzrt60auq.png",
                 "id": "123",
-                "title": "Mass Effect"
+                "title": "Mass Effect: Andromeda"
             },
             {
-                "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/jk9el4ksl4c7qwaex2y5.png",
+                "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/m1qtsn4ehaen83bbp1ee.png",
                 "id": "1234",
-                "title": "Zelda"
+                "title": "Forza Motorsport 3"
+            },
+            {
+                "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/gy5jzbxk068kduoki6wx.png",
+                "id": "125",
+                "title": "Fallout 4: Nuka World"
+            },
+            {
+                "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/fhbeilnghyhhmjqhinqa.png",
+                "id": "1236",
+                "title": "Titanfall 2"
             }
         ];
 
