@@ -50,5 +50,13 @@ public class Game {
 
 	public void setPlatforms(Set<Platform> platforms) {
 		this.platforms = platforms;
-	}	
+	}
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
+	}
 }
