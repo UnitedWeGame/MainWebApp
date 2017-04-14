@@ -41,7 +41,7 @@ public class RegistrationController {
 		if (bindingResult.hasErrors()) {
 			return "registration/register";
 		}
-		userService.saveUser(user);
+		userService.createUser(user);
 		
 		//Manually log user in
 		UserDetails userDetails = userService.loadUserByUsername(user.getUsername());

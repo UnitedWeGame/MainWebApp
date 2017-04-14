@@ -4,6 +4,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +28,7 @@ import com.UnitedWeGame.services.UserService;
 
 @RestController
 @RequestMapping("/api/games")
-public class GamesApiController {
+public class GamesAPIController {
 	
 	@Autowired
 	GameService gameService;	
@@ -28,6 +36,8 @@ public class GamesApiController {
 	UserService userService;
 	@Autowired
 	PlatformService platformService;
+	@Autowired
+	SessionFactory sessionFactory;
 	
 	@RequestMapping("/")
 	public List<Game> index() {
@@ -64,5 +74,26 @@ public class GamesApiController {
 		gamePlatforms.add(platform);
 		gameService.saveGame(game);
 		return game;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/{gameId}/friendsOwn")
+	public List<User> friendsOwn(@PathVariable Long gameId) {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		Long userId = userService.getLoggedInUser().getId();
+		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
+				.createAlias("users.friends", "friends")
+				.add(Restrictions.eq("users.id", userId))
+				.setProjection(Projections.property("friends.id"));
+		Criteria query = session.createCriteria(User.class, "users2")
+				.createAlias("users2.games", "gamesAlias")
+				.add(Restrictions.eq("gamesAlias.id", gameId))
+				.add(Subqueries.propertyIn("users2.id", subquery));
+		return query.list();
 	}
 }

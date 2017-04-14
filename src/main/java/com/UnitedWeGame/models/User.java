@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -44,10 +45,14 @@ public class User {
 	private Set<Game> games = new HashSet<Game>();
 	
 	@JsonIgnore
+	@ManyToMany
+	private Set<User> friends;
+	
+	@JsonIgnore
 	@Transient
 	private String passwordConfirm;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	public void setId(long id) {
@@ -98,6 +103,11 @@ public class User {
 	public void setGames(Set<Game> games) {
 		this.games = games;
 	}
-	
+	public Set<User> getFriends() {
+		return friends;
+	}
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
+	}
 	
 }

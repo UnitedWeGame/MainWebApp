@@ -41,11 +41,10 @@ public class UserService implements UserDetailsService {
 		return userDetails.getUser();
 	}
 	
-	public void saveUser(User user) {
+	public void createUser(User user) {
 		// This is VERY temporary, only doing this because I'm currently using H2 in memory database
 		Role role = new Role("USER");
 		roleRepo.save(role);
-		
 		Set<Role> roles = user.getRoles();
 		roles.add(role);
 		// Assign every user with a default blank profile
@@ -54,6 +53,10 @@ public class UserService implements UserDetailsService {
 		user.setProfile(profile);
 		user.setRoles(roles);
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		userRepo.save(user);
+	}
+	
+	public void saveUser(User user) {
 		userRepo.save(user);
 	}
 
