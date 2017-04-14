@@ -8,24 +8,33 @@ class FriendStore extends EventEmitter{
         //this.friends = [];
         this.friends = [
             {
-                "gamerTag": "weetermachine",
+                "login": "weetermachine",
                 "ID": "123",
-                "game": "Donkey Kong Country",
-                "platform": "Super Nintendo",
                 "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
             },
             {
-                "gamerTag": "logangsta",
+                "login": "logangsta",
                 "ID": "124",
-                "game": "Snake",
-                "platform": "TI-89",
                 "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
             },
             {
-                "gamerTag": "jacksonHenriettaMurphysGamerTag",
+                "login": "jackson",
                 "ID": "125",
-                "game": "Mario 64",
-                "platform": "You should know this",
+                "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
+            },
+            {
+                "login": "frederick",
+                "ID": "126",
+                "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
+            },
+            {
+                "login": "RichardHead",
+                "ID": "127",
+                "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
+            },
+            {
+                "login": "racist12YearOld",
+                "ID": "128",
                 "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
             }
         ];

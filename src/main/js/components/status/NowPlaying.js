@@ -1,5 +1,4 @@
 import React from "react";
-import FriendPlaying from "./FriendPlaying";
 import FriendStore from "../../stores/FriendStore";
 
 export default class NowPlaying extends React.Component {
@@ -30,8 +29,27 @@ export default class NowPlaying extends React.Component {
     render() {
         const friends = this.state.friendList.map((person) => <FriendPlaying key={person.ID} {...person}/> );
         return (
-            <div>
+            <div class="well pre-scrollable">
+                <h3 class="text-center"> Playing Now: </h3>
                 <div>{friends}</div>
+            </div>
+        );
+    }
+}
+
+class FriendPlaying extends React.Component {
+    render() {
+        const {gamerTag} = this.props;
+        const {game} = this.props;
+        const {platform} = this.props;
+        const {imageUrl} = this.props;
+
+        return (
+            <div class="autosize-container" id="friend">
+                <p> <img src={imageUrl} alt="Mountain View"/>
+                 {gamerTag} is playing</p>
+                <p>{game} <br/> on {platform}</p>
+                <hr/>
             </div>
         );
     }
