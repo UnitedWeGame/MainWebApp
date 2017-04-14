@@ -62,9 +62,16 @@ public class UsersAPIController {
 		return request;
 	}
 	
-	@RequestMapping("/requests")
-	public List<FriendRequest> listAllRequests() {
-		return requestService.allRequests();
+	@RequestMapping("/requests/owned")
+	public Set<FriendRequest> listAllRequests() {
+		User user = userService.getLoggedInUser();
+		return requestService.allRequestsOwned(user.getId());
+	}
+	
+	@RequestMapping("/requests/pending")
+	public Set<FriendRequest> listAllRequestsForMe() {
+		User user = userService.getLoggedInUser();
+		return requestService.allRequestsToAccept(user.getId());
 	}
 	
 	@RequestMapping("/requests/{requestId}/acceptRequest")

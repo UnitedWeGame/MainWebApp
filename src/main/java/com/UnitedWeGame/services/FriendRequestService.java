@@ -1,6 +1,7 @@
 package com.UnitedWeGame.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,13 @@ public class FriendRequestService {
 	
 	public void removeRequest(FriendRequest request) {
 		requestRepo.delete(request);
+	}
+	
+	public Set<FriendRequest> allRequestsOwned(Long ownerId) {
+		return requestRepo.findByOwner(ownerId);
+	}
+	
+	public Set<FriendRequest> allRequestsToAccept(Long friendId) {
+		return requestRepo.findByFriend(friendId);
 	}
 }
