@@ -83,7 +83,7 @@ public class GamesAPIController {
 		Game game = gameService.findById(gameId);
 		List<User> users = userService.gameOwnedByFriends(gameId);
 		String body = String.format("Hello, your friend %s would like to play %s", username, game.getTitle());
-		body += ". Generated SMS sent from Addiction Recovery, HA WE HACKED YOUR SITE";
+		body += ". Generated SMS sent from United We Game, please do not reply.";
 		for (User user : users) {
 			if (user.getPhoneNum() != null && !user.getPhoneNum().equals(""))
 				textService.sendSMS(user.getPhoneNum(), body);
