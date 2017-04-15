@@ -49,7 +49,20 @@ class ActivityStore extends EventEmitter{
         return this.activityItem;
     }
 
+    addPost(post){
+        this.activityItem.push(post);
+        this.emit("change");
+    }
+
+    handleActions(action){
+        switch (action.type) {
+            case "CREATE_POST": {
+                this.addPost(action.post);
+                break;
+            }
+        }
+    }
 }
 const activityStore = new ActivityStore();
-//dispatcher.register(friendStore.handleActions.bind(friendStore));
+dispatcher.register(activityStore.handleActions.bind(activityStore));
 export default activityStore;
