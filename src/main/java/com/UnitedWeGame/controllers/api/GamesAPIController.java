@@ -35,7 +35,7 @@ public class GamesAPIController {
 	@Autowired
 	TwilioService textService;
 	
-	@RequestMapping("/")
+	@RequestMapping("")
 	public List<Game> index() {
 		return gameService.allGames();
 	}

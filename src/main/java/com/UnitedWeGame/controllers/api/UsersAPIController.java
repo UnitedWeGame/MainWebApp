@@ -36,6 +36,11 @@ public class UsersAPIController {
 		return userService.allUsers();
 	}
 	
+	@RequestMapping("/users/me")
+	public User loggedInUser() {
+		return userService.findById(userService.getLoggedInUser().getId());
+	}
+	
 	@RequestMapping("/users/{userId}")
 	public User getProfile(@PathVariable Long userId) {
 		return userService.findById(userId);
