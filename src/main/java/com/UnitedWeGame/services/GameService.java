@@ -29,4 +29,8 @@ public class GameService {
 	public Game findByTitle(String title) {
 		return gameRepo.findByTitle(title);
 	}
+	
+	public List<Game> findByTitleContaining(String title) {
+		return gameRepo.findByTitleContaining(title);
+	}
 }

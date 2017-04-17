@@ -52,6 +52,10 @@ public class UserService implements UserDetailsService {
 		return userDetails.getUser();
 	}
 	
+	public List<User> findByUsernameContaining(String username) {
+		return userRepo.findByUsernameContaining(username);
+	}
+	
 	public void createUser(User user) {
 		// This is VERY temporary, only doing this because I'm currently using H2 in memory database
 		Role role = new Role("USER");

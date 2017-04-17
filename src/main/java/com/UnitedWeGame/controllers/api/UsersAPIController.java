@@ -46,6 +46,11 @@ public class UsersAPIController {
 		return userService.findById(userId);
 	}
 	
+	@RequestMapping("/users/search/{username}")
+	public List<User> searchForUser(@PathVariable String username) {
+		return userService.findByUsernameContaining(username);
+	}
+	
 	@RequestMapping(value="/users", method=RequestMethod.PUT)
 	public Profile updateProfile(@RequestBody Profile profile) {
 		Profile oldProfile = profileService.getLoggedInProfile();

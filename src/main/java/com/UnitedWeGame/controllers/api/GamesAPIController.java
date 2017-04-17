@@ -82,6 +82,11 @@ public class GamesAPIController {
 		return userService.gameOwnedByFriends(gameId);
 	}
 	
+	@RequestMapping("/search/{gameTitle}")
+	public List<Game> gameTitleContains(@PathVariable String gameTitle) {
+		return gameService.findByTitleContaining(gameTitle);
+	}
+	
 	@RequestMapping("/{gameId}/groupNotification")
 	public String friendsGroupNotification(@PathVariable Long gameId) {
 		String username = userService.getLoggedInUser().getUsername();
