@@ -72,6 +72,11 @@ public class GamesAPIController {
 		return game;
 	}
 	
+	@RequestMapping("/friendsOwn")
+	public List<User> friendsOwnAll() {
+		return userService.gamesOwnedByFriends();
+	}
+	
 	@RequestMapping("/{gameId}/friendsOwn")
 	public List<User> friendsOwn(@PathVariable Long gameId) {
 		return userService.gameOwnedByFriends(gameId);

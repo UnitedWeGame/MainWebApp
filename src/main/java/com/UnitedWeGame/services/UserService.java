@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.UnitedWeGame.models.Game;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.Role;
 import com.UnitedWeGame.models.User;
@@ -105,6 +106,25 @@ public class UserService implements UserDetailsService {
 				.createAlias("users2.games", "gamesAlias")
 				.add(Restrictions.eq("gamesAlias.id", gameId))
 				.add(Subqueries.propertyIn("users2.id", subquery));
+		return query.list();
+	}
+	
+	public List<User> gamesOwnedByFriends() {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		Long userId = getLoggedInUser().getId();
+		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
+				.createAlias("users.friends", "friends")
+				.add(Restrictions.eq("users.id", userId))
+				.setProjection(Projections.property("friends.id"));
+		Criteria query = session.createCriteria(Game.class, "game")
+				.createAlias("game.users", "userAlias")
+				.add(Subqueries.propertyIn("userAlias.id", subquery))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return query.list();
 	}
 }
