@@ -1,5 +1,6 @@
 package com.UnitedWeGame.models;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +35,7 @@ public class User {
 	@OneToOne
 	private Profile profile;
 	private String phoneNum;
+	private Date lastActivity;
 
 	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -44,6 +46,9 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_library", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
 	private Set<Game> games = new HashSet<Game>();
+	
+	@OneToMany
+	private Set<GamerIdentifier> gamerIdentifiers = new HashSet<GamerIdentifier>();
 	
 	@JsonIgnore
 	@ManyToMany
@@ -116,5 +121,16 @@ public class User {
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
-	
+	public Date getLastActivity() {
+		return lastActivity;
+	}
+	public void setLastActivity(Date lastActivity) {
+		this.lastActivity = lastActivity;
+	}
+	public Set<GamerIdentifier> getGamerIdentifiers() {
+		return gamerIdentifiers;
+	}
+	public void setGamerIdentifiers(Set<GamerIdentifier> gamerIdentifiers) {
+		this.gamerIdentifiers = gamerIdentifiers;
+	}
 }

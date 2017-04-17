@@ -1,5 +1,6 @@
 package com.UnitedWeGame.controllers.api;
 
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.SessionFactory;
@@ -24,5 +25,10 @@ public class FriendsAPIController {
 	public Set<User> getFriends() {
 		User user = userService.getLoggedInUser();
 		return user.getFriends();
+	}
+	
+	@RequestMapping("/online")
+	public List<User> onlineFriends() {
+		return userService.getOnlineFriends();
 	}
 }

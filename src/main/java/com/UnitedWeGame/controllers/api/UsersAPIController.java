@@ -1,5 +1,6 @@
 package com.UnitedWeGame.controllers.api;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -59,6 +60,13 @@ public class UsersAPIController {
 		return oldProfile;
 	}
 	
+	@RequestMapping("/users/updateTimestamp")
+	public void updateTimeStamp() {
+		User user = userService.getLoggedInUser();
+		user.setLastActivity(new Date());
+		userService.saveUser(user);
+	}
+	
 	@RequestMapping("/users/{friendId}/requestFriend")
 	public FriendRequest createRequest(@PathVariable Long friendId) {
 		User user = userService.getLoggedInUser();
@@ -108,4 +116,6 @@ public class UsersAPIController {
 		requestService.removeRequest(request);
 		return "Friendship denied.";
 	}
+	
+	
 }

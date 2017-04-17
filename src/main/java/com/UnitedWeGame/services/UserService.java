@@ -1,5 +1,7 @@
 package com.UnitedWeGame.services;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -129,6 +131,28 @@ public class UserService implements UserDetailsService {
 				.createAlias("game.users", "userAlias")
 				.add(Subqueries.propertyIn("userAlias.id", subquery))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return query.list();
+	}
+	
+	public List<User> getOnlineFriends() {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		Long userId = getLoggedInUser().getId();
+		Date currentDate = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.MINUTE, -5);
+		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
+				.createAlias("users.friends", "friends")
+				.add(Restrictions.eq("users.id", userId))
+				.add(Restrictions.gt("friends.lastActivity", cal.getTime()))
+				.setProjection(Projections.property("friends.id"));
+		Criteria query = session.createCriteria(User.class, "users2")
+				.add(Subqueries.propertyIn("users2.id", subquery));
 		return query.list();
 	}
 }
