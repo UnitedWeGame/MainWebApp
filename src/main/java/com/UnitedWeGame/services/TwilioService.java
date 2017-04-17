@@ -15,9 +15,9 @@ import com.twilio.sdk.resource.instance.Message;
 @Service
 public class TwilioService {
     // Find your Account Sid and Token at twilio.com/user/account
-    public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");//"ACf3f2a39c143d6c5c625bde94fa013e03";
-    public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");//"ada00ccad829b40d420aaee4d3d9b8e8";
-    public static final String TWILIO_NUMBER = System.getenv("TWILIO_NUMBER");//"+13852356348";
+    public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
+    public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
+    public static final String TWILIO_NUMBER = System.getenv("TWILIO_NUMBER");
     
     public void sendSMS(String phoneNum, String body) {
         try {
