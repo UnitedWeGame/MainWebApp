@@ -155,4 +155,17 @@ public class UserService implements UserDetailsService {
 				.add(Subqueries.propertyIn("users2.id", subquery));
 		return query.list();
 	}
+	
+	public User getUserByGamerIdentifier(String gamerIdentifier) {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		Criteria query = session.createCriteria(User.class, "users")
+				.createAlias("users.gamerIdentifiers", "gamerTags")
+				.add(Restrictions.eq("gamerTags.identifier", gamerIdentifier));
+		return (User) query.uniqueResult();
+	}
 }
