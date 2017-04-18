@@ -2,6 +2,10 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+
+### Node modules ###
+node_modules/
+
 ### OS Files ###
 .DS_Store
 
@@ -64,3 +68,4 @@ nbdist/
 ehthumbs.db
 Thumbs.db
 /bin/
+client.min.js
