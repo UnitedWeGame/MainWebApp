@@ -55,9 +55,7 @@ public class GamesAPIController {
 	@RequestMapping(value="/{platform}", method=RequestMethod.POST)
 	public Game createGame(@PathVariable String platform, @RequestBody Game game) {
 		Platform platformForGame = platformService.findPlatform(platform);
-		Set<Platform> platforms = new HashSet<Platform>();
-		platforms.add(platformForGame);
-		game.setPlatforms(platforms);
+		game.setPlatform(platformForGame);
 		gameService.saveGame(game);
 		return game;
 	}
@@ -66,8 +64,7 @@ public class GamesAPIController {
 	public Game addPlatformToGame(@PathVariable Long gameId, @PathVariable String platformTitle) {
 		Game game = gameService.findById(gameId);
 		Platform platform = platformService.findPlatform(platformTitle);
-		Set<Platform> gamePlatforms = game.getPlatforms();
-		gamePlatforms.add(platform);
+		game.setPlatform(platform);
 		gameService.saveGame(game);
 		return game;
 	}

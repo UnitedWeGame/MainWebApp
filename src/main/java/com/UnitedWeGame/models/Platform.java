@@ -4,16 +4,14 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Platform {
 	@Id
 	private String title;
 	
-	@ManyToMany(mappedBy = "platforms")
+	@OneToMany
 	private Set<Game> games;
 
 	public String getTitle() {

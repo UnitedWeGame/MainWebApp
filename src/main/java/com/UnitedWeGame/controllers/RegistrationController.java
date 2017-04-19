@@ -51,7 +51,7 @@ public class RegistrationController {
 		
 		redirectAttrib.addFlashAttribute("success",
 				"You have successfully registered. Feel free to edit your profile now!");
-		return "redirect:/edit-profile";
+		return "redirect:/users";
 	}
 	
 	@GetMapping("/logout")
