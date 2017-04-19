@@ -1,5 +1,6 @@
 import React from "react";
 import * as PostActions from "../../actions/PostActions"
+import UserStore from "../../stores/UserStore";
 
 export default class PostCreator extends React.Component {
     constructor(props) {
@@ -17,9 +18,16 @@ export default class PostCreator extends React.Component {
     handleSubmit(event) {
         /*const name = PostActions.getUser();
         console.log("user name: " + name);*/
-        const newPost = {
-            text: this.state.value
+        const login = UserStore.getUsername();
+        const ID = Date.now();
+        const newPost = { 
+            login: login,
+            ID,
+            verb: "said: ",
+            object: this.state.value,
+            imageUrl: UserStore.getImageUrl()
         };
+        
         PostActions.createPost(newPost);
         event.preventDefault();
         this.setState({value: ''});
