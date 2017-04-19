@@ -2,18 +2,13 @@ package com.UnitedWeGame.models;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Game {
@@ -23,10 +18,8 @@ public class Game {
 	private long id;
 	private String title;
 	private String pictureUrl;
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "game_platform", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "platform_id"))
-	private Set<Platform> platforms;
+	@ManyToOne
+	private Platform platform;
 	
 	@JsonBackReference
 	@ManyToMany(mappedBy = "games")
@@ -44,12 +37,12 @@ public class Game {
 		this.title = title;
 	}
 
-	public Set<Platform> getPlatforms() {
-		return platforms;
+	public Platform getPlatform() {
+		return platform;
 	}
 
-	public void setPlatforms(Set<Platform> platforms) {
-		this.platforms = platforms;
+	public void setPlatform(Platform platform) {
+		this.platform = platform;
 	}
 
 	public String getPictureUrl() {
