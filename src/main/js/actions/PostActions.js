@@ -1,7 +1,7 @@
 import dispatcher from "../dispatcher";
 
 export function createPost(post) {
-    var ID = Date.now();
+    /*var ID = Date.now();
     var login;
     $.get( "/api/users/me", function( data ) {
         login = data.username;
@@ -12,25 +12,19 @@ export function createPost(post) {
             verb: "said: ",
             object: txt,
             imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"
-        };
+        };*/
 
         // TODO: POST the post to the server
         dispatcher.dispatch({
             type: "CREATE_POST",
-            post: newPost
+            post: post
         });
-    });
+    //});
     
 }
 
 export function getUser(){
     var name;
-    /*fetch('/api/users/me')
-        .then(function(res) {
-            return res.text();
-        }).then(function(body) {
-            return body;
-        });*/
     $.get( "/api/users/me", function( data ) {
           name = data.username;
         });
