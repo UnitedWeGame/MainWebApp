@@ -36,6 +36,7 @@ public class User {
 	private Profile profile;
 	private String phoneNum;
 	private Date lastActivity;
+	private String imageUrl;
 
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -133,4 +134,11 @@ public class User {
 	public void setGamerIdentifiers(Set<GamerIdentifier> gamerIdentifiers) {
 		this.gamerIdentifiers = gamerIdentifiers;
 	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String pictureUrl) {
+		this.imageUrl = pictureUrl;
+	}
+	
 }

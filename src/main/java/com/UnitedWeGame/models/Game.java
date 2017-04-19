@@ -18,7 +18,7 @@ public class Game {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	private String title;
-	private String pictureUrl;
+	private String imageUrl;
 	@ManyToOne
 	private Platform platform;
 	
@@ -46,11 +46,11 @@ public class Game {
 		this.platform = platform;
 	}
 
-	public String getPictureUrl() {
-		return pictureUrl;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setPictureUrl(String pictureUrl) {
-		this.pictureUrl = pictureUrl;
+	public void setImageUrl(String pictureUrl) {
+		this.imageUrl = pictureUrl;
 	}
 }
