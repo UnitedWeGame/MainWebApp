@@ -50,7 +50,7 @@ class ActivityStore extends EventEmitter{
     }
 
     addPost(post){
-        this.activityItem.push(post);
+        this.activityItem.unshift(post);
         this.emit("change");
     }
 

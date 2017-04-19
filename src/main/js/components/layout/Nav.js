@@ -1,5 +1,6 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
+import UserName from "./UserName";
 
 export default class Nav extends React.Component {
 
@@ -55,6 +56,7 @@ export default class Nav extends React.Component {
                     <div class={"navbar-collapse " + navClass} id="bs-example-navbar-collapse-1">
 
                         <ul class="nav navbar-nav navbar-right">
+                            <li><UserName/></li>
                             <li class={activityClass}>
                                 <Link to="activity" onClick={this.toggleCollapse.bind(this)}>Activity</Link>
                             </li>

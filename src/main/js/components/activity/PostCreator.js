@@ -15,10 +15,10 @@ export default class PostCreator extends React.Component {
     }
 
     handleSubmit(event) {
+        /*const name = PostActions.getUser();
+        console.log("user name: " + name);*/
         const newPost = {
-            login: "kelpaso",
-            text: this.state.value,
-            ID: Date.now().toString()
+            text: this.state.value
         };
         PostActions.createPost(newPost);
         event.preventDefault();

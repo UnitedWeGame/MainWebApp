@@ -1,21 +1,42 @@
 import dispatcher from "../dispatcher";
 
 export function createPost(post) {
-    const ID = Date.now();
-    const txt = post.text;
-    const login = post.login;
-    const newPost = {
-        login: login,
-        ID,
-        verb: "said: ",
-        object: txt,
-        imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"
-    };
+    var ID = Date.now();
+    var login;
+    $.get( "/api/users/me", function( data ) {
+        login = data.username;
+        const txt = post.text;
+        const newPost = { 
+            login: login,
+            ID,
+            verb: "said: ",
+            object: txt,
+            imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"
+        };
 
-    //make call to server here
+        // TODO: POST the post to the server
+        dispatcher.dispatch({
+            type: "CREATE_POST",
+            post: newPost
+        });
+    });
+    
+}
+
+export function getUser(){
+    var name;
+    /*fetch('/api/users/me')
+        .then(function(res) {
+            return res.text();
+        }).then(function(body) {
+            return body;
+        });*/
+    $.get( "/api/users/me", function( data ) {
+          name = data.username;
+        });
 
     dispatcher.dispatch({
-        type: "CREATE_POST",
-        post: newPost
-    });
+            type: "GET_USER_NAME",
+            name: name
+        });
 }
