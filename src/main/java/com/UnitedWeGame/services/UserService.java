@@ -115,6 +115,22 @@ public class UserService implements UserDetailsService {
 		return query.list();
 	}
 	
+	public List<Game> gamesOwnedByPlatform(String platformTitle) {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		Long userId = getLoggedInUser().getId();
+		Criteria query = session.createCriteria(Game.class, "game")
+				.createAlias("game.users", "userAlias")
+				.add(Restrictions.eq("game.platform.title", platformTitle))
+				.add(Restrictions.eq("userAlias.id", userId))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return query.list();
+	}
+	
 	public List<User> gamesOwnedByFriends() {
 		Session session;
 		try {

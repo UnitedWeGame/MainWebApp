@@ -52,6 +52,11 @@ public class GamesAPIController {
 		userService.saveUser(user);
 	}
 	
+	@RequestMapping("/owned/{platform}")
+	public List<Game> gamesOwnedByPlatform(@PathVariable String platform) {
+		return userService.gamesOwnedByPlatform(platform);
+	}
+	
 	@RequestMapping(value="/{platform}", method=RequestMethod.POST)
 	public Game createGame(@PathVariable String platform, @RequestBody Game game) {
 		Platform platformForGame = platformService.findPlatform(platform);
