@@ -4,7 +4,9 @@
   "description": "A site for gamers who game",
   "main": "./js/client.js",
   "scripts": {
-    "dev": "webpack-dev-server --content-base src --inline --hot"
+    "dev": "webpack-dev-server --content-base src --inline --hot",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
+    
   },
   "repository": {
     "type": "git",
