@@ -176,8 +176,9 @@ public class UserService implements UserDetailsService {
 				.add(Subqueries.propertyIn("users2.id", subquery))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<User> users = query.list();
-		session.flush();
+		//session.flush();
 		session.getTransaction().commit();
+		session.disconnect();
 		return users;
 	}
 	
