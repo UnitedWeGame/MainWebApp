@@ -13,7 +13,10 @@ export default class LibraryItems extends React.Component {
 
         console.log("Inside library items. Game list: " + gameList);
         this.state = {
-            gameList: gameList
+            gameList: gameList,
+            xBoxActive: "active",
+            steamActive: "",
+            psActive: ""
         };
     }
 
@@ -33,12 +36,30 @@ export default class LibraryItems extends React.Component {
 
 
     togglePlatform(platform, event){
-        if(platform == "XBox")
+        if(platform == "XBox"){
             LibraryActions.showXBoxGames();
-        else if(platform == "Steam")
+            this.setState({
+                xBoxActive: "active",
+                steamActive: "",
+                psActive: ""
+            });
+        }
+        else if(platform == "Steam"){
             LibraryActions.showSteamGames();
-        else if(platform == "PS")
+            this.setState({
+                xBoxActive: "",
+                steamActive: "active",
+                psActive: ""
+            });
+        }
+        else if(platform == "PS"){
             LibraryActions.showPlaystationGames();
+            this.setState({
+                xBoxActive: "",
+                steamActive: "",
+                psActive: "active"
+            });
+        }
 
         console.log("Platform toggled is: " + platform);
 
@@ -49,21 +70,31 @@ export default class LibraryItems extends React.Component {
         const games = this.state.gameList.map((g) => <LibraryItem key={g.id} {...g}/> );
         console.log("Rendering " + games.length + " games");
         
+        const toggleButtons = {
+            width: "100%",
+            margin: "auto",
+            display: "block",
+            textAlign: "center"
+        };
+
+
         return (
             <div>
 
-                <div class="row">
+                <div style={toggleButtons}>
                     <ButtonToolbar>
-                        <ButtonGroup bsSize="large">
-                            <Button bsStyle="primary" onClick={this.togglePlatform.bind(this, "XBox")}>XBox</Button>
-                            <Button bsStyle="primary" onClick={this.togglePlatform.bind(this, "Steam")}>Steam</Button>
-                            <Button bsStyle="primary" onClick={this.togglePlatform.bind(this, "PS")}>Playstation</Button>
+                        <ButtonGroup bsSize="large" style={toggleButtons}>
+                            <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "XBox")} active={this.state.xBoxActive}>XBox</Button>
+                            <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "Steam")} active={this.state.steamActive}>Steam</Button>
+                            <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "PS")} active={this.state.psActive}>Playstation</Button>
                         </ButtonGroup>
                     </ButtonToolbar>
                 </div>
                 
-                <div class="row">
-                {games}
+                <br/>
+                
+                <div class="row well">
+                    {games}
                 </div>
 
             </div>

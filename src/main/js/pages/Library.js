@@ -16,7 +16,7 @@ export default class Library extends React.Component {
                         </div>
                         <div class="col-md-8">
 
-                            <div class="row well">
+                            <div class="row">
                                 <LibraryItems/>
                             </div>
 
