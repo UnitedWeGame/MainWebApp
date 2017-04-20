@@ -18,6 +18,7 @@ public class GamerIdentifier {
 	private String identifier;
 	private String platform;
 	
+	
 	public String getIdentifier() {
 		return identifier;
 	}
@@ -33,4 +34,5 @@ public class GamerIdentifier {
 	public Long getId() {
 		return id;
 	}
+	
 }
