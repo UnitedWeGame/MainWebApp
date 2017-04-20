@@ -8,6 +8,7 @@ export default class LibraryItems extends React.Component {
         this.getLibraryItems = this.getLibraryItems.bind(this);
         const gameList = LibraryStore.getAll();
 
+        console.log("Inside library items. Game list: " + gameList);
         this.state = {
             gameList: gameList
         };

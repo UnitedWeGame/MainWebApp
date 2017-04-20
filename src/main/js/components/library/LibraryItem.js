@@ -4,7 +4,7 @@ import {Button, ButtonToolbar, ButtonGroup, Overlay, OverlayTrigger, Popover} fr
 export default class LibraryItem extends React.Component {
 
     render() {
-        const {url} = this.props;
+        const {imageUrl} = this.props;
         const {title} = this.props;
         const titleTextStyle = {};
         const coverStyle = {
@@ -32,7 +32,7 @@ export default class LibraryItem extends React.Component {
             <span style={itemStyle}>
 
                     <OverlayTrigger trigger="click" rootClose placement="right" overlay={popoverClickRootClose}>
-                        <img src={url} style={coverStyle} alt="Game cover"/>
+                        <img src={imageUrl} style={coverStyle} alt="Game cover"/>
                         {/*<Button bsStyle="link" id="titleTextStyle">{title}</Button>*/}
                     </OverlayTrigger>
             </span>
