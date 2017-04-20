@@ -19,7 +19,7 @@ export default class Library extends React.Component {
 
                             <div class="row">
                                 <ButtonToolbar>
-                                    <ButtonGroup bsSize="large" block>
+                                    <ButtonGroup bsSize="large">
                                         <Button bsStyle="primary">XBox</Button>
                                         <Button bsStyle="primary">Steam</Button>
                                         <Button bsStyle="primary">Playstation</Button>

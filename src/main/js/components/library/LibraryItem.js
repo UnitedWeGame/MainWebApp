@@ -1,11 +1,27 @@
 import React from "react";
 import {Button, ButtonToolbar, ButtonGroup, Overlay, OverlayTrigger, Popover} from 'react-bootstrap';
+import * as LibraryActions from "../../actions/LibraryActions";
 
 export default class LibraryItem extends React.Component {
+    constructor(){
+        super();
+        this.state = {inviteSentCount: 0};
+        console.log("inviteSentCount: " + this.state.inviteSentCount);
+        //this.handleInvite = this.handleInvite.bind(this);
+    }
+
+    handleInvite(id, event) {  
+        console.log("id is: " + id);
+        console.log("event is: " + event);
+        LibraryActions.sendTextInvite(id);
+
+    }
 
     render() {
         const {imageUrl} = this.props;
         const {title} = this.props;
+        const {id} = this.props;
+
         const titleTextStyle = {};
         const coverStyle = {
             cursor: "pointer"
@@ -18,7 +34,7 @@ export default class LibraryItem extends React.Component {
         const popoverClickRootClose = (
             <Popover id="popover-trigger-click-root-close" title={title}>
                 <ButtonGroup vertical>
-                    <Button bsStyle="success" block>Invite friends via text</Button>
+                    <Button bsStyle="success" onClick={this.handleInvite.bind(this, id)} block>Invite friends via text</Button>
                     <Button>Game information</Button>
                     <Button>Write a review</Button>
                     <Button>Read friends' reviews</Button>
@@ -33,7 +49,6 @@ export default class LibraryItem extends React.Component {
 
                     <OverlayTrigger trigger="click" rootClose placement="right" overlay={popoverClickRootClose}>
                         <img src={imageUrl} style={coverStyle} alt="Game cover"/>
-                        {/*<Button bsStyle="link" id="titleTextStyle">{title}</Button>*/}
                     </OverlayTrigger>
             </span>
 
