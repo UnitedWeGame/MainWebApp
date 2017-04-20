@@ -23,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.UnitedWeGame.models.Game;
+import com.UnitedWeGame.models.OnlineFeed;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.Role;
 import com.UnitedWeGame.models.User;
@@ -184,5 +185,24 @@ public class UserService implements UserDetailsService {
 				.createAlias("users.gamerIdentifiers", "gamerTags")
 				.add(Restrictions.eq("gamerTags.identifier", gamerIdentifier));
 		return (User) query.uniqueResult();
+	}
+	
+	public List<OnlineFeed> getUserFeed() {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		Long userId = getLoggedInUser().getId();
+		Date currentDate = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.HOUR, 1);
+		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
+				.add(Restrictions.eq("onlineFeed.user.id", userId))
+				.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return query.list();
 	}
 }

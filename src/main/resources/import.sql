@@ -48,4 +48,5 @@ insert into users_friends values (8, 4)
 insert into users_friends values (8, 6)
 
 insert into game (image_url, title, platform_title) values ('test.com', 'MLP', 'Xbox 360');
+insert into online_feed (gamer_tag, last_activity, game_id, user_id) values ('weeterMachine', now(), 11123, 2)
 

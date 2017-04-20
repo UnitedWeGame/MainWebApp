@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.UnitedWeGame.models.OnlineFeed;
 import com.UnitedWeGame.models.User;
+import com.UnitedWeGame.services.OnlineFeedService;
 import com.UnitedWeGame.services.UserService;
 
 @RestController
@@ -20,7 +22,7 @@ public class FriendsAPIController {
 	
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	@RequestMapping("")
 	public Set<User> getFriends() {
 		User user = userService.getLoggedInUser();
@@ -30,5 +32,10 @@ public class FriendsAPIController {
 	@RequestMapping("/online")
 	public List<User> onlineFriends() {
 		return userService.getOnlineFriends();
+	}
+	
+	@RequestMapping("onlineFeed")
+	public List<OnlineFeed> getOnlineFeed() {
+		return userService.getUserFeed();
 	}
 }
