@@ -49,6 +49,7 @@ public class User {
 	private Set<Game> games = new HashSet<Game>();
 	
 	@OneToMany
+	@JoinColumn(name="user_id", nullable=false)
 	private Set<GamerIdentifier> gamerIdentifiers = new HashSet<GamerIdentifier>();
 	
 	@OneToMany

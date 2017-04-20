@@ -9,11 +9,11 @@ insert into game (id, image_url, title, platform_title) values (111234, 'http://
 insert into game (id, image_url, title, platform_title) values (11125, 'http://images.igdb.com/igdb/image/upload/t_cover_big/gy5jzbxk068kduoki6wx.png', 'Fallout 4: Nuka World', 'PS3');
 insert into game (id, image_url, title, platform_title) values (111236, 'http://images.igdb.com/igdb/image/upload/t_cover_big/fhbeilnghyhhmjqhinqa.png', 'Titanfall 2', 'PS3');
 
-
 insert into profile values (3, 'Hello, Im Logan')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (2, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8016789986', 'logangster', 3, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/mjustxpafje74fzjbeuy.jpg')
 insert into user_library values (2, 11123)
 insert into user_library values (2, 111234)
+insert into gamer_identifier (identifier, platform, user_id) values ('logangster', 'Xbox Live', 2)
 
 insert into profile values (5, 'Hello, Im Jackson')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (4, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8019138949', 'jacksonmeister', 5, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg')
@@ -24,6 +24,7 @@ insert into profile values (7, 'Hello, Im Chris')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (6, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8014139990', 'weetermachine', 7, now(), 'http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png')
 insert into user_library values (6, 11123)
 insert into user_library values (6, 111234)
+insert into gamer_identifier (identifier, platform, user_id) values ('weetermachine', 'Xbox Live', 6)
 
 insert into profile values (9, 'Hello, Im Kelsey')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (8, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8015574857', 'kelpaso', 9, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg')
