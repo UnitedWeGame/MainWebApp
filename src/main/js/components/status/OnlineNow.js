@@ -1,9 +1,12 @@
 import React from "react";
 import OnlineNowStore from "../../stores/OnlineNowStore";
+import * as OnlineNowActions from "../../actions/OnlineNowActions";
 
 export default class OnlineNow extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        OnlineNowActions.getOnlineNow();
+
         this.getFriends = this.getFriends.bind(this);
         const friendList = OnlineNowStore.getAll();
 
@@ -40,13 +43,13 @@ export default class OnlineNow extends React.Component {
 
 class FriendOnline extends React.Component {
     render() {
-        const {login} = this.props;
+        const {username} = this.props;
         const {imageUrl} = this.props;
 
         return (
             <div class="autosize-container" id="friend">
                 <p><img src={imageUrl} alt="Mountain View"/>
-                    {login} is currently online</p>
+                    {username} is currently online</p>
                 <hr/>
             </div>
         );
