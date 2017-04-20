@@ -52,10 +52,6 @@ public class User {
 	@JoinColumn(name="user_id", nullable=false)
 	private Set<GamerIdentifier> gamerIdentifiers = new HashSet<GamerIdentifier>();
 	
-	@OneToMany
-	@JoinColumn(name="user_id", nullable=false)
-	private Set<OnlineFeed> onlineFeed = new HashSet<OnlineFeed>();
-	
 	@JsonIgnore
 	@ManyToMany
 	private Set<User> friends;
@@ -144,10 +140,5 @@ public class User {
 	}
 	public void setImageUrl(String pictureUrl) {
 		this.imageUrl = pictureUrl;
-	}
-	public Set<OnlineFeed> getOnlineFeed() {
-		return onlineFeed;
-	}
-	
-	
+	}	
 }
