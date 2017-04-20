@@ -6,6 +6,7 @@ export default class LibraryItem extends React.Component {
     constructor(){
         super();
         this.state = {inviteSentCount: 0};
+        this.state = {inviteButtonText: "Invite friends via text"}
         console.log("inviteSentCount: " + this.state.inviteSentCount);
         //this.handleInvite = this.handleInvite.bind(this);
     }
@@ -14,6 +15,9 @@ export default class LibraryItem extends React.Component {
         console.log("id is: " + id);
         console.log("event is: " + event);
         LibraryActions.sendTextInvite(id);
+        this.setState({
+            inviteButtonText: "Sent!"
+        });
 
     }
 
@@ -34,7 +38,7 @@ export default class LibraryItem extends React.Component {
         const popoverClickRootClose = (
             <Popover id="popover-trigger-click-root-close" title={title}>
                 <ButtonGroup vertical>
-                    <Button bsStyle="success" onClick={this.handleInvite.bind(this, id)} block>Invite friends via text</Button>
+                    <Button bsStyle="success" onClick={this.handleInvite.bind(this, id)} block>{this.state.inviteButtonText}</Button>
                     <Button>Game information</Button>
                     <Button>Write a review</Button>
                     <Button>Read friends' reviews</Button>
