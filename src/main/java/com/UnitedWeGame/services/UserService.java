@@ -161,6 +161,7 @@ public class UserService implements UserDetailsService {
 		} catch (HibernateException e) {
 		    session = sessionFactory.openSession();
 		}
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -176,6 +177,7 @@ public class UserService implements UserDetailsService {
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<User> users = query.list();
 		session.flush();
+		session.getTransaction().commit();
 		return users;
 	}
 	
