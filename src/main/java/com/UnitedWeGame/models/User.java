@@ -52,6 +52,7 @@ public class User {
 	private Set<GamerIdentifier> gamerIdentifiers = new HashSet<GamerIdentifier>();
 	
 	@OneToMany
+	@JoinColumn(name="user_id", nullable=false)
 	private Set<OnlineFeed> onlineFeed = new HashSet<OnlineFeed>();
 	
 	@JsonIgnore
