@@ -6,48 +6,80 @@ class LibraryStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
-        this.games = [];
-        //this.test = [];
-        // this.games = [
-        //     {
-        //         "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/kln2xrk7av3dzrt60auq.png",
-        //         "id": "123",
-        //         "title": "Mass Effect: Andromeda"
-        //     },
-        //     {
-        //         "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/m1qtsn4ehaen83bbp1ee.png",
-        //         "id": "1234",
-        //         "title": "Forza Motorsport 3"
-        //     },
-        //     {
-        //         "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/gy5jzbxk068kduoki6wx.png",
-        //         "id": "125",
-        //         "title": "Fallout 4: Nuka World"
-        //     },
-        //     {
-        //         "url": "http://images.igdb.com/igdb/image/upload/t_cover_big/fhbeilnghyhhmjqhinqa.png",
-        //         "id": "1236",
-        //         "title": "Titanfall 2"
-        //     }
-        // ];
+        this.shownGames = [];
+        this.allGames = [];
 
-   
     }
 
     getAll(){
-        return this.games;
+        return this.shownGames;
     }
 
-    setGames(games){
-        this.games = games;
+    // called when user logs in
+    initGames(games){
+        this.allGames = games;
+        this.setXBoxGames();
+    }
+
+    setXBoxGames(){
+        this.shownGames = [];
+        var games = this.allGames;
+        for(var i = 0; i < games.length; i++){
+
+            if(games[i].platform.title == "Xbox 360"
+                || games[i].platform.title == "Xbox Live"
+                || games[i].platform.title == "Xbox One"){
+                this.shownGames.push(games[i]);
+            }
+        }
+        console.log("should renderthis many games: " + this.shownGames.length);
+
         this.emit("change");
     }
 
+    setSteamGames(){
+        this.shownGames = [];
+        var games = this.allGames;
+
+        for(var i = 0; i < games.length; i++){
+
+            if(games[i].platform.title == "Steam")
+                this.shownGames.push(games[i]);
+        }
+       
+        this.emit("change");
+    }
+
+    setPlaystationGames(){
+        this.shownGames = [];
+        var games = this.allGames;
+
+        for(var i = 0; i < games.length; i++){
+
+            if(games[i].platform.title == "PS3"
+                || games[i].platform.title == "PS4")
+                this.shownGames.push(games[i]);
+        }
+        
+        this.emit("change");
+    }
 
     handleActions(action){
         switch (action.type) {
             case "GET_USER_DATA": {
-                this.setGames(action.user.games);
+                this.initGames(action.user.games);
+                break;
+            }
+            case "SHOW_XBOX_GAMES": {
+                this.setXBoxGames();
+                break;
+            }
+            case "SHOW_STEAM_GAMES": {
+                this.setSteamGames();
+                break;
+            }
+            case "SHOW_PLAYSTATION_GAMES": {
+                this.setPlaystationGames();
                 break;
             }
         }
