@@ -41,6 +41,7 @@ public class RegistrationController {
 		if (bindingResult.hasErrors()) {
 			return "registration/register";
 		}
+		user.setImageUrl("https://images.igdb.com/igdb/image/upload/t_micro/mjustxpafje74fzjbeuy.jpg");
 		userService.createUser(user);
 		
 		//Manually log user in
