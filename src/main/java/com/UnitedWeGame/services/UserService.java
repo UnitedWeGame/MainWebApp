@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -151,6 +153,7 @@ public class UserService implements UserDetailsService {
 		return query.list();
 	}
 	
+	@Transactional
 	public List<User> getOnlineFriends() {
 		Session session;
 		try {
@@ -171,7 +174,9 @@ public class UserService implements UserDetailsService {
 		Criteria query = session.createCriteria(User.class, "users2")
 				.add(Subqueries.propertyIn("users2.id", subquery))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<User> users = query.list();
+		session.flush();
+		return users;
 	}
 	
 	public User getUserByGamerIdentifier(String gamerIdentifier) {
