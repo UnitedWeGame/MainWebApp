@@ -136,12 +136,8 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public List<User> gamesOwnedByFriends() {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
 				.createAlias("users.friends", "friends")
@@ -151,7 +147,10 @@ public class UserService implements UserDetailsService {
 				.createAlias("game.users", "userAlias")
 				.add(Subqueries.propertyIn("userAlias.id", subquery))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<User> users = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return users;
 	}
 	
 	@Transactional
@@ -180,25 +179,20 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public User getUserByGamerIdentifier(String gamerIdentifier) {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Criteria query = session.createCriteria(User.class, "users")
 				.createAlias("users.gamerIdentifiers", "gamerTags")
 				.add(Restrictions.eq("gamerTags.identifier", gamerIdentifier));
-		return (User) query.uniqueResult();
+		User user = (User) query.uniqueResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
 	}
 	
 	public List<OnlineFeed> getUserFeed() {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -208,6 +202,9 @@ public class UserService implements UserDetailsService {
 				.add(Restrictions.eq("onlineFeed.user.id", userId))
 				.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<OnlineFeed> feed = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return feed;
 	}
 }
