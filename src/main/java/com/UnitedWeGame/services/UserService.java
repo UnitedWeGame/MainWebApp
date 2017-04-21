@@ -11,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.StatelessSession;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -155,12 +156,8 @@ public class UserService implements UserDetailsService {
 	
 	@Transactional
 	public List<User> getOnlineFriends() {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session;
+		session = sessionFactory.openStatelessSession();
 		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Date currentDate = new Date();
@@ -178,7 +175,7 @@ public class UserService implements UserDetailsService {
 		List<User> users = query.list();
 		//session.flush();
 		session.getTransaction().commit();
-		session.disconnect();
+		session.close();
 		return users;
 	}
 	
