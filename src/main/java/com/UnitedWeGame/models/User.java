@@ -48,7 +48,7 @@ public class User {
 	@JoinTable(name = "user_library", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
 	private Set<Game> games = new HashSet<Game>();
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id", nullable=false)
 	private Set<GamerIdentifier> gamerIdentifiers = new HashSet<GamerIdentifier>();
 	

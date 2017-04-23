@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.StatelessSession;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -133,12 +136,8 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public List<User> gamesOwnedByFriends() {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
 				.createAlias("users.friends", "friends")
@@ -148,16 +147,17 @@ public class UserService implements UserDetailsService {
 				.createAlias("game.users", "userAlias")
 				.add(Subqueries.propertyIn("userAlias.id", subquery))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<User> users = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return users;
 	}
 	
+	@Transactional
 	public List<User> getOnlineFriends() {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session;
+		session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -171,29 +171,28 @@ public class UserService implements UserDetailsService {
 		Criteria query = session.createCriteria(User.class, "users2")
 				.add(Subqueries.propertyIn("users2.id", subquery))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<User> users = query.list();
+		//session.flush();
+		session.getTransaction().commit();
+		session.close();
+		return users;
 	}
 	
 	public User getUserByGamerIdentifier(String gamerIdentifier) {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Criteria query = session.createCriteria(User.class, "users")
 				.createAlias("users.gamerIdentifiers", "gamerTags")
 				.add(Restrictions.eq("gamerTags.identifier", gamerIdentifier));
-		return (User) query.uniqueResult();
+		User user = (User) query.uniqueResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
 	}
 	
 	public List<OnlineFeed> getUserFeed() {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -203,6 +202,9 @@ public class UserService implements UserDetailsService {
 				.add(Restrictions.eq("onlineFeed.user.id", userId))
 				.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<OnlineFeed> feed = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return feed;
 	}
 }
