@@ -81,9 +81,9 @@ export default class LibraryItems extends React.Component {
         return (
             <div>
 
-                <div style={toggleButtons}>
+                <div>
                     <ButtonToolbar>
-                        <ButtonGroup bsSize="large" style={toggleButtons}>
+                        <ButtonGroup bsSize="large">
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "XBox")} active={this.state.xBoxActive}>XBox</Button>
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "Steam")} active={this.state.steamActive}>Steam</Button>
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "PS")} active={this.state.psActive}>Playstation</Button>

@@ -30,10 +30,11 @@ export default class OnlineNow extends React.Component {
     }
 
     render() {
-        const friends = this.state.friendList.map((person) => <FriendOnline key={person.ID} {...person}/> );
+        var friends = this.state.friendList.map((person) => <FriendOnline key={person.ID} {...person}/> );
+        if(friends.length == 0) friends = "No friends are online...";    
         return (
             <div class="well pre-scrollable">
-                <h3 class="text-center"> Online Now: </h3>
+                {/*<h3 class="text-center"> Online Now: </h3>*/}
                 <div>{friends}</div>
             </div>
         );
@@ -48,8 +49,8 @@ class FriendOnline extends React.Component {
 
         return (
             <div class="autosize-container" id="friend">
-                <p><img src={imageUrl} alt="Mountain View"/>
-                    {username} is currently online</p>
+                <p><img src={imageUrl} alt="Profile Picture"/>
+                    <strong>{username}</strong></p>
                 <hr/>
             </div>
         );

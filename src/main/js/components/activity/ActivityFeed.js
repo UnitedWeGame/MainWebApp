@@ -52,7 +52,7 @@ class Item extends React.Component {
 
         return (
             <div>
-                <p> <img src={imageUrl} alt="Mountain View"/> {login} {verb} {object} </p>
+                <p> <img src={imageUrl} alt="Profile Picture"/> {login} {verb} {object} </p>
             <hr/>
             </div>
         );

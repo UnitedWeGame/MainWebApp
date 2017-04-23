@@ -30,7 +30,7 @@ export default class NowPlaying extends React.Component {
         const friends = this.state.friendList.map((person) => <FriendPlaying key={person.ID} {...person}/> );
         return (
             <div class="well pre-scrollable">
-                <h3 class="text-center"> Playing Now: </h3>
+                {/*<h3 class="text-center"> Playing Now: </h3>*/}
                 <div>{friends}</div>
             </div>
         );
@@ -47,7 +47,7 @@ class FriendPlaying extends React.Component {
         return (
             <div class="autosize-container" id="friend">
                 <p> <img src={imageUrl} alt="Mountain View"/>
-                 {gamerTag} is playing</p>
+                 <strong>{gamerTag}</strong> is playing</p>
                 <p>{game} <br/> on {platform}</p>
                 <hr/>
             </div>

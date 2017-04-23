@@ -6,22 +6,10 @@ import NowPlaying from "../components/status/NowPlaying";
 export default class Library extends React.Component {
     render() {
         return (
-            <div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
+            <div class="container">
 
-                            <NowPlaying/>
-
-                        </div>
-                        <div class="col-md-8">
-
-                            <div class="row">
-                                <LibraryItems/>
-                            </div>
-
-                        </div>
-                    </div>
+                <div class="row">
+                    <LibraryItems/>
                 </div>
             </div>
         );
