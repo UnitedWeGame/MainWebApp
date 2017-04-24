@@ -5,8 +5,8 @@ class FriendStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
-        //this.friends = [];
-        this.friends = [
+        this.allFriends = [];
+        this.friendsPlayingNow = [
             {
                 "gamerTag": "weetermachine",
                 "ID": "123",
@@ -30,20 +30,40 @@ class FriendStore extends EventEmitter{
             }
         ];
 
-        // fetch('/Friends.json')
-        //     .then(function(response) {
-        //         return response.json();
-        //     }).then(function(json) {
-        //     component.friends = json;
-        //     component.emit("change");
-        // });
+        
     }
 
     getAll(){
-        return this.friends;
+        return this.allFriends;
+    }
+
+    getPlayingNow(){
+        return this.friendsPlayingNow;
+    }
+
+    setAll(friends){
+        console.log("IN THE SET ALL FUNCTION");
+        console.log(friends);
+
+        this.allFriends = friends;
+        this.emit("change");
+    }
+
+    setPlayingNow(friendsPlayingNow){
+        this.friendsPlayingNow = friendsPlayingNow;
+    }
+
+    handleActions(action){
+        switch (action.type) {
+            case "GET_ALL_FRIENDS_DATA": {
+                this.setAll(action.friends);
+                console.log(" IN THE HANDLE ACTIONS FUNCTION");
+                break;
+            }
+        }
     }
 
 }
 const friendStore = new FriendStore();
-//dispatcher.register(friendStore.handleActions.bind(friendStore));
+dispatcher.register(friendStore.handleActions.bind(friendStore));
 export default friendStore;
