@@ -102,12 +102,8 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public List<User> gameOwnedByFriends(Long gameId) {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
 				.createAlias("users.friends", "friends")
@@ -117,23 +113,25 @@ public class UserService implements UserDetailsService {
 				.createAlias("users2.games", "gamesAlias")
 				.add(Restrictions.eq("gamesAlias.id", gameId))
 				.add(Subqueries.propertyIn("users2.id", subquery));
-		return query.list();
+		List<User> users = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return users;
 	}
 	
 	public List<Game> gamesOwnedByPlatform(String platformTitle) {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Criteria query = session.createCriteria(Game.class, "game")
 				.createAlias("game.users", "userAlias")
 				.add(Restrictions.eq("game.platform.title", platformTitle))
 				.add(Restrictions.eq("userAlias.id", userId))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<Game> games =  query.list();
+		session.getTransaction().commit();
+		session.close();
+		return games;
 	}
 	
 	public List<User> gamesOwnedByFriends() {
