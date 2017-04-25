@@ -1,6 +1,8 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 import * as UserActions from "../../actions/UserActions"
+import * as FriendActions from "../../actions/FriendActions"
+
 
 export default class Nav extends React.Component {
 
@@ -11,6 +13,7 @@ export default class Nav extends React.Component {
         };
 
         UserActions.getUserData();
+        FriendActions.getAllFriends();
     }
 
     toggleCollapse() {
@@ -24,19 +27,16 @@ export default class Nav extends React.Component {
 
     render() {
 
-        console.log(this.props);
+        const logoStyle = {
+            marginBottom: "6px"
+        }
 
         const { location } = this.props;
         const { collapsed } = this.state;
         const activityClass = location.pathname === "/" ? "active" : "";
-        const groupsClass = location.pathname.match(/^\/groups/) ? "active" : "";
+        const friendsClass = location.pathname.match(/^\/friends/) ? "active" : "";
         const libraryClass = location.pathname.match(/^\/library/) ? "active" : "";
         const profileClass = location.pathname.match(/^\/profile/) ? "active" : "";
-
-        // const activityClass = "";
-        // const groupsClass = "";
-        // const libraryClass = "";
-        // const profileClass = "";
 
         const navClass = collapsed ? "collapse" : "";
 
@@ -51,7 +51,7 @@ export default class Nav extends React.Component {
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><img src="http://i.imgur.com/yK9sv5L.png" alt="United We Game"/></a>
+                        <a class="navbar-brand" href="#" style={logoStyle}><img src="http://i.imgur.com/yK9sv5L.png" alt="United We Game"/></a>
                     </div>
 
                     {/*<!-- Collect the nav links, forms, and other content for toggling -->*/}
@@ -61,8 +61,8 @@ export default class Nav extends React.Component {
                             <li class={activityClass}>
                                 <Link to="activity" onClick={this.toggleCollapse.bind(this)}>Activity</Link>
                             </li>
-                            <li class={groupsClass}>
-                                <Link to="groups" onClick={this.toggleCollapse.bind(this)}>Groups</Link>
+                            <li class={friendsClass}>
+                                <Link to="friends" onClick={this.toggleCollapse.bind(this)}>Friends</Link>
                             </li>
                             <li class={libraryClass}>
                                 <Link to="library" onClick={this.toggleCollapse.bind(this)}>Library</Link>

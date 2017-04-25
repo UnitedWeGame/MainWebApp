@@ -2,6 +2,7 @@
 <div layout:decorator="layout/main" layout:fragment="content" class="container jumbotron">
 	<h1>United We Game</h1>
 	<h2>A website for gaming and meeting others who do as well</h2><br/>
-	<a th:href="@{/registration}" sec:authorize="isAnonymous()" class="btn btn-primary">Register</a>
-	<a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-primary">Login</a>
+	<a th:href="@{/registration}" sec:authorize="isAnonymous()" class="btn btn-lg btn-success">Register</a>
+	<span style="display:inline-block; width: 10px;"></span>
+	<a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-lg btn-primary">Login</a>
 </div>
