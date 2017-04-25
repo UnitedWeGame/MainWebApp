@@ -15,7 +15,7 @@ export default class Layout extends React.Component {
             webkitBackgroundSize: "cover",
             mozBackgroundSize: "cover",
             oBackgroundSize: "cover",
-            paddingBottom: "100px"
+            paddingBottom: "200px"
 
         };
 
