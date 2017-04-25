@@ -213,7 +213,7 @@ public class UserService implements UserDetailsService {
 		}
 		session.getTransaction().commit();
 		session.close();
-		return feed;
+		return feedWithoutDup;
 	}
 	
 	public List<OnlineFeed> getOldUserFeed() {
