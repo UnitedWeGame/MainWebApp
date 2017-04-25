@@ -27,7 +27,9 @@ export default class Nav extends React.Component {
 
     render() {
 
-        console.log(this.props);
+        const logoStyle = {
+            marginBottom: "6px"
+        }
 
         const { location } = this.props;
         const { collapsed } = this.state;
@@ -49,7 +51,7 @@ export default class Nav extends React.Component {
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><img src="http://i.imgur.com/yK9sv5L.png" alt="United We Game"/></a>
+                        <a class="navbar-brand" href="#" style={logoStyle}><img src="http://i.imgur.com/yK9sv5L.png" alt="United We Game"/></a>
                     </div>
 
                     {/*<!-- Collect the nav links, forms, and other content for toggling -->*/}
