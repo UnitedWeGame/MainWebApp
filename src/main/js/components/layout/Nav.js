@@ -2,20 +2,40 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 import * as UserActions from "../../actions/UserActions"
 import * as FriendActions from "../../actions/FriendActions"
+import UserStore from "../../stores/UserStore";
 
 
 export default class Nav extends React.Component {
 
     constructor() {
-        super()
+        super();
+
+        this.setUsername = this.setUsername.bind(this);
+        const username = UserStore.getUsername();
         this.state = {
             collapsed: true,
+            usernameDisplay: username
         };
 
         UserActions.getUserData();
         FriendActions.getAllFriends();
         FriendActions.getNowPlaying();
     }
+
+    componentWillMount() {
+        UserStore.on("change", this.setUsername);
+    }
+
+    componentWillUnmount() {
+        UserStore.removeListener("change", this.setUsername);
+    }
+
+    setUsername(){
+        this.setState({
+            username: UserStore.getUsername()
+        });
+    }
+
 
     toggleCollapse() {
         const collapsed = !this.state.collapsed;
@@ -69,7 +89,7 @@ export default class Nav extends React.Component {
                                 <Link to="library" onClick={this.toggleCollapse.bind(this)}>Library</Link>
                             </li>
                             <li class={profileClass}>
-                                <Link to="profile" onClick={this.toggleCollapse.bind(this)}>Profile</Link>
+                                <Link to="profile" onClick={this.toggleCollapse.bind(this)}><strong>{this.state.username}</strong></Link>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>

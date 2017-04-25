@@ -10,8 +10,9 @@ export default class Layout extends React.Component {
     render() {
         const { location } = this.props;
         const entirePageStyle = {
-            backgroundImage: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')", 
+            background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')", 
             backgroundSize: "cover"
+
         };
 
         const containerStyle = {
