@@ -215,11 +215,11 @@ public class UserService implements UserDetailsService {
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
-		cal.add(Calendar.HOUR, -4);
+		//cal.add(Calendar.HOUR, -4);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
 				.createAlias("onlineFeed.user", "users")
 				.add(Restrictions.eq("users.id", userId))
-				.add(Restrictions.lt("onlineFeed.lastActivity", cal.getTime()))
+				//.add(Restrictions.lt("onlineFeed.lastActivity", cal.getTime()))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<OnlineFeed> feed = query.list();
 		session.getTransaction().commit();
