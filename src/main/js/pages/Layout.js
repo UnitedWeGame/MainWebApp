@@ -11,7 +11,11 @@ export default class Layout extends React.Component {
         const { location } = this.props;
         const entirePageStyle = {
             background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')", 
-            backgroundSize: "cover"
+            backgroundSize: "cover",
+            webkitBackgroundSize: "cover",
+            mozBackgroundSize: "cover",
+            oBackgroundSize: "cover",
+            paddingBottom: "100px"
 
         };
 
