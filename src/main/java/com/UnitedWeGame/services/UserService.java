@@ -189,7 +189,7 @@ public class UserService implements UserDetailsService {
 		return user;
 	}
 	
-	public Set<OnlineFeed> getUserFeed() {
+	public List<OnlineFeed> getUserFeed() {
 		StatelessSession session = sessionFactory.openStatelessSession();
 		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
@@ -203,16 +203,8 @@ public class UserService implements UserDetailsService {
 				.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<OnlineFeed> feed = query.list();
-		Set<OnlineFeed> feedWithoutDup = new HashSet<OnlineFeed>();
-		HashSet<Long> ids = new HashSet<Long>();
-		for (OnlineFeed item : feed) {
-			if (!ids.contains(item.getId())) {
-				feedWithoutDup.add(item);
-			}
-			ids.add(item.getId());		
-		}
 		session.getTransaction().commit();
 		session.close();
-		return feedWithoutDup;
+		return feed;
 	}
 }
