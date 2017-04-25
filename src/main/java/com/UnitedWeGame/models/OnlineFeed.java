@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class OnlineFeed {
 	@Id
@@ -17,6 +19,7 @@ public class OnlineFeed {
 	@ManyToOne
 	private Game game;
 	private Date lastActivity;
+	@JsonIgnore
 	@ManyToOne
 	private User user;
 	public String getGamerTag() {
