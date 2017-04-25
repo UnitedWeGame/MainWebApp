@@ -1,5 +1,6 @@
 package com.UnitedWeGame.services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -9,7 +10,6 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
@@ -196,13 +196,21 @@ public class UserService implements UserDetailsService {
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
-		//cal.add(Calendar.HOUR, -4);
+		cal.add(Calendar.HOUR, -5);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
 				.createAlias("onlineFeed.user", "users")
 				.add(Restrictions.eq("users.id", userId))
-				//.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
+				.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<OnlineFeed> feed = query.list();
+		List<OnlineFeed> feedWithoutDup = new ArrayList<OnlineFeed>();
+		HashSet<Long> ids = new HashSet<Long>();
+		for (OnlineFeed item : feed) {
+			if (!ids.contains(item.getId())) {
+				feedWithoutDup.add(item);
+			}
+			ids.add(item.getId());
+		}
 		session.getTransaction().commit();
 		session.close();
 		return feed;
@@ -215,7 +223,7 @@ public class UserService implements UserDetailsService {
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
-		cal.add(Calendar.HOUR, -4);
+		cal.add(Calendar.HOUR, -5);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
 				.createAlias("onlineFeed.user", "users")
 				.add(Restrictions.eq("users.id", userId))
