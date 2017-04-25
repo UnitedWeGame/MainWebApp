@@ -14,6 +14,7 @@ export default class Nav extends React.Component {
 
         UserActions.getUserData();
         FriendActions.getAllFriends();
+        FriendActions.getNowPlaying();
     }
 
     toggleCollapse() {
