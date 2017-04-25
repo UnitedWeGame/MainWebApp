@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.UnitedWeGame.models.NewUsers;
 import com.UnitedWeGame.models.OnlineFeed;
 import com.UnitedWeGame.models.User;
-import com.UnitedWeGame.services.OnlineFeedService;
+import com.UnitedWeGame.services.NewUsersService;
 import com.UnitedWeGame.services.UserService;
 
 @RestController
@@ -22,6 +23,9 @@ public class FriendsAPIController {
 	
 	@Autowired
 	SessionFactory sessionFactory;
+	
+	@Autowired
+	NewUsersService newUsersService;
 
 	@RequestMapping("")
 	public Set<User> getFriends() {
@@ -36,6 +40,11 @@ public class FriendsAPIController {
 	
 	@RequestMapping("onlineFeed")
 	public List<OnlineFeed> getOnlineFeed() {
+		if (!userService.getOldUserFeed().isEmpty()) {
+			NewUsers newUser = new NewUsers();
+			newUser.setUserId(userService.getLoggedInUser().getId());
+			newUsersService.saveNewUser(newUser);
+		}
 		return userService.getUserFeed();
 	}
 }
