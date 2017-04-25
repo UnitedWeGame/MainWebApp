@@ -49,9 +49,10 @@ class FriendPlaying extends React.Component {
 
         return (
             <div class="autosize-container" id="friend">
-                <p> <img src={imageUrl} alt="Mountain View"/>
+                <p> 
                  <strong>{gamerTag}</strong> is playing</p>
                 <p>{game} <br/> on {platform}</p>
+                <img src={imageUrl} alt="Mountain View"/>
                 <hr/>
             </div>
         );

@@ -1,14 +1,15 @@
 package com.UnitedWeGame.services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
@@ -101,12 +102,8 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public List<User> gameOwnedByFriends(Long gameId) {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		DetachedCriteria subquery = DetachedCriteria.forClass(User.class, "users")
 				.createAlias("users.friends", "friends")
@@ -116,23 +113,25 @@ public class UserService implements UserDetailsService {
 				.createAlias("users2.games", "gamesAlias")
 				.add(Restrictions.eq("gamesAlias.id", gameId))
 				.add(Subqueries.propertyIn("users2.id", subquery));
-		return query.list();
+		List<User> users = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return users;
 	}
 	
 	public List<Game> gamesOwnedByPlatform(String platformTitle) {
-		Session session;
-		try {
-		    session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
-		}
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Criteria query = session.createCriteria(Game.class, "game")
 				.createAlias("game.users", "userAlias")
 				.add(Restrictions.eq("game.platform.title", platformTitle))
 				.add(Restrictions.eq("userAlias.id", userId))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return query.list();
+		List<Game> games =  query.list();
+		session.getTransaction().commit();
+		session.close();
+		return games;
 	}
 	
 	public List<User> gamesOwnedByFriends() {
@@ -197,10 +196,38 @@ public class UserService implements UserDetailsService {
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
-		cal.add(Calendar.HOUR, -1);
+		cal.add(Calendar.HOUR, -7);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
-				.add(Restrictions.eq("onlineFeed.user.id", userId))
+				.createAlias("onlineFeed.user", "users")
+				.add(Restrictions.eq("users.id", userId))
 				.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<OnlineFeed> feed = query.list();
+		List<OnlineFeed> feedWithoutDup = new ArrayList<OnlineFeed>();
+		HashSet<Long> ids = new HashSet<Long>();
+		for (OnlineFeed item : feed) {
+			if (!ids.contains(item.getId())) {
+				feedWithoutDup.add(item);
+			}
+			ids.add(item.getId());
+		}
+		session.getTransaction().commit();
+		session.close();
+		return feedWithoutDup;
+	}
+	
+	public List<OnlineFeed> getOldUserFeed() {
+		StatelessSession session = sessionFactory.openStatelessSession();
+		session.beginTransaction();
+		Long userId = getLoggedInUser().getId();
+		Date currentDate = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.HOUR, -7);
+		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
+				.createAlias("onlineFeed.user", "users")
+				.add(Restrictions.eq("users.id", userId))
+				.add(Restrictions.lt("onlineFeed.lastActivity", cal.getTime()))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<OnlineFeed> feed = query.list();
 		session.getTransaction().commit();

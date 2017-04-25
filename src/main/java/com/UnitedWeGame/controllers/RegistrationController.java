@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.UnitedWeGame.models.GamerIdentifier;
+import com.UnitedWeGame.models.NewUsers;
 import com.UnitedWeGame.models.User;
 import com.UnitedWeGame.models.UserValidator;
 import com.UnitedWeGame.services.GamerIdentifierService;
+import com.UnitedWeGame.services.NewUsersService;
 import com.UnitedWeGame.services.UserService;
 
 @Controller
@@ -30,6 +32,8 @@ public class RegistrationController {
 	UserService userService;
 	@Autowired
 	GamerIdentifierService gamerIdentifierService;
+	@Autowired
+	NewUsersService newUsersService;
 
 	@Autowired
 	UserValidator userValidator;
@@ -67,7 +71,9 @@ public class RegistrationController {
 		}
 		user.setImageUrl("https://images.igdb.com/igdb/image/upload/t_micro/mjustxpafje74fzjbeuy.jpg");
 		userService.createUser(user);
-		
+		NewUsers newUser = new NewUsers();
+		newUser.setUserId(user.getId());
+		newUsersService.saveNewUser(newUser);
 		//Manually log user in
 		UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
 		Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
