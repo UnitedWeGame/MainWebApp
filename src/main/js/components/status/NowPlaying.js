@@ -42,6 +42,7 @@ export default class NowPlaying extends React.Component {
 
 class FriendPlaying extends React.Component {
     render() {
+
         const {gamerTag} = this.props;
         const {game} = this.props;
         const {platform} = this.props;
@@ -52,7 +53,7 @@ class FriendPlaying extends React.Component {
                 <p> 
                  <strong>{gamerTag}</strong> is playing</p>
                 <p>{game} <br/> on {platform}</p>
-                <img src={imageUrl} alt="Mountain View"/>
+                <img style={{width: 70, height: 70}} src={imageUrl} alt="Mountain View"/>
                 <hr/>
             </div>
         );
