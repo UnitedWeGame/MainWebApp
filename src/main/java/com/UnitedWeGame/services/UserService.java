@@ -2,6 +2,7 @@ package com.UnitedWeGame.services;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -190,7 +191,7 @@ public class UserService implements UserDetailsService {
 		return user;
 	}
 	
-	public List<OnlineFeed> getUserFeed() {
+	public Set<OnlineFeed> getUserFeed() {
 		StatelessSession session = sessionFactory.openStatelessSession();
 		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
@@ -199,12 +200,21 @@ public class UserService implements UserDetailsService {
 		cal.setTime(currentDate);
 		cal.add(Calendar.HOUR, -1);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
-				.add(Restrictions.eq("onlineFeed.user.id", userId))
+				.createAlias("onlineFeed.user", "users")
+				.add(Restrictions.eq("users.id", userId))
 				.add(Restrictions.gt("onlineFeed.lastActivity", cal.getTime()))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<OnlineFeed> feed = query.list();
+		Set<OnlineFeed> feedWithoutDup = new HashSet<OnlineFeed>();
+		HashSet<Long> ids = new HashSet<Long>();
+		for (OnlineFeed item : feed) {
+			if (!ids.contains(item.getId())) {
+				feedWithoutDup.add(item);
+			}
+			ids.add(item.getId());		
+		}
 		session.getTransaction().commit();
 		session.close();
-		return feed;
+		return feedWithoutDup;
 	}
 }

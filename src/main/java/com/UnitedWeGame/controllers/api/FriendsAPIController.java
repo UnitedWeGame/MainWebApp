@@ -35,7 +35,7 @@ public class FriendsAPIController {
 	}
 	
 	@RequestMapping("onlineFeed")
-	public List<OnlineFeed> getOnlineFeed() {
+	public Set<OnlineFeed> getOnlineFeed() {
 		return userService.getUserFeed();
 	}
 }

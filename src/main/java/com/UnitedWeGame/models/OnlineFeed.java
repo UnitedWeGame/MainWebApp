@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -22,6 +25,7 @@ public class OnlineFeed {
 	@JsonIgnore
 	@ManyToOne
 	private User user;
+	
 	public String getGamerTag() {
 		return gamerTag;
 	}

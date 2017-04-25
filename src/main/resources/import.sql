@@ -1,4 +1,3 @@
-
 insert into platform values ('PS3');
 insert into platform values ('PS4');
 insert into platform values ('Xbox 360');
@@ -49,4 +48,6 @@ insert into users_friends values (8888, 6666)
 
 insert into game (image_url, title, platform_title) values ('test.com', 'MLP', 'Xbox 360');
 insert into online_feed (gamer_tag, last_activity, game_id, user_id) values ('weeterMachine', now(), 11123, 2222)
+insert into online_feed (gamer_tag, last_activity, game_id, user_id) values ('yourMom', now(), 11123, 2222)
+
 
