@@ -196,7 +196,7 @@ public class UserService implements UserDetailsService {
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
-		cal.add(Calendar.HOUR, -5);
+		cal.add(Calendar.HOUR, -7);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
 				.createAlias("onlineFeed.user", "users")
 				.add(Restrictions.eq("users.id", userId))
@@ -223,7 +223,7 @@ public class UserService implements UserDetailsService {
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
-		cal.add(Calendar.HOUR, -5);
+		cal.add(Calendar.HOUR, -7);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
 				.createAlias("onlineFeed.user", "users")
 				.add(Restrictions.eq("users.id", userId))
