@@ -19,7 +19,7 @@ export function getNowPlaying(){
     	var i;
     	for(i in data){
     		var img = data[i].game.imageUrl;
-			var img = img.replace("t_cover_big", "t_thumb");
+			//var img = img.replace("t_cover_big", "t_thumb");
     		var obj = {
     			"gamerTag": data[i].gamerTag,
     			"ID" : data[i].id,
