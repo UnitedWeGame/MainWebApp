@@ -6,29 +6,7 @@ class FriendStore extends EventEmitter{
         super();
         var component = this;
         this.allFriends = [];
-        this.friendsPlayingNow = [
-            {
-                "gamerTag": "weetermachine",
-                "ID": "123",
-                "game": "Donkey Kong Country",
-                "platform": "Super Nintendo",
-                "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
-            },
-            {
-                "gamerTag": "logangsta",
-                "ID": "124",
-                "game": "Snake",
-                "platform": "TI-89",
-                "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
-            },
-            {
-                "gamerTag": "jacksonHenriettaMurphysGamerTag",
-                "ID": "125",
-                "game": "Mario 64",
-                "platform": "You should know this",
-                "imageUrl": "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"
-            }
-        ];
+        this.friendsPlayingNow = [];
 
         
     }
@@ -51,6 +29,7 @@ class FriendStore extends EventEmitter{
 
     setPlayingNow(friendsPlayingNow){
         this.friendsPlayingNow = friendsPlayingNow;
+        this.emit("change");
     }
 
     handleActions(action){
@@ -58,6 +37,10 @@ class FriendStore extends EventEmitter{
             case "GET_ALL_FRIENDS_DATA": {
                 this.setAll(action.friends);
                 console.log(" IN THE HANDLE ACTIONS FUNCTION");
+                break;
+            }
+            case "UPDATE_NOW_PLAYING":{
+                this.setPlayingNow(action.friends);
                 break;
             }
         }

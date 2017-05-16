@@ -1,3 +1,4 @@
+
 insert into platform values ('PS3');
 insert into platform values ('PS4');
 insert into platform values ('Xbox 360');
@@ -14,16 +15,12 @@ insert into game (id, image_url, title, platform_title) values (10233, 'http://i
 
 
 
-insert into game (id, image_url, title, platform_title) values (999999, 'https://lh3.googleusercontent.com/YqlXGn_KbC5zxxEDr12vsYWjcMpZokEmGZ76opYh4VmRwa2FCP6fHYzFcad5-xj4C677=w300', 'Xbox Home', 'Xbox 360');
-insert into game (id, image_url, title, platform_title) values (999998, 'https://lh3.googleusercontent.com/YqlXGn_KbC5zxxEDr12vsYWjcMpZokEmGZ76opYh4VmRwa2FCP6fHYzFcad5-xj4C677=w300', 'Xbox Home', 'Xbox One');
-
-
 
 insert into profile values (3333, 'Hello, Im Logan')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (2222, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8016789986', 'logangster', 3333, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/mjustxpafje74fzjbeuy.jpg')
 insert into user_library values (2222, 11123)
 insert into user_library values (2222, 111234)
-insert into gamer_identifier (identifier, platform, user_id) values ('Logangsta', 'Xbox Live', 2222)
+insert into gamer_identifier (identifier, platform, user_id) values ('logangster', 'Xbox Live', 2222)
 
 insert into profile values (5555, 'Hello, Im Jackson')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (4444, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8019138949', 'jacksonmeister', 5555, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg')
@@ -66,6 +63,4 @@ insert into users_friends values (8888, 6666)
 
 insert into game (image_url, title, platform_title) values ('test.com', 'MLP', 'Xbox 360');
 insert into online_feed (gamer_tag, last_activity, game_id, user_id) values ('weeterMachine', now(), 11123, 2222)
-insert into online_feed (gamer_tag, last_activity, game_id, user_id) values ('yourMom', now(), 11123, 2222)
-
 

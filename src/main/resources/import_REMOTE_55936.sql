@@ -7,16 +7,8 @@ insert into game (id, image_url, title, platform_title) values (11123, 'http://i
 insert into game (id, image_url, title, platform_title) values (111234, 'http://images.igdb.com/igdb/image/upload/t_cover_big/m1qtsn4ehaen83bbp1ee.png', 'Forza Motorsport 3', 'Xbox 360');
 insert into game (id, image_url, title, platform_title) values (11125, 'http://images.igdb.com/igdb/image/upload/t_cover_big/gy5jzbxk068kduoki6wx.png', 'Fallout 4: Nuka World', 'PS3');
 insert into game (id, image_url, title, platform_title) values (111236, 'http://images.igdb.com/igdb/image/upload/t_cover_big/fhbeilnghyhhmjqhinqa.png', 'Titanfall 2', 'PS3');
-insert into game (id, image_url, title, platform_title) values (19459, 'http://images.igdb.com/igdb/image/upload/t_cover_big/cmtplicvdajycqx2vz6t.png', 'FIFA 17', 'PS4');
-insert into game (id, image_url, title, platform_title) values (11071, 'http://images.igdb.com/igdb/image/upload/t_cover_big/z6ukyh2er3ntgeax0yew.png', 'FIFA 16', 'Xbox 360');
-insert into game (id, image_url, title, platform_title) values (9254, 'http://images.igdb.com/igdb/image/upload/t_cover_big/uppylnya8h7k7jblynnj.png', 'Subnautica', 'Steam');
-insert into game (id, image_url, title, platform_title) values (10233, 'http://images.igdb.com/igdb/image/upload/t_cover_big/nis45tdtxwveq3lde7wz.png', 'Brawlhalla', 'Steam');
-
-
-
 insert into game (id, image_url, title, platform_title) values (999999, 'https://lh3.googleusercontent.com/YqlXGn_KbC5zxxEDr12vsYWjcMpZokEmGZ76opYh4VmRwa2FCP6fHYzFcad5-xj4C677=w300', 'Xbox Home', 'Xbox 360');
 insert into game (id, image_url, title, platform_title) values (999998, 'https://lh3.googleusercontent.com/YqlXGn_KbC5zxxEDr12vsYWjcMpZokEmGZ76opYh4VmRwa2FCP6fHYzFcad5-xj4C677=w300', 'Xbox Home', 'Xbox One');
-
 
 
 insert into profile values (3333, 'Hello, Im Logan')
@@ -29,13 +21,6 @@ insert into profile values (5555, 'Hello, Im Jackson')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (4444, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8019138949', 'jacksonmeister', 5555, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg')
 insert into user_library values (4444, 11123)
 insert into user_library values (4444, 11125)
-insert into user_library values (4444, 111236)
-insert into user_library values (4444, 11071)
-insert into user_library values (4444, 9254)
-insert into user_library values (4444, 10233)
-
-
-
 
 insert into profile values (7777, 'Hello, Im Chris')
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (6666, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8014139990', 'weetermachine', 7777, now(), 'http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png')
