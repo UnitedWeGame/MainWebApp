@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, hashHistory } from "react-router";
 
 
 import Layout from "./pages/Layout";
+import LayoutNoSideStatus from "./pages/LayoutNoSideStatus";
 import Activity from "./pages/Activity";
 import Friends from "./pages/Friends";
 import Library from "./pages/Library";
@@ -22,6 +23,8 @@ ReactDOM.render(
             <Route path="library" name="library" component={Library}></Route>
             <Route path="profile" name="profile" component={Profile}></Route>
             <Route path="settings" name="settings" component={Settings}></Route>
+        </Route>
+        <Route path="/games*" component={LayoutNoSideStatus}>
         </Route>
     </Router>,
     app);
