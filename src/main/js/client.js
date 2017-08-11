@@ -7,6 +7,7 @@ import Layout from "./pages/Layout";
 import LayoutNoSideStatus from "./pages/LayoutNoSideStatus";
 import Activity from "./pages/Activity";
 import Friends from "./pages/Friends";
+import GameInfo from "./pages/GameInfo";
 import Library from "./pages/Library";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
@@ -24,7 +25,8 @@ ReactDOM.render(
             <Route path="profile" name="profile" component={Profile}></Route>
             <Route path="settings" name="settings" component={Settings}></Route>
         </Route>
-        <Route path="/games*" component={LayoutNoSideStatus}>
+        <Route component={LayoutNoSideStatus}>
+          <Route path="/game*" component={GameInfo}></Route>
         </Route>
     </Router>,
     app);

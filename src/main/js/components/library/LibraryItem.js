@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import {Button, ButtonToolbar, ButtonGroup, Overlay, OverlayTrigger, Popover} from 'react-bootstrap';
 import * as LibraryActions from "../../actions/LibraryActions";
 
@@ -11,7 +12,7 @@ export default class LibraryItem extends React.Component {
         //this.handleInvite = this.handleInvite.bind(this);
     }
 
-    handleInvite(id, event) {  
+    handleInvite(id, event) {
         console.log("id is: " + id);
         console.log("event is: " + event);
         LibraryActions.sendTextInvite(id);
@@ -39,9 +40,9 @@ export default class LibraryItem extends React.Component {
             <Popover id="popover-trigger-click-root-close" title={title}>
                 <ButtonGroup vertical>
                     <Button bsStyle="success" onClick={this.handleInvite.bind(this, id)} block>{this.state.inviteButtonText}</Button>
-                    <Button>Game information</Button>
+                    <Button><Link to="game">Game information</Link></Button>
                     <Button>Write a review</Button>
-                    <Button>Read friends' reviews</Button>
+                    <Button>Read friend reviews</Button>
                     <Button bsStyle="danger">Remove game</Button>
                 </ButtonGroup>
             </Popover>
