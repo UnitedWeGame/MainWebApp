@@ -1,5 +1,14 @@
 import dispatcher from "../dispatcher";
 
+export function getGameInfo(gameId){
+    //$.get( "/api/games/" + gameId, function( data ) {
+        dispatcher.dispatch({
+                type: "GET_GAME_INFO",
+                gameInfo: data
+            });
+    //});
+}
+
 export function sendTextInvite(gameId){
 	console.log("sending text for game number: " + gameId);
 

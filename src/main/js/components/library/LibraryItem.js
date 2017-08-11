@@ -12,15 +12,18 @@ export default class LibraryItem extends React.Component {
         //this.handleInvite = this.handleInvite.bind(this);
     }
 
+    getGameInfo(id, event) {
+      LibraryActions.getGameInfo(id);
+    }
+
     handleInvite(id, event) {
-        console.log("id is: " + id);
-        console.log("event is: " + event);
         LibraryActions.sendTextInvite(id);
         this.setState({
             inviteButtonText: "Sent!"
         });
-
     }
+
+
 
     render() {
         const {imageUrl} = this.props;
@@ -40,7 +43,7 @@ export default class LibraryItem extends React.Component {
             <Popover id="popover-trigger-click-root-close" title={title}>
                 <ButtonGroup vertical>
                     <Button bsStyle="success" onClick={this.handleInvite.bind(this, id)} block>{this.state.inviteButtonText}</Button>
-                    <Button><Link to="game">Game information</Link></Button>
+                    <Button onClick={this.getGameInfo.bind(this, id)}><Link to="game">Game information</Link></Button>
                     <Button>Write a review</Button>
                     <Button>Read friend reviews</Button>
                     <Button bsStyle="danger">Remove game</Button>
