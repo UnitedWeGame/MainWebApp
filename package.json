@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "webpack-dev-server --content-base src --inline --hot",
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
-    
   },
   "repository": {
     "type": "git",
@@ -34,11 +33,12 @@
     "flux": "^2.1.1",
     "history": "^1.17.0",
     "node-fetch": "^1.5.3",
+    "prop-types": "^15.5.8",
     "react": "^0.14.6",
     "react-bootstrap": "0.30.8",
-    "prop-types": "^15.5.8",
     "react-dom": "^0.14.6",
     "react-router": "^1.0.3",
+    "react-slick": "^0.14.11",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },

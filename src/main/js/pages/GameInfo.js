@@ -1,7 +1,50 @@
 import React from "react";
+import Slider from "react-slick";
+
 
 export default class GameInfo extends React.Component {
     render() {
+
+      var settings = {
+        dots: true,
+        infinite: true,
+        autoplaySpeed: 5000,
+        fade: true,
+        speed: 30,
+        centerMode: true,
+        slidesToScroll: 1,
+        autoplay: true
+      }
+
+      const containerStyle = {
+        height: 300,
+        overflow: "hidden",
+        color: "#333",
+        position: "relative"
+      };
+
+      const imageStyle = {
+        filter: "brightness(50%)",
+        margin: "auto"
+      };
+
+
+      return (
+    	<div class={containerStyle}>
+      	<Slider {...settings} class={imageStyle} >
+
+         <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg'  /></div>
+          <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg' /></div>
+          <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_huge/ka2i4aehuuibfecyaphh.jpg' /></div>
+          <div><img src='http://placekitten.com/g/400/200' /></div>
+
+        </Slider>
+      </div>
+    );
+  }
+}
+
+{/*
 
       const mainTextStyle = {
         position: "absolute",
@@ -49,3 +92,5 @@ export default class GameInfo extends React.Component {
       );
     }
 }
+
+*/}
