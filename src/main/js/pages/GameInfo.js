@@ -16,6 +16,10 @@ export default class GameInfo extends React.Component {
         autoplay: true
       }
 
+      const titleStyle = {
+        textAlign: "center"
+      };
+
       const containerStyle = {
         height: 300,
         overflow: "hidden",
@@ -30,7 +34,7 @@ export default class GameInfo extends React.Component {
 
 
       return (
-        <div>
+        <div style={titleStyle}>
           <h1>The Legend Of Zelda: The Skyward Sword</h1>
     	     <div class={containerStyle}>
             	<Slider {...settings} class={imageStyle} >
