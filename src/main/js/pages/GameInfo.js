@@ -30,15 +30,17 @@ export default class GameInfo extends React.Component {
 
 
       return (
-    	<div class={containerStyle}>
-      	<Slider {...settings} class={imageStyle} >
+        <div>
+          <h1>The Legend Of Zelda: The Skyward Sword</h1>
+    	     <div class={containerStyle}>
+            	<Slider {...settings} class={imageStyle} >
 
-         <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg'  /></div>
-          <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg' /></div>
-          <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_huge/ka2i4aehuuibfecyaphh.jpg' /></div>
-          <div><img src='http://placekitten.com/g/400/200' /></div>
+               <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg'  /></div>
+                <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg' /></div>
+                <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/ka2i4aehuuibfecyaphh.jpg' /></div>
 
-        </Slider>
+              </Slider>
+          </div>
       </div>
     );
   }
