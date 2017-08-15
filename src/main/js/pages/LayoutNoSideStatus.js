@@ -13,7 +13,7 @@ export default class LayoutNoSideStatus extends React.Component {
         };
 
         const containerStyle = {
-            marginTop: "60px",
+            marginTop: "20px",
             marginLeft: "10px",
         };
 
