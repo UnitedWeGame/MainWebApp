@@ -47,7 +47,7 @@ export default class GameInfo extends React.Component {
 
       return (
         <div style={titleStyle}>
-          <h1>The Legend Of Zelda: The Skyward Sword</h1>
+          <h1>The Legend Of Zelda: The Skyward Swords</h1>
     	     <div class={containerStyle}>
             	<Slider {...settings} class={imageStyle} >
 
@@ -58,13 +58,12 @@ export default class GameInfo extends React.Component {
               </Slider>
           </div>
           <section>
-          <Tabs index={this.state.index} onChange={this.handleTabChange} fixed>
-          <Tab label='Info'><small>First Content</small></Tab>
-          <Tab label='Reviews'><small>Second Content</small></Tab>
-          <Tab label='Friends Who Own'><small>Third Content</small></Tab>
-          <Tab label='Invite'><small>Third Content</small></Tab>
-
-        </Tabs>
+            <Tabs index={this.state.index} onChange={this.handleTabChange} fixed>
+            <Tab label='Info'><small>First Content</small></Tab>
+            <Tab label='Reviews'><small>Second Content</small></Tab>
+            <Tab label='Friends Who Own'><small>Third Content</small></Tab>
+            <Tab label='Invite'><small>Third Content</small></Tab>
+          </Tabs>
         </section>
       </div>
     );
