@@ -5,6 +5,7 @@ import Slider from "react-slick";
 export default class GameInfo extends React.Component {
     render() {
 
+      {/* For the screenshot slider */}
       var settings = {
         dots: true,
         infinite: true,
@@ -19,6 +20,9 @@ export default class GameInfo extends React.Component {
       const titleStyle = {
         textAlign: "center"
       };
+
+      {/* For the navs that toggle between General, Reviews, etc.*/}
+
 
       const containerStyle = {
         height: 300,

@@ -10,7 +10,7 @@ export default class Layout extends React.Component {
     render() {
         const { location } = this.props;
         const entirePageStyle = {
-            background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')", 
+            background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')",
             backgroundSize: "cover",
             webkitBackgroundSize: "cover",
             mozBackgroundSize: "cover",
@@ -21,7 +21,7 @@ export default class Layout extends React.Component {
 
         const containerStyle = {
             marginTop: "60px",
-            marginLeft: "10px",            
+            marginLeft: "10px",
         };
 
         const sideStatusPanel = {
@@ -37,7 +37,7 @@ export default class Layout extends React.Component {
 
                 <div class="container" style={containerStyle}>
                     <div class="row">
-                    
+
                         <div class="col-md-4">
                             <div style={sideStatusPanel}>
                                 <h2 class="text-center">Playing Now</h2>
@@ -50,14 +50,16 @@ export default class Layout extends React.Component {
                                 <h2 class="text-center">Online Now</h2>
                                 <OnlineNow/>
                             </div>
-                        
+
                         </div>
-                        
+
                         <div class="col-md-1">
                         </div>
 
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                                 {this.props.children}
+                        </div>
+                        <div class="col-md-1">
                         </div>
 
                      </div>
