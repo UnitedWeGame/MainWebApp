@@ -18,7 +18,24 @@ module.exports = {
                     //presets: ['react', 'es2015', 'stage-0'],
                     plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
                 }
-            }
+            },
+
+            {
+              test: /\.css$/,
+              use: [
+                "style-loader",
+                {
+                  loader: "css-loader",
+                  options: {
+                    modules: true,
+                    sourceMap: true,
+                    importLoaders: 1,
+                    localIdentName: "[name]--[local]--[hash:base64:8]"
+                  }
+                },
+                "postcss-loader" // has separate config, see postcss.config.js nearby
+              ]
+            },
         ]
     },
     output: {

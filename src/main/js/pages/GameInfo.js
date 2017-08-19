@@ -1,5 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
+import {Tab, Tabs} from 'react-toolbox';
+
 
 
 export default class GameInfo extends React.Component {
