@@ -60,6 +60,7 @@ export default class Layout extends React.Component {
                                 {this.props.children}
                         </div>
                         <div class="col-md-1">
+                          <br/>
                         </div>
 
                      </div>
