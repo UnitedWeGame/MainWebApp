@@ -34,7 +34,6 @@
     "history": "^1.17.0",
     "node-fetch": "^1.5.3",
     "node-sass": "^4.5.3",
-    "postcss-import": "^10.0.0",
     "prop-types": "^15.5.8",
     "react": "^15.0.0",
     "react-bootstrap": "0.30.8",
