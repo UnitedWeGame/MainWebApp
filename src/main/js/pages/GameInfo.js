@@ -24,13 +24,13 @@ export default class GameInfo extends React.Component {
       };
 
       {/* For the navs that toggle between General, Reviews, etc.*/}
-      state = {
+      {/*state = {
         index: 1,
       };
 
       handleTabChange = (index) => {
         this.setState({index});
-      };
+      };*/}
 
       const containerStyle = {
         height: 300,
@@ -57,14 +57,14 @@ export default class GameInfo extends React.Component {
 
               </Slider>
           </div>
-          <section>
+          {/*<section>
             <Tabs index={this.state.index} onChange={this.handleTabChange} fixed>
             <Tab label='Info'><small>First Content</small></Tab>
             <Tab label='Reviews'><small>Second Content</small></Tab>
             <Tab label='Friends Who Own'><small>Third Content</small></Tab>
             <Tab label='Invite'><small>Third Content</small></Tab>
           </Tabs>
-        </section>
+        </section>*/}
       </div>
     );
   }
