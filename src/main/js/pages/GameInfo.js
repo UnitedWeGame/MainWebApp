@@ -5,6 +5,16 @@ import {Tab, Tabs} from 'react-toolbox';
 
 
 export default class GameInfo extends React.Component {
+
+  state = {
+    index: 1,
+  };
+
+  handleTabChange = (index) => {
+    this.setState({index});
+  };
+
+
     render() {
 
       {/* For the screenshot slider */}
@@ -23,14 +33,7 @@ export default class GameInfo extends React.Component {
         textAlign: "center"
       };
 
-      {/* For the navs that toggle between General, Reviews, etc.*/}
-      {/*state = {
-        index: 1,
-      };
 
-      handleTabChange = (index) => {
-        this.setState({index});
-      };*/}
 
       const containerStyle = {
         height: 300,
@@ -57,14 +60,14 @@ export default class GameInfo extends React.Component {
 
               </Slider>
           </div>
-          {/*<section>
+          <section>
             <Tabs index={this.state.index} onChange={this.handleTabChange} fixed>
             <Tab label='Info'><small>First Content</small></Tab>
             <Tab label='Reviews'><small>Second Content</small></Tab>
             <Tab label='Friends Who Own'><small>Third Content</small></Tab>
             <Tab label='Invite'><small>Third Content</small></Tab>
           </Tabs>
-        </section>*/}
+        </section>
       </div>
     );
   }
