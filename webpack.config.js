@@ -5,7 +5,7 @@ var fetch = require('node-fetch');
 
 module.exports = {
     context: path.join(__dirname, "src"),
-    devtool: debug ? "inline-sourcemap" : null,
+    devtool: debug ? "inline-sourcemap" : false,
     entry: "./main/js/client.js",
     module: {
         loaders: [
