@@ -8,7 +8,7 @@ import {Tab} from 'react-toolbox';
 export default class GameInfo extends React.Component {
 
   state = {
-    index: 1,
+    index: 0,
   };
 
   handleTabChange = (index) => {
@@ -50,34 +50,35 @@ export default class GameInfo extends React.Component {
 
 
       return (
-        <div style={titleStyle}>
-          <h1>The Legend Of Zelda: The Skyward Sword</h1>
-          <br/>
-          <section>
-            <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
-              <Tab label='Info'>
-                <div class={containerStyle}>
-                  <br/>
-                   <Slider {...settings} class={imageStyle} >
+        <div>
+          <div style={titleStyle}>
+            <h1>The Legend Of Zelda: The Skyward Sword</h1>
+          </div>
+            <br/>
+            <section>
+              <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
+                <Tab label='Info'>
+                  <div class={containerStyle}>
+                    <br/>
+                     <Slider {...settings} class={imageStyle} >
 
-                    <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg'  /></div>
-                     <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg' /></div>
-                     <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/ka2i4aehuuibfecyaphh.jpg' /></div>
+                      <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg'  /></div>
+                       <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg' /></div>
+                       <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/ka2i4aehuuibfecyaphh.jpg' /></div>
 
-                   </Slider>
-                   <br/>
-                   <h3>Release Date: </h3>
-                   <small>September 10, 2012</small>
-                </div>
+                     </Slider>
+                     <br/>
+                     <h3>Release Date: </h3>
+                     <small>September 10, 2012</small>
+                  </div>
 
 
-              </Tab>
-              <Tab label='Reviews'><large>There are no reviews</large></Tab>
-              <Tab label='Friends Who Own'><large>To do...</large></Tab>
-              <Tab label='Invite'><large>Not yet implemented</large></Tab>
-            </CustomTabs>
-          </section>
-
+                </Tab>
+                <Tab label='Reviews'><large>There are no reviews</large></Tab>
+                <Tab label='Friends Who Own'><large>To do...</large></Tab>
+                <Tab label='Invite'><large>Not yet implemented</large></Tab>
+              </CustomTabs>
+            </section>
 
       </div>
     );
