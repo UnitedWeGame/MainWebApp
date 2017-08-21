@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
-import {Tab, Tabs} from 'react-toolbox';
+import CustomTabs from "../components/uiPieces/CustomTabs.js"
+import {Tab} from 'react-toolbox';
 
 
 
@@ -61,12 +62,12 @@ export default class GameInfo extends React.Component {
               </Slider>
           </div>
           <section>
-            <Tabs index={this.state.index} onChange={this.handleTabChange} fixed>
+            <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
             <Tab label='Info'><small>First Content</small></Tab>
             <Tab label='Reviews'><small>Second Content</small></Tab>
             <Tab label='Friends Who Own'><small>Third Content</small></Tab>
             <Tab label='Invite'><small>Third Content</small></Tab>
-          </Tabs>
+          </CustomTabs>
         </section>
       </div>
     );

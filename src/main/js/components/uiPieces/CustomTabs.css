@@ -1,0 +1,9 @@
+@import "react-toolbox/lib/tabs/theme.css";
+
+.label {
+  color: #cac4c4;
+
+  &.active {
+    color: #3ba03b;
+  }
+}
