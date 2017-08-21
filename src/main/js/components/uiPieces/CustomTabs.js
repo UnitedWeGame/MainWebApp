@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import { Tabs } from 'react-toolbox/lib/tabs';
 import theme from './CustomTabs.css';
 
-const CustomTabs = ({ children  }) => (
-  <Tabs theme={theme}>
+const CustomTabs = ({ children, ...other  }) => (
+  <Tabs {...other} theme={theme}>
     {children}
   </Tabs>
 );
