@@ -70,6 +70,9 @@ export default class GameInfo extends React.Component {
                      <br/>
                      <h3>Release Date: </h3>
                      <small>September 10, 2012</small>
+                     <br/>
+                     <h3>Community Rating: </h3>
+                     
                   </div>
 
 
