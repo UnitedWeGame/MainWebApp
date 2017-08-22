@@ -81,11 +81,16 @@ export default class GameInfo extends React.Component {
 
                      </Slider>
                      <br/>
-                    <span><h3>Release Date:  </h3> <small>September 10, 2012</small></span>
+                    <h3>Release Date:  </h3> <medium>September 10, 2012</medium>
                      <br/>
-                     <span><h3>Your Rating:  </h3>
+                     <h3>Your Rating:  </h3>
                      <ReactStars {...starSettings} onChange={this.ratingChanged}/>
-                     </span>
+                     <br/>
+                     <h3>Community Rating:  </h3>
+                     <medium>4.5 (out of 5)</medium>
+                     <br/>
+                     <h3>Summary:  </h3>
+                     <medium>Long ago, on a dark day, the earth cracked and evil forces rushed out of the fissure. These forces attacked the people of the earth, slaughtering them and destroying their land. They did this in search of the ultimate power, a power capable of granting any wishes of its holder. This power, passed down from the gods of old, was guarded by Her Grace, the goddess of the land. The goddess gathered the surviving humans on a piece of earth and sent it skyward, beyond the clouds. With the humans safe, the goddess joined the land dwellers and fought the evil forces in a war of unmatched scale and ferocity. They eventually sealed the evil forces away, restoring peace to the surface. However, the humans remained in Skyloft, as Hylia knew that the seal on the evil would not hold forever.</medium>
 
 
                   </div>
