@@ -2,6 +2,15 @@ import dispatcher from "../dispatcher";
 
 export function getGameInfo(gameId){
     //$.get( "/api/games/" + gameId, function( data ) {
+    var data = {
+      title: "Zelda",
+      releaseDate: "October 11, 2016",
+      usersRating: 3.5,
+      communityRating: 5,
+      gameSummary: "An epic game",
+      usersReview: false
+
+    }
         dispatcher.dispatch({
                 type: "GET_GAME_INFO",
                 gameInfo: data

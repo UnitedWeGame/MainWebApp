@@ -6,15 +6,18 @@ class GameStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
-        this.game = {};
-        this.game.title = "Title Not Found";
-        this.game.releaseDate = "Release Date Not Found";
-        this.game.userRating = 0;
-        this.game.communityRating = "No rating found";
-        this.game.gameSummary = "Game summary not found";
-        this.game.usersReview = false;
-        this.game.otherReviews = "No reviews for this game";
-        this.game.friendsWhoOwn = "No friends own this game";
+        this.game = {
+          title: "Title Not Found",
+          releaseDate: "Release Date Not Found",
+          userRating: 0,
+          communityRating: "No rating found",
+          gameSummary: "Game summary not found",
+          usersReview: false,
+          otherReviews: "No reviews for this game",
+          friendsWhoOwn: "No friends own this game",
+        };
+
+        console.log("game store constructor was successful")
 
     }
 
