@@ -1,7 +1,9 @@
 import React from "react";
 import Slider from "react-slick";
-import CustomTabs from "../components/uiPieces/CustomTabs.js"
-import {Tab} from 'react-toolbox';
+import CustomTabs from "../components/uiPieces/CustomTabs.js";
+import {Tab} from "react-toolbox";
+import ReactStars from "react-stars";
+
 
 
 
@@ -15,11 +17,16 @@ export default class GameInfo extends React.Component {
     this.setState({index});
   };
 
+  // Called when the user makes a new star rating
+   ratingChanged = (newRating) => {
+     console.log(newRating)
+  };
+
 
     render() {
 
       {/* For the screenshot slider */}
-      var settings = {
+      var sliderSettings = {
         dots: true,
         infinite: true,
         autoplaySpeed: 5000,
@@ -28,6 +35,13 @@ export default class GameInfo extends React.Component {
         centerMode: true,
         slidesToScroll: 1,
         autoplay: true
+      }
+
+      var starSettings = {
+        count: 5,
+        onChange: ratingChanged,
+        size: 24,
+        color2: '#ffd700'
       }
 
       const titleStyle = {
@@ -60,7 +74,7 @@ export default class GameInfo extends React.Component {
                 <Tab label='Info'>
                   <div class={containerStyle}>
                     <br/>
-                     <Slider {...settings} class={imageStyle} >
+                     <Slider {...sliderSettings} class={imageStyle} >
 
                       <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg'  /></div>
                        <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg' /></div>
@@ -71,8 +85,10 @@ export default class GameInfo extends React.Component {
                      <h3>Release Date: </h3>
                      <small>September 10, 2012</small>
                      <br/>
-                     <h3>Community Rating: </h3>
-                     
+                     <h3>Your Rating: </h3>
+                     <ReactStars {...starSettings}/>
+
+
                   </div>
 
 
