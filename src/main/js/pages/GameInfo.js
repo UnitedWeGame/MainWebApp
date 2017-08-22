@@ -39,9 +39,9 @@ export default class GameInfo extends React.Component {
 
       var starSettings = {
         count: 5,
-        onChange: ratingChanged,
+        onChange: "ratingChanged",
         size: 24,
-        color2: '#ffd700'
+        color2: "#ffd700"
       }
 
       const titleStyle = {
