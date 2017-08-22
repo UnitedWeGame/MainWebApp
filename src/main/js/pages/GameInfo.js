@@ -19,7 +19,7 @@ export default class GameInfo extends React.Component {
 
   // Called when the user makes a new star rating
    ratingChanged = (newRating) => {
-     console.log(newRating)
+     console.log(newRating);
   };
 
 
@@ -39,7 +39,6 @@ export default class GameInfo extends React.Component {
 
       var starSettings = {
         count: 5,
-        onChange: "ratingChanged",
         size: 24,
         color2: "#ffd700"
       }
@@ -86,7 +85,7 @@ export default class GameInfo extends React.Component {
                      <small>September 10, 2012</small>
                      <br/>
                      <h3>Your Rating: </h3>
-                     <ReactStars {...starSettings}/>
+                     <ReactStars {...starSettings} onChange={this.ratingChanged}/>
 
 
                   </div>
