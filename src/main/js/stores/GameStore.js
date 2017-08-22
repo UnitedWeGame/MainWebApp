@@ -68,6 +68,6 @@ class GameStore extends EventEmitter{
     }
 
 }
-const GameStore = new GameStore();
+const gameStore = new GameStore();
 dispatcher.register(gameStore.handleActions.bind(gameStore));
 export default gameStore;
