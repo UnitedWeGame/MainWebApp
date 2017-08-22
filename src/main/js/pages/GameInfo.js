@@ -81,11 +81,11 @@ export default class GameInfo extends React.Component {
 
                      </Slider>
                      <br/>
-                     <h3>Release Date: </h3>
-                     <small>September 10, 2012</small>
+                    <span><h3>Release Date:  </h3> <small>September 10, 2012</small></span>
                      <br/>
-                     <h3>Your Rating: </h3>
+                     <span><h3>Your Rating:  </h3>
                      <ReactStars {...starSettings} onChange={this.ratingChanged}/>
+                     </span>
 
 
                   </div>
