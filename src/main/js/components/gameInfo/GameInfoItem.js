@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import CustomTabs from "../uiPieces/CustomTabs";
 import {Tab} from "react-toolbox";
 import ReactStars from "react-stars";
-import UserStore from "../../stores/UserStore";
+import GameStore from "../../stores/GameStore";
 
 
 
