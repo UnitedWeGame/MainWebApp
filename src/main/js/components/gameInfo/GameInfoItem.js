@@ -14,6 +14,11 @@ export default class GameInfoItem extends React.Component {
       this.getGameInfo = this.getGameInfo.bind(this);
       const gameInfo = GameStore.getGame();
 
+      this.state = {
+        gameInfo: gameInfo,
+        index: 0
+      }
+
   }
 
   componentWillMount() {
@@ -31,9 +36,6 @@ export default class GameInfoItem extends React.Component {
       console.log(gameInfo);
   }
 
-  state = {
-    index: 0,
-  };
 
   handleTabChange = (index) => {
     this.setState({index});
