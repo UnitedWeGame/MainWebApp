@@ -1,0 +1,7 @@
+@import "react-toolbox/lib/button/theme.css";
+
+.neutral:not([disabled]) {
+  &.toggle {
+    color: #c8c8c8;
+  }
+}
