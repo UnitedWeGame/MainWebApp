@@ -17,8 +17,6 @@ class GameStore extends EventEmitter{
           friendsWhoOwn: "No friends own this game",
         };
 
-        console.log("game store constructor was successful")
-
     }
 
     getGame(){
@@ -54,8 +52,6 @@ class GameStore extends EventEmitter{
 
         this.emit("change");
     }
-
-
 
 
     handleActions(action){
