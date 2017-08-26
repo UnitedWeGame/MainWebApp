@@ -1,3 +1,8 @@
 * {
     box-sizing: border-box;
 }
+
+.background {
+	background: url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg') no-repeat center center fixed; 
+	background-size: cover;
+}
