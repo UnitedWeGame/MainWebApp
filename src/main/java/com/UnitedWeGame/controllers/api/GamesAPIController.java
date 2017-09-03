@@ -40,6 +40,11 @@ public class GamesAPIController {
 		return gameService.allGames();
 	}
 	
+	@RequestMapping("/{gameId}")
+	public Game fetchSingleGame(@PathVariable Long gameId) {
+		return gameService.findById(gameId);
+	}
+	
 	@RequestMapping("/{gameId}/addToLibrary")
 	public void addGameToUser(@PathVariable Long gameId) {
 		User user = userService.getLoggedInUser();
