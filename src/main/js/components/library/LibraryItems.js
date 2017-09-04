@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ButtonToolbar, ButtonGroup, Glyphicon, Modal } from 'react-bootstrap';
+import { Button, ButtonToolbar, ButtonGroup, ControlLabel, FormLabel, FormGroup, FormControl, Glyphicon, Modal } from 'react-bootstrap';
 import CustomAutocomplete from '../uiPieces/CustomAutocomplete';
 import LibraryItem from "./LibraryItem";
 import LibraryStore from "../../stores/LibraryStore";
@@ -20,7 +20,10 @@ export default class LibraryItems extends React.Component {
             steamActive: "",
             psActive: "",
             showModal: false,
-            addedGame: ""
+            addedGame: "",
+            formPlatform: "XBox 360",
+            formTitle: "Select"
+
         };
     }
 
@@ -39,6 +42,12 @@ export default class LibraryItems extends React.Component {
     close() {
     	this.setState({ showModal: false });
   	}
+
+    handlePlatformChange(event) {
+      let fieldName = event.target.name;
+      let fleldVal = event.target.value;
+      console.log(fieldName + " " + fleldVal);
+    }
 
     handleChange = (value) => {
     this.setState({addedGame: value});
@@ -128,20 +137,31 @@ export default class LibraryItems extends React.Component {
     		          	</Modal.Header>
     		          	<Modal.Body>
 
-                    <CustomAutocomplete
-                      direction="down"
-                      label="Type game here..."
-                      multiple={false}
-                      onChange={this.handleChange}
-                      source={gamesArray}
-                      value={this.state.simple}
-                    />
+                    <FormGroup controlId="formControlsSelect">
+                      <ControlLabel>Platform</ControlLabel>
+                      <FormControl componentClass="select" placeholder="select" onChange={this.handlePlatformChange.bind(this)}>
+                        <option value="select">Select...</option>
+                        <option value="PS4">PS4</option>
+                        <option value="Steam">Steam</option>
+                        <option value="XBox 360">XBox 360</option>
+                        <option value="XBox One">XBox One</option>
+
+                      </FormControl>
+                      <br/>
+                      <ControlLabel>Game Title</ControlLabel>
+                      <FormControl componentClass="select" placeholder="select">
+                        <option value="select">Select...</option>
+                        <option value="other">...</option>
+                      </FormControl>
+                    </FormGroup>
+
+
 
     		          </Modal.Body>
     		          <Modal.Footer>
                     <ButtonToolbar>
                       <Button bsStyle="success" onClick={this.close}>Add</Button>
-      		            <Button onClick={this.close}>Close</Button>
+      		            <Button onClick={this.close}>Cancel</Button>
                     </ButtonToolbar>
     		          </Modal.Footer>
     		        </Modal>
