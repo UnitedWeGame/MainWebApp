@@ -53,17 +53,10 @@ export default class LibraryItems extends React.Component {
   	}
 
     handlePlatformChange(event) {
-      let fieldName = event.target.name;
-      let fieldVal = event.target.value;
-      console.log(fieldName + " " + fieldVal);
       var gameList = this.state.dbGameList;
 
       if(event.target.value == "Steam"){
         this.setState({ formGameTitles: gameList.Steam});
-
-        for(var i = 0; i < gameList.Steam.length; i++){
-          console.log(gameList.Steam[i]);
-        }
       }
       else if(event.target.value == "PS3"){
         this.setState({ formGameTitles: gameList.PS3});
@@ -78,6 +71,12 @@ export default class LibraryItems extends React.Component {
         this.setState({ formGameTitles: gameList.XBoxOne});
       }
 
+    }
+
+    handleTitleChange(event){
+      let fieldName = event.target.name;
+      let fieldVal = event.target.value;
+      console.log(fieldName + " " + fieldVal);
     }
 
     handleChange = (value) => {
@@ -174,7 +173,7 @@ export default class LibraryItems extends React.Component {
                       </FormControl>
                       <br/>
                       <ControlLabel>Game Title</ControlLabel>
-                      <FormControl componentClass="select" placeholder="select">
+                      <FormControl componentClass="select" placeholder="select" onChange={this.handleTitleChange.bind(this)}>
                         <option value="select">Select...</option>
                         {gameTitles}
                       </FormControl>
@@ -201,7 +200,7 @@ class FormGameTitle extends React.Component {
     return (
 
        <option value="{title}">{title}</option>
-      
+
     )
   }
 }
