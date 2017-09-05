@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, ButtonToolbar, ButtonGroup, ControlLabel, FormLabel, FormGroup, FormControl, Glyphicon, Modal } from 'react-bootstrap';
-import CustomAutocomplete from '../uiPieces/CustomAutocomplete';
 import LibraryItem from "./LibraryItem";
 import LibraryStore from "../../stores/LibraryStore";
 import DbGameStore from "../../stores/DbGameStore";
@@ -25,7 +24,7 @@ export default class LibraryItems extends React.Component {
             showModal: false,
             addedGame: "",
             formPlatform: "XBox 360",
-            formTitle: "Select",
+            formGameTitles: [{title: "Initialization Placeholder", id: 1}],
             allgamesHaveBeenRetrieved: false
 
         };
@@ -60,15 +59,25 @@ export default class LibraryItems extends React.Component {
       var gameList = this.state.dbGameList;
 
       if(event.target.value == "Steam"){
+        this.setState({ formGameTitles: gameList.Steam});
+
         for(var i = 0; i < gameList.Steam.length; i++){
-        console.log(gameList.Steam[i]);
+          console.log(gameList.Steam[i]);
         }
       }
       else if(event.target.value == "PS3"){
-        for(var i = 0; i < gameList.PS3.length; i++){
-        console.log(gameList.PS3[i]);
-        }
+        this.setState({ formGameTitles: gameList.PS3});
       }
+      else if(event.target.value == "PS4"){
+        this.setState({ formGameTitles: gameList.PS4});
+      }
+      else if(event.target.value == "XBox 360"){
+        this.setState({ formGameTitles: gameList.XBox360});
+      }
+      else if(event.target.value == "XBox One"){
+        this.setState({ formGameTitles: gameList.XBoxOne});
+      }
+
     }
 
     handleChange = (value) => {
@@ -119,25 +128,14 @@ export default class LibraryItems extends React.Component {
 
     render() {
         const games = this.state.ownedGameList.map((g) => <LibraryItem key={g.id} {...g}/> );
-        console.log("Rendering " + games.length + " games");
-
-        const toggleButtons = {
-            width: "100%",
-            margin: "auto",
-            display: "block",
-            textAlign: "center"
-        };
+        const gameTitles = this.state.formGameTitles.map((g) => <FormGameTitle key={g.id} {...g}/> );
 
         const spacingStyle = {
         	marginLeft: "10px"
         };
 
-        const gamesArray = ['Brawlhalla','FIFA 16','Titanfall','Subnautica']
-
-
         return (
             <div>
-
                 <div>
                     <ButtonToolbar>
                         <ButtonGroup bsSize="large">
@@ -159,7 +157,7 @@ export default class LibraryItems extends React.Component {
 
                 <Modal show={this.state.showModal} onHide={this.close}>
     		          	<Modal.Header closeButton>
-    		            	<Modal.Title><h3>Add a Game</h3></Modal.Title>
+    		            	<Modal.Title>Add a Game</Modal.Title>
     		          	</Modal.Header>
     		          	<Modal.Body>
 
@@ -178,11 +176,9 @@ export default class LibraryItems extends React.Component {
                       <ControlLabel>Game Title</ControlLabel>
                       <FormControl componentClass="select" placeholder="select">
                         <option value="select">Select...</option>
-                        <option value="other">...</option>
+                        {gameTitles}
                       </FormControl>
                     </FormGroup>
-
-
 
     		          </Modal.Body>
     		          <Modal.Footer>
@@ -196,4 +192,16 @@ export default class LibraryItems extends React.Component {
             </div>
         );
     }
+}
+
+class FormGameTitle extends React.Component {
+  render() {
+    const {title} = this.props;
+
+    return (
+
+       <option value="{title}">{title}</option>
+      
+    )
+  }
 }
