@@ -3,39 +3,49 @@ import { Button, ButtonToolbar, ButtonGroup, ControlLabel, FormLabel, FormGroup,
 import CustomAutocomplete from '../uiPieces/CustomAutocomplete';
 import LibraryItem from "./LibraryItem";
 import LibraryStore from "../../stores/LibraryStore";
+import DbGameStore from "../../stores/DbGameStore";
 import * as LibraryActions from "../../actions/LibraryActions";
 
 
 export default class LibraryItems extends React.Component {
     constructor(){
         super();
-        this.open = this.open.bind(this); // for add-game modal
+        this.openAddGameModal = this.openAddGameModal.bind(this); // for add-game modal
     		this.close = this.close.bind(this); // for add-game modal
         this.getLibraryItems = this.getLibraryItems.bind(this);
-        const gameList = LibraryStore.getAll();
+        this.getDbGames = this.getDbGames.bind(this);
+        const ownedGameList = LibraryStore.getAll();
 
         this.state = {
-            gameList: gameList,
+            ownedGameList: ownedGameList,
+            dbGameList: "empty",
             xBoxActive: "active",
             steamActive: "",
             psActive: "",
             showModal: false,
             addedGame: "",
             formPlatform: "XBox 360",
-            formTitle: "Select"
+            formTitle: "Select",
+            allgamesHaveBeenRetrieved: false
 
         };
     }
 
     componentWillMount() {
         LibraryStore.on("change", this.getLibraryItems);
+        DbGameStore.on("change", this.getDbGames);
     }
 
     componentWillUnmount() {
         LibraryStore.removeListener("change", this.getLibraryItems);
+        DbGameStore.removeListener("change", this.getDbGames);
     }
 
-    open() {
+    openAddGameModal() {
+      if(!this.state.allgamesHaveBeenRetrieved){
+        LibraryActions.getAllGames();
+        this.setState({allgamesHaveBeenRetrieved: true});
+      }
     	this.setState({ showModal: true });
   	}
 
@@ -45,19 +55,35 @@ export default class LibraryItems extends React.Component {
 
     handlePlatformChange(event) {
       let fieldName = event.target.name;
-      let fleldVal = event.target.value;
-      console.log(fieldName + " " + fleldVal);
+      let fieldVal = event.target.value;
+      console.log(fieldName + " " + fieldVal);
+      var gameList = this.state.dbGameList;
+
+      if(event.target.value == "Steam"){
+        for(var i = 0; i < gameList.Steam.length; i++){
+        console.log(gameList.Steam[i]);
+        }
+      }
+      else if(event.target.value == "PS3"){
+        for(var i = 0; i < gameList.PS3.length; i++){
+        console.log(gameList.PS3[i]);
+        }
+      }
     }
 
     handleChange = (value) => {
     this.setState({addedGame: value});
   };
 
-
+    getDbGames(){
+        this.setState({
+            dbGameList: DbGameStore.getAll()
+        });
+    }
 
     getLibraryItems(){
         this.setState({
-            gameList: LibraryStore.getAll()
+            ownedGameList: LibraryStore.getAll()
         });
     }
 
@@ -92,7 +118,7 @@ export default class LibraryItems extends React.Component {
 
 
     render() {
-        const games = this.state.gameList.map((g) => <LibraryItem key={g.id} {...g}/> );
+        const games = this.state.ownedGameList.map((g) => <LibraryItem key={g.id} {...g}/> );
         console.log("Rendering " + games.length + " games");
 
         const toggleButtons = {
@@ -120,7 +146,7 @@ export default class LibraryItems extends React.Component {
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "PS")} active={this.state.psActive}>Playstation</Button>
                         </ButtonGroup>
                         <ButtonGroup bsSize="large">
-                            <Button bsStyle="success" onClick={this.open} style={spacingStyle}><Glyphicon glyph="plus" /></Button>
+                            <Button bsStyle="success" onClick={this.openAddGameModal} style={spacingStyle}><Glyphicon glyph="plus" /></Button>
                         </ButtonGroup>
                     </ButtonToolbar>
                 </div>
@@ -141,6 +167,7 @@ export default class LibraryItems extends React.Component {
                       <ControlLabel>Platform</ControlLabel>
                       <FormControl componentClass="select" placeholder="select" onChange={this.handlePlatformChange.bind(this)}>
                         <option value="select">Select...</option>
+                        <option value="PS3">PS3</option>
                         <option value="PS4">PS4</option>
                         <option value="Steam">Steam</option>
                         <option value="XBox 360">XBox 360</option>
