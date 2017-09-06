@@ -48,6 +48,7 @@ public class ActivityFeedAPIController {
 			jsonResp.put("userId", activity.getUser().getId());
 			jsonResp.put("username", activity.getUser().getUsername());
 			jsonResp.put("content", activity.getContent());
+			jsonResp.put("created_date", activity.getCreatedDate());
 		}
 		return jsonResp;
 	}
