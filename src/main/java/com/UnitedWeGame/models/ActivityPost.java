@@ -10,13 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ActivityFeed {
+public class ActivityPost {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	@ManyToOne
 	private User user;
+	@Column(nullable=true)
 	private Date createdDate;
 	@Column(columnDefinition="TEXT")
 	private String content;

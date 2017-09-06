@@ -50,7 +50,7 @@ public class User {
 	
 	@JsonIgnore
 	@OneToMany
-	private Set<ActivityFeed> activityFeed = new HashSet<ActivityFeed>();
+	private Set<ActivityPost> activityFeed = new HashSet<ActivityPost>();
 	
 	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -150,10 +150,10 @@ public class User {
 	public void setImageUrl(String pictureUrl) {
 		this.imageUrl = pictureUrl;
 	}
-	public Set<ActivityFeed> getActivityFeed() {
+	public Set<ActivityPost> getActivityFeed() {
 		return activityFeed;
 	}
-	public void setActivityFeed(Set<ActivityFeed> activityFeed) {
+	public void setActivityFeed(Set<ActivityPost> activityFeed) {
 		this.activityFeed = activityFeed;
 	}
 }

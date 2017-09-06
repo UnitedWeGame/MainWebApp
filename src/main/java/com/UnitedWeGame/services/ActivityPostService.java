@@ -6,31 +6,31 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.UnitedWeGame.models.ActivityFeed;
+import com.UnitedWeGame.models.ActivityPost;
 import com.UnitedWeGame.models.User;
-import com.UnitedWeGame.repos.ActivityFeedRepository;
+import com.UnitedWeGame.repos.ActivityPostRepository;
 
 @Service
-public class ActivityFeedService {
+public class ActivityPostService {
 	
 	@Autowired
-	ActivityFeedRepository activityFeedRepo;
+	ActivityPostRepository activityFeedRepo;
 	
-	public ActivityFeed findById(Long id) {
+	public ActivityPost findById(Long id) {
 		return activityFeedRepo.findOne(id);
 	}
 	
-	public List<ActivityFeed> findAllActiviesByFriends(User user) {
+	public List<ActivityPost> findAllActiviesByFriends(User user) {
 		return activityFeedRepo.findByUserInOrderByCreatedDateDesc(user.getFriends());
 	}
 	
-	public ActivityFeed createActivity(ActivityFeed activity) {
+	public ActivityPost createActivity(ActivityPost activity) {
 		activity.setCreatedDate(new Date());
 		activityFeedRepo.save(activity);
 		return activity;
 	}
 	
-	public String deleteActivity(ActivityFeed activity) {
+	public String deleteActivity(ActivityPost activity) {
 		try {
 			activityFeedRepo.delete(activity);
 			return "Deleted activity";
