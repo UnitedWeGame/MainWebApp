@@ -1,4 +1,6 @@
 import dispatcher from "../dispatcher";
+import * as UserActions from "./UserActions";
+
 
 export function getGameInfo(gameId){
     //$.get( "/api/games/" + gameId, function( data ) {
@@ -26,6 +28,14 @@ export function getAllGames(){
             });
     });
 }
+
+export function addGame(id, platform){
+    //$.get( "/api/games/addToLibrary/" + id + "/platform", function( data ) {
+    //});
+    //UserActions.getUserData();
+    console.log("/api/games/" + id + "/" + platform + "/addToLibrary/")
+}
+
 
 export function sendTextInvite(gameId){
 	console.log("sending text for game number: " + gameId);
