@@ -1,6 +1,5 @@
 package com.UnitedWeGame.controllers.api;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,16 +44,37 @@ public class GamesAPIController {
 		return gameService.findById(gameId);
 	}
 	
-	@RequestMapping("/{gameId}/addToLibrary")
-	public void addGameToUser(@PathVariable Long gameId) {
+	@RequestMapping("/{gameId}/{platformTitle}/addToLibrary")
+	public String addGameToUser(@PathVariable Long gameId, @PathVariable String platformTitle) {
 		User user = userService.getLoggedInUser();
-		Game game = gameService.findById(gameId);
-		
-		Set<Game> games = user.getGames();
-		System.out.println(game);
-		games.add(game);
-		user.setGames(games);
-		userService.saveUser(user);
+		Platform platform = platformService.findPlatform(platformTitle);
+		Game game = gameService.findByIdAndPlatform(gameId, platform);
+	
+		if (game != null) {
+			Set<Game> games = user.getGames();
+			System.out.println(game);
+			games.add(game);
+			user.setGames(games);
+			userService.saveUser(user);
+			return "Game has been added";
+		}
+		return "Game couldn't be found";
+	}
+	
+	@RequestMapping("/{gameId}/{platformTitle}/removeFromLibrary")
+	public String removeGameFromUser(@PathVariable Long gameId, @PathVariable String platformTitle) {
+		User user = userService.getLoggedInUser();
+		Platform platform = platformService.findPlatform(platformTitle);
+		Game game = gameService.findByIdAndPlatform(gameId, platform);
+	
+		if (game != null) {
+			Set<Game> games = user.getGames();
+			games.remove(game);
+			user.setGames(games);
+			userService.saveUser(user);
+			return "Game has been removed.";
+		}
+		return "Game couldn't be found";
 	}
 	
 	@RequestMapping("/owned/{platform}")

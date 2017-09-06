@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.UnitedWeGame.models.Game;
+import com.UnitedWeGame.models.Platform;
 import com.UnitedWeGame.repos.GameRepository;
 
 @Service
@@ -32,5 +33,9 @@ public class GameService {
 	
 	public List<Game> findByTitleContaining(String title) {
 		return gameRepo.findByTitleContaining(title);
+	}
+	
+	public Game findByIdAndPlatform(Long id, Platform platform) {
+		return gameRepo.findByIdAndPlatform(id, platform);
 	}
 }
