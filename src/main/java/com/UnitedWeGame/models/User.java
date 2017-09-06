@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,6 +23,10 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * @author logangster
+ *
+ */
 @Entity 
 @Table(name = "users")
 public class User {
@@ -42,6 +47,10 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<Role>();
+	
+	@JsonIgnore
+	@OneToMany
+	private Set<ActivityFeed> activityFeed = new HashSet<ActivityFeed>();
 	
 	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -140,5 +149,11 @@ public class User {
 	}
 	public void setImageUrl(String pictureUrl) {
 		this.imageUrl = pictureUrl;
-	}	
+	}
+	public Set<ActivityFeed> getActivityFeed() {
+		return activityFeed;
+	}
+	public void setActivityFeed(Set<ActivityFeed> activityFeed) {
+		this.activityFeed = activityFeed;
+	}
 }

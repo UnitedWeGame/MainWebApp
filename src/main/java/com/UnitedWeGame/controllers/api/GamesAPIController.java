@@ -52,8 +52,8 @@ public class GamesAPIController {
 	
 		if (game != null) {
 			Set<Game> games = user.getGames();
-			System.out.println(game);
-			games.add(game);
+			if (!games.contains(game))
+				games.add(game);
 			user.setGames(games);
 			userService.saveUser(user);
 			return "Game has been added";
