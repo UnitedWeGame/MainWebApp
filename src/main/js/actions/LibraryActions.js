@@ -18,6 +18,15 @@ export function getGameInfo(gameId){
     //});
 }
 
+export function getAllGames(){
+    $.get( "/api/games/", function( data ) {
+        dispatcher.dispatch({
+                type: "GET_ALL_GAMES",
+                games: data
+            });
+    });
+}
+
 export function sendTextInvite(gameId){
 	console.log("sending text for game number: " + gameId);
 
