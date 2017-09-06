@@ -23,12 +23,19 @@ export default class LibraryItem extends React.Component {
         });
     }
 
+    removeGame(id, platform, event) {
+      platform = platform.replace(/\s+/g, ''); // remove possible space
+      console.log("game to remove: " + id + ", " + platform)
+      LibraryActions.removeGame(id, platform);
+    }
+
 
 
     render() {
         const {imageUrl} = this.props;
         const {title} = this.props;
         const {id} = this.props;
+        const platform = this.props.platform.title;
 
         const titleTextStyle = {};
         const coverStyle = {
@@ -46,7 +53,7 @@ export default class LibraryItem extends React.Component {
                     <Button onClick={this.getGameInfo.bind(this, id)}><Link to="game">Game information</Link></Button>
                     <Button>Write a review</Button>
                     <Button>Read friend reviews</Button>
-                    <Button bsStyle="danger">Remove game</Button>
+                    <Button bsStyle="danger" onClick={this.removeGame.bind(this, id, platform)}>Remove game</Button>
                 </ButtonGroup>
             </Popover>
         );
