@@ -1,5 +1,6 @@
 package com.UnitedWeGame.controllers.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,14 +42,16 @@ public class ActivityFeedAPIController {
 	}
 	
 	@RequestMapping("/friends")
-	public Map<Object, Object> fetchFriendsFeed() {
-		Map<Object, Object> jsonResp = new HashMap<>();
+	public List<Map<Object, Object>> fetchFriendsFeed() {
+		List<Map<Object, Object>> jsonResp = new ArrayList<>();
 		List<ActivityPost> activityFeed = activityPostService.findAllActiviesByFriends(userService.getLoggedInUser());
 		for (ActivityPost activity : activityFeed) {
-			jsonResp.put("userId", activity.getUser().getId());
-			jsonResp.put("username", activity.getUser().getUsername());
-			jsonResp.put("content", activity.getContent());
-			jsonResp.put("created_date", activity.getCreatedDate());
+			Map<Object, Object> activityMap = new HashMap<>();
+			activityMap.put("userId", activity.getUser().getId());
+			activityMap.put("username", activity.getUser().getUsername());
+			activityMap.put("content", activity.getContent());
+			activityMap.put("created_date", activity.getCreatedDate());
+			jsonResp.add(activityMap);
 		}
 		return jsonResp;
 	}
