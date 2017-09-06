@@ -9,5 +9,5 @@ import com.UnitedWeGame.models.ActivityFeed;
 import com.UnitedWeGame.models.User;
 
 public interface ActivityFeedRepository extends CrudRepository<ActivityFeed, Long> {
-	public List<ActivityFeed> findByUserInOrderByCreateddateDesc(Set<User> users);
+	public List<ActivityFeed> findByUserInOrderByCreatedDateDesc(Set<User> users);
 }

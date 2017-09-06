@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.UnitedWeGame.models.ActivityFeed;
 import com.UnitedWeGame.models.User;
 import com.UnitedWeGame.repos.ActivityFeedRepository;
 
+@Service
 public class ActivityFeedService {
+	
 	@Autowired
 	ActivityFeedRepository activityFeedRepo;
 	
@@ -18,7 +21,7 @@ public class ActivityFeedService {
 	}
 	
 	public List<ActivityFeed> findAllActiviesByFriends(User user) {
-		return activityFeedRepo.findByUserInOrderByCreateddateDesc(user.getFriends());
+		return activityFeedRepo.findByUserInOrderByCreatedDateDesc(user.getFriends());
 	}
 	
 	public ActivityFeed createActivity(ActivityFeed activity) {
