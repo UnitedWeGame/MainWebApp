@@ -88,12 +88,12 @@ export default class LibraryItems extends React.Component {
       }
       else if(event.target.value == "XBox 360"){
         this.setState({ formGameTitles: gameList.XBox360});
-        this.setState({ addedGamePlatform: "XBox360"});
+        this.setState({ addedGamePlatform: "XBox 360"});
 
       }
       else if(event.target.value == "XBox One"){
         this.setState({ formGameTitles: gameList.XBoxOne});
-        this.setState({ addedGamePlatform: "XBoxOne"});
+        this.setState({ addedGamePlatform: "XBox One"});
 
       }
 
