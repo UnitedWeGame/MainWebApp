@@ -10,4 +10,5 @@ import com.UnitedWeGame.models.User;
 
 public interface ActivityPostRepository extends CrudRepository<ActivityPost, Long> {
 	public List<ActivityPost> findByUserInOrderByCreatedDateDesc(Set<User> users);
+	public List<ActivityPost> findByUser(User user);
 }

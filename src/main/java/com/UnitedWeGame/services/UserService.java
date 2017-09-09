@@ -235,4 +235,12 @@ public class UserService implements UserDetailsService {
 		session.close();
 		return feed;
 	}
+	
+	public boolean isFriend(Long userId) {
+		for (User user : getLoggedInUser().getFriends()) {
+			if (user.getId().equals(userId))
+				return true;
+		}
+		return false;
+	}
 }

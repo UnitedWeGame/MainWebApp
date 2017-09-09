@@ -1,13 +1,12 @@
 package com.UnitedWeGame.controllers.api;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,10 +41,11 @@ public class ActivityFeedAPIController {
 	}
 	
 	@RequestMapping("/friends")
-	public List<Map<Object, Object>> fetchFriendsFeed() {
-		List<Map<Object, Object>> jsonResp = new ArrayList<>();
-		List<ActivityPost> activityFeed = activityPostService.findAllActiviesByFriends(userService.getLoggedInUser());
-		for (ActivityPost activity : activityFeed) {
+	public List<ActivityPost> fetchFriendsFeed() {
+		return activityPostService.findAllActiviesByFriends(userService.getLoggedInUser());
+		// Not sure if we want to return just user name, it's more work when we can just return full user
+		//List<Map<Object, Object>> jsonResp = new ArrayList<>();
+		/*for (ActivityPost activity : activityFeed) {
 			Map<Object, Object> activityMap = new HashMap<>();
 			activityMap.put("userId", activity.getUser().getId());
 			activityMap.put("username", activity.getUser().getUsername());
@@ -53,6 +53,14 @@ public class ActivityFeedAPIController {
 			activityMap.put("created_date", activity.getCreatedDate());
 			jsonResp.add(activityMap);
 		}
-		return jsonResp;
+		return jsonResp;*/
+	}
+	
+	@RequestMapping("/{userId}")
+	public List<ActivityPost> getFeedForUser(@PathVariable long userId) {
+		if (userService.isFriend(userId) || userService.getLoggedInUser().getId().equals(userId)) {
+			return activityPostService.findByUser(userId);
+		}
+		return new ArrayList<ActivityPost>();
 	}
 }

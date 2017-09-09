@@ -16,6 +16,9 @@ public class ActivityPostService {
 	@Autowired
 	ActivityPostRepository activityFeedRepo;
 	
+	@Autowired
+	UserService userService;
+	
 	public ActivityPost findById(Long id) {
 		return activityFeedRepo.findOne(id);
 	}
@@ -28,6 +31,10 @@ public class ActivityPostService {
 		activity.setCreatedDate(new Date());
 		activityFeedRepo.save(activity);
 		return activity;
+	}
+	
+	public List<ActivityPost> findByUser(Long userId) {
+		return activityFeedRepo.findByUser(userService.findById(userId));
 	}
 	
 	public String deleteActivity(ActivityPost activity) {
