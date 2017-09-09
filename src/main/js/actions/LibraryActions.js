@@ -56,7 +56,7 @@ export function sendTextInvite(gameId){
 
 }
 
-export function showXBoxGames(){
+export function showXboxGames(){
 	dispatcher.dispatch({
             type: "SHOW_XBOX_GAMES"
         });
