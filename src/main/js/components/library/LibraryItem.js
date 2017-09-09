@@ -33,7 +33,8 @@ export default class LibraryItem extends React.Component {
       console.log("game to remove: " + id + ", " + platform)
       LibraryActions.removeGame(id, platform);
       // add logic to show the games for the correct platform
-      //if(platform == "XBox 360" || platform == "XBox One")
+      //if(platform == "PS3" || platform == "PS4")
+      //  LibraryActions.showPlaystationGames();
     }
 
     openRemoveGameModal() {

@@ -32,7 +32,7 @@ export function getAllGames(){
 export function addGame(id, platform){
     $.get( "/api/games/" + id + "/" + platform + "/addToLibrary/", function( data ) {
       console.log(data);
-      UserActions.getUserData();
+      UserActions.getUserData(platform);
     });
     console.log("/api/games/" + id + "/" + platform + "/addToLibrary/")
 }
@@ -40,7 +40,7 @@ export function addGame(id, platform){
 export function removeGame(id, platform){
     $.get( "/api/games/" + id + "/" + platform + "/removeFromLibrary/", function( data ) {
       console.log(data);
-      UserActions.getUserData();
+      UserActions.getUserData(platform);
     });
     console.log("/api/games/" + id + "/" + platform + "/removeFromLibrary/")
 }
