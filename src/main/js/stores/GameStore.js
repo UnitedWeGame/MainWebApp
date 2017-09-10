@@ -8,13 +8,17 @@ class GameStore extends EventEmitter{
         var component = this;
         this.game = {
           title: "Title Not Found",
-          releaseDate: "Release Date Not Found",
+          firstReleaseDate: "Release Date Not Found",
           userRating: 0,
           communityRating: "No rating found",
-          gameSummary: "Game summary not found",
+          communityRatingCount: "",
+          summary: "Game summary not found",
           usersReview: false,
           otherReviews: "No reviews for this game",
           friendsWhoOwn: "No friends own this game",
+          screenshots: [{id: 0, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg"},
+           {id: 1, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg"},
+           {id: 2, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/ka2i4aehuuibfecyaphh.jpg"}]
         };
 
     }
@@ -27,17 +31,28 @@ class GameStore extends EventEmitter{
       if(gameInfo.title){
         this.game.title = gameInfo.title;
       }
-      if(gameInfo.releaseDate){
-        this.game.releaseDate = gameInfo.releaseDate;
+
+      //console.log("number of screenshots: " + gameInfo.screenshots.length)
+      if(gameInfo.screenshots.length > 0){
+        this.game.screenshots = gameInfo.screenshots;
+      }
+      else
+        this.game.screenshots = [{id: 0, url: "https://i.imgur.com/mACD6Ea.jpg"}]
+
+      if(gameInfo.firstReleaseDate){
+        this.game.firstReleaseDate = gameInfo.firstReleaseDate;
       }
       if(gameInfo.userRating){
         this.game.userRating = gameInfo.userRating;
       }
-      if(gameInfo.communityRating){
-        this.game.communityRating = gameInfo.communityRating;
+      if(gameInfo.totalRating){
+        this.game.communityRating = gameInfo.totalRating;
       }
-      if(gameInfo.gameSummary){
-        this.game.gameSummary = gameInfo.gameSummary;
+      if(gameInfo.totalRatingCount){
+        this.game.communityRatingCount = gameInfo.totalRatingCount;
+      }
+      if(gameInfo.summary){
+        this.game.summary = gameInfo.summary;
       }
       if(gameInfo.usersReview){
         this.game.usersReview = gameInfo.usersReview;

@@ -20,7 +20,7 @@ export default class LibraryItems extends React.Component {
         this.state = {
             ownedGameList: ownedGameList,
             dbGameList: "empty",
-            xBoxActive: "active",
+            XboxActive: "active",
             steamActive: "",
             psActive: "",
             showModal: false,
@@ -86,14 +86,14 @@ export default class LibraryItems extends React.Component {
         this.setState({ addedGamePlatform: "PS4"});
 
       }
-      else if(event.target.value == "XBox 360"){
-        this.setState({ formGameTitles: gameList.XBox360});
-        this.setState({ addedGamePlatform: "XBox 360"});
+      else if(event.target.value == "Xbox 360"){
+        this.setState({ formGameTitles: gameList.Xbox360});
+        this.setState({ addedGamePlatform: "Xbox360"});
 
       }
-      else if(event.target.value == "XBox One"){
-        this.setState({ formGameTitles: gameList.XBoxOne});
-        this.setState({ addedGamePlatform: "XBox One"});
+      else if(event.target.value == "Xbox One"){
+        this.setState({ formGameTitles: gameList.XboxOne});
+        this.setState({ addedGamePlatform: "XboxOne"});
 
       }
 
@@ -117,10 +117,10 @@ export default class LibraryItems extends React.Component {
 
 
     togglePlatform(platform, event){
-        if(platform == "XBox"){
-            LibraryActions.showXBoxGames();
+        if(platform == "Xbox"){
+            LibraryActions.showXboxGames();
             this.setState({
-                xBoxActive: "active",
+                XboxActive: "active",
                 steamActive: "",
                 psActive: ""
             });
@@ -128,7 +128,7 @@ export default class LibraryItems extends React.Component {
         else if(platform == "Steam"){
             LibraryActions.showSteamGames();
             this.setState({
-                xBoxActive: "",
+                XboxActive: "",
                 steamActive: "active",
                 psActive: ""
             });
@@ -136,7 +136,7 @@ export default class LibraryItems extends React.Component {
         else if(platform == "PS"){
             LibraryActions.showPlaystationGames();
             this.setState({
-                xBoxActive: "",
+                XboxActive: "",
                 steamActive: "",
                 psActive: "active"
             });
@@ -158,7 +158,7 @@ export default class LibraryItems extends React.Component {
                 <div>
                     <ButtonToolbar>
                         <ButtonGroup bsSize="large">
-                            <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "XBox")} active={this.state.xBoxActive}>XBox</Button>
+                            <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "Xbox")} active={this.state.XboxActive}>Xbox</Button>
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "Steam")} active={this.state.steamActive}>Steam</Button>
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "PS")} active={this.state.psActive}>Playstation</Button>
                         </ButtonGroup>
@@ -186,8 +186,8 @@ export default class LibraryItems extends React.Component {
                         <option value="PS3">PS3</option>
                         <option value="PS4">PS4</option>
                         <option value="Steam">Steam</option>
-                        <option value="XBox 360">XBox 360</option>
-                        <option value="XBox One">XBox One</option>
+                        <option value="Xbox 360">Xbox 360</option>
+                        <option value="Xbox One">Xbox One</option>
 
                       </FormControl>
                       <br/>
