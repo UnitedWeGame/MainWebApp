@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class GamerIdentifier {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String identifier;
 	private String platform;
@@ -19,15 +19,19 @@ public class GamerIdentifier {
 	public String getIdentifier() {
 		return identifier;
 	}
+
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
+
 	public String getPlatform() {
 		return platform;
 	}
+
 	public void setPlatform(String platform) {
 		this.platform = platform;
 	}
+
 	public Long getId() {
 		return id;
 	}

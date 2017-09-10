@@ -15,7 +15,7 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
-		
+
 		if (!user.getPassword().equals(user.getPasswordConfirm())) {
 			errors.rejectValue("password", "error.user", "Passwords don't match");
 		}

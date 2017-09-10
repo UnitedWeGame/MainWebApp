@@ -22,9 +22,9 @@ import com.UnitedWeGame.services.UserService;
 @RestController
 @RequestMapping("/api/games")
 public class GamesAPIController {
-	
+
 	@Autowired
-	GameService gameService;	
+	GameService gameService;
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -33,23 +33,23 @@ public class GamesAPIController {
 	SessionFactory sessionFactory;
 	@Autowired
 	TwilioService textService;
-	
+
 	@RequestMapping("")
 	public List<Game> index() {
 		return gameService.allGames();
 	}
-	
+
 	@RequestMapping("/{gameId}")
 	public Game fetchSingleGame(@PathVariable Long gameId) {
 		return gameService.findById(gameId);
 	}
-	
+
 	@RequestMapping("/{gameId}/{platformTitle}/addToLibrary")
 	public String addGameToUser(@PathVariable Long gameId, @PathVariable String platformTitle) {
 		User user = userService.getLoggedInUser();
 		Platform platform = platformService.findPlatform(platformTitle);
 		Game game = gameService.findByIdAndPlatform(gameId, platform);
-	
+
 		if (game != null) {
 			Set<Game> games = user.getGames();
 			if (!games.contains(game))
@@ -60,13 +60,13 @@ public class GamesAPIController {
 		}
 		return "Game couldn't be found";
 	}
-	
+
 	@RequestMapping("/{gameId}/{platformTitle}/removeFromLibrary")
 	public String removeGameFromUser(@PathVariable Long gameId, @PathVariable String platformTitle) {
 		User user = userService.getLoggedInUser();
 		Platform platform = platformService.findPlatform(platformTitle);
 		Game game = gameService.findByIdAndPlatform(gameId, platform);
-	
+
 		if (game != null) {
 			Set<Game> games = user.getGames();
 			games.remove(game);
@@ -76,20 +76,20 @@ public class GamesAPIController {
 		}
 		return "Game couldn't be found";
 	}
-	
+
 	@RequestMapping("/owned/{platform}")
 	public List<Game> gamesOwnedByPlatform(@PathVariable String platform) {
 		return userService.gamesOwnedByPlatform(platform);
 	}
-	
-	@RequestMapping(value="/{platform}", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/{platform}", method = RequestMethod.POST)
 	public Game createGame(@PathVariable String platform, @RequestBody Game game) {
 		Platform platformForGame = platformService.findPlatform(platform);
 		game.setPlatform(platformForGame);
 		gameService.saveGame(game);
 		return game;
 	}
-	
+
 	@RequestMapping("/addPlatform/{gameId}/{platformTitle}")
 	public Game addPlatformToGame(@PathVariable Long gameId, @PathVariable String platformTitle) {
 		Game game = gameService.findById(gameId);
@@ -98,22 +98,22 @@ public class GamesAPIController {
 		gameService.saveGame(game);
 		return game;
 	}
-	
+
 	@RequestMapping("/friendsOwn")
 	public List<User> friendsOwnAll() {
 		return userService.gamesOwnedByFriends();
 	}
-	
+
 	@RequestMapping("/{gameId}/friendsOwn")
 	public List<User> friendsOwn(@PathVariable Long gameId) {
 		return userService.gameOwnedByFriends(gameId);
 	}
-	
+
 	@RequestMapping("/search/{gameTitle}")
 	public List<Game> gameTitleContains(@PathVariable String gameTitle) {
 		return gameService.findByTitleContaining(gameTitle);
 	}
-	
+
 	@RequestMapping("/{gameId}/groupNotification")
 	public String friendsGroupNotification(@PathVariable Long gameId) {
 		String username = userService.getLoggedInUser().getUsername();

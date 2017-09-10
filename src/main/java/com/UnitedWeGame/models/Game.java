@@ -113,6 +113,14 @@ public class Game {
 	public void setScreenshots(Set<Screenshot> screenshots) {
 		this.screenshots = screenshots;
 	}
+	
+	public List<GameRating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<GameRating> ratings) {
+		this.ratings = ratings;
+	}
 
 	@Override
 	public int hashCode() {

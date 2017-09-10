@@ -22,56 +22,56 @@ import com.UnitedWeGame.services.UserService;
 @RestController
 @RequestMapping("/api")
 public class UsersAPIController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	ProfileService profileService;
-	
+
 	@Autowired
 	FriendRequestService requestService;
-	
+
 	@RequestMapping("/users")
 	public List<User> index(Model model) {
 		return userService.allUsers();
 	}
-	
+
 	@RequestMapping("/users/me")
 	public User loggedInUser() {
 		return userService.findById(userService.getLoggedInUser().getId());
 	}
-	
+
 	@RequestMapping("/users/{userId}")
 	public User getProfile(@PathVariable Long userId) {
 		return userService.findById(userId);
 	}
-	
+
 	@RequestMapping("/users/search/{username}")
 	public List<User> searchForUser(@PathVariable String username) {
 		return userService.findByUsernameContaining(username);
 	}
-	
-	@RequestMapping(value="/users", method=RequestMethod.PUT)
+
+	@RequestMapping(value = "/users", method = RequestMethod.PUT)
 	public Profile updateProfile(@RequestBody Profile profile) {
 		Profile oldProfile = profileService.getLoggedInProfile();
 		oldProfile.updateAttributes(profile);
 		profileService.saveProfile(oldProfile);
 		return oldProfile;
 	}
-	
+
 	@RequestMapping("/users/updateTimestamp")
 	public void updateTimeStamp() {
 		User user = userService.getLoggedInUser();
 		user.setLastActivity(new Date());
 		userService.saveUser(user);
 	}
-	
+
 	@RequestMapping("/users/{friendId}/requestFriend")
 	public FriendRequest createRequest(@PathVariable Long friendId) {
 		User user = userService.getLoggedInUser();
 		System.out.println(user.getId());
-		//Do a call to ensure this is a user in the system
+		// Do a call to ensure this is a user in the system
 		User friend = userService.findById(friendId);
 		FriendRequest request = new FriendRequest();
 		request.setOwner(user.getId());
@@ -79,19 +79,19 @@ public class UsersAPIController {
 		requestService.saveRequest(request);
 		return request;
 	}
-	
+
 	@RequestMapping("/requests/owned")
 	public Set<FriendRequest> listAllRequests() {
 		User user = userService.getLoggedInUser();
 		return requestService.allRequestsOwned(user.getId());
 	}
-	
+
 	@RequestMapping("/requests/pending")
 	public Set<FriendRequest> listAllRequestsForMe() {
 		User user = userService.getLoggedInUser();
 		return requestService.allRequestsToAccept(user.getId());
 	}
-	
+
 	@RequestMapping("/requests/{requestId}/acceptRequest")
 	public String acceptRequest(@PathVariable Long requestId) {
 		FriendRequest request = requestService.findById(requestId);
@@ -109,13 +109,12 @@ public class UsersAPIController {
 		requestService.removeRequest(request);
 		return "Friendship accepted.";
 	}
-	
+
 	@RequestMapping("/requests/{requestId}/rejectRequest")
 	public String rejectRequest(@PathVariable Long requestId) {
 		FriendRequest request = requestService.findById(requestId);
 		requestService.removeRequest(request);
 		return "Friendship denied.";
 	}
-	
-	
+
 }

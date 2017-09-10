@@ -61,7 +61,6 @@ public class User {
 	@OneToMany
 	private List<GameRating> gameRatings = new ArrayList<GameRating>();
 	
-	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_library", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
 	private Set<Game> games = new HashSet<Game>();
@@ -165,4 +164,11 @@ public class User {
 	public void setActivityFeed(Set<ActivityPost> activityFeed) {
 		this.activityFeed = activityFeed;
 	}
+	public List<GameRating> getGameRatings() {
+		return gameRatings;
+	}
+	public void setGameRatings(List<GameRating> gameRatings) {
+		this.gameRatings = gameRatings;
+	}
+	
 }

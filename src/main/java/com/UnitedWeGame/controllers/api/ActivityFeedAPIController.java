@@ -19,14 +19,14 @@ import com.UnitedWeGame.services.UserService;
 @RestController
 @RequestMapping("/api/activityFeed")
 public class ActivityFeedAPIController {
-	
+
 	@Autowired
 	ActivityPostService activityPostService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value="", method=RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ActivityPost createActivity(@RequestBody String json) {
 		ActivityPost activity = new ActivityPost();
 		try {
@@ -39,23 +39,24 @@ public class ActivityFeedAPIController {
 		activityPostService.createActivity(activity);
 		return activity;
 	}
-	
+
 	@RequestMapping("/friends")
 	public List<ActivityPost> fetchFriendsFeed() {
 		return activityPostService.findAllActiviesByFriends(userService.getLoggedInUser());
-		// Not sure if we want to return just user name, it's more work when we can just return full user
-		//List<Map<Object, Object>> jsonResp = new ArrayList<>();
-		/*for (ActivityPost activity : activityFeed) {
-			Map<Object, Object> activityMap = new HashMap<>();
-			activityMap.put("userId", activity.getUser().getId());
-			activityMap.put("username", activity.getUser().getUsername());
-			activityMap.put("content", activity.getContent());
-			activityMap.put("created_date", activity.getCreatedDate());
-			jsonResp.add(activityMap);
-		}
-		return jsonResp;*/
+		// Not sure if we want to return just user name, it's more work when we
+		// can just return full user
+		// List<Map<Object, Object>> jsonResp = new ArrayList<>();
+		/*
+		 * for (ActivityPost activity : activityFeed) { Map<Object, Object>
+		 * activityMap = new HashMap<>(); activityMap.put("userId",
+		 * activity.getUser().getId()); activityMap.put("username",
+		 * activity.getUser().getUsername()); activityMap.put("content",
+		 * activity.getContent()); activityMap.put("created_date",
+		 * activity.getCreatedDate()); jsonResp.add(activityMap); } return
+		 * jsonResp;
+		 */
 	}
-	
+
 	@RequestMapping("/{userId}")
 	public List<ActivityPost> getFeedForUser(@PathVariable long userId) {
 		if (userService.isFriend(userId) || userService.getLoggedInUser().getId().equals(userId)) {
