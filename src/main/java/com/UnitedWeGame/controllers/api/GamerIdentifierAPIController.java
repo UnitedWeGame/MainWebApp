@@ -22,11 +22,10 @@ public class GamerIdentifierAPIController {
 	UserService userService;
 	@Autowired
 	GamerIdentifierService gamerIdService;
-	
+		
 	@RequestMapping(value = "", method=RequestMethod.POST) 
 	public GamerIdentifier createGametag(@RequestBody GamerIdentifier gamerIdentifier) {
 		User user = userService.getLoggedInUser();
-		gamerIdService.save(gamerIdentifier);
 		Set<GamerIdentifier> identifiers = user.getGamerIdentifiers();
 		identifiers.add(gamerIdentifier);
 		user.setGamerIdentifiers(identifiers);

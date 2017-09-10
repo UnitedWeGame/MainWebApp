@@ -1,7 +1,5 @@
 package com.UnitedWeGame.models;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +15,7 @@ public class GamerIdentifier {
 	private Long id;
 	private String identifier;
 	private String platform;
-	
-	
+
 	public String getIdentifier() {
 		return identifier;
 	}
@@ -34,5 +31,4 @@ public class GamerIdentifier {
 	public Long getId() {
 		return id;
 	}
-	
 }

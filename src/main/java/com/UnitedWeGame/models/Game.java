@@ -1,6 +1,7 @@
 package com.UnitedWeGame.models;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -38,6 +39,8 @@ public class Game {
 	private Integer totalRatingCount;
 	@OneToMany(mappedBy="game", fetch = FetchType.EAGER)
 	private Set<Screenshot> screenshots;
+	@OneToMany
+	private List<GameRating> ratings;
 	
 	@JsonBackReference
 	@ManyToMany(mappedBy = "games")
