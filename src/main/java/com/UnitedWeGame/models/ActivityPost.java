@@ -13,33 +13,38 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class ActivityPost {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@JsonBackReference
 	@ManyToOne
 	private User user;
-	@Column(nullable=true)
+	@Column(nullable = true)
 	private Date createdDate;
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String content;
-	
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}

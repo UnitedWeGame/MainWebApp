@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 public class Platform {
 	@Id
 	private String title;
-	
+
 	@OneToMany
 	private Set<Game> games;
 

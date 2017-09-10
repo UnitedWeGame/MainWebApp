@@ -19,10 +19,17 @@ public class GameRatingService {
 	@Autowired
 	UserService userService;
 	
-	/*public List<GameRating> getFriendsRatings() {
-		User user = userService.getLoggedInUser();
+	public List<GameRating> getFriendsRatings(User user) {
 		return gameRatingRepo.findByUserIn(user.getFriends());
-	}*/
+	}
+	
+	public List<GameRating> getUserGameRatings(User user) {
+		return gameRatingRepo.findByUser(user);
+	}
+	
+	public List<GameRating> getFriendRatingsByGame(User user, Game game) {
+		return gameRatingRepo.findByUserInAndGame(user.getFriends(), game);
+	}
 	
 	public List<GameRating> getGameRatings(Game game) {
 		return gameRatingRepo.findByGame(game);
@@ -31,5 +38,9 @@ public class GameRatingService {
 	public GameRating saveGameRating(GameRating gameRating) {
 		gameRatingRepo.save(gameRating);
 		return gameRating;
+	}
+	
+	public GameRating findByUserAndGame(User user, Game game) {
+		return gameRatingRepo.findByUserAndGame(user, game);
 	}
 }

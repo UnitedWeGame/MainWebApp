@@ -17,13 +17,13 @@ import com.UnitedWeGame.services.UserService;
 @RestController
 @RequestMapping("/api/friends")
 public class FriendsAPIController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	@Autowired
 	NewUsersService newUsersService;
 
@@ -32,12 +32,12 @@ public class FriendsAPIController {
 		User user = userService.getLoggedInUser();
 		return user.getFriends();
 	}
-	
+
 	@RequestMapping("/online")
 	public List<User> onlineFriends() {
 		return userService.getOnlineFriends();
 	}
-	
+
 	@RequestMapping("onlineFeed")
 	public List<OnlineFeed> getOnlineFeed() {
 		if (!userService.getOldUserFeed().isEmpty()) {

@@ -8,28 +8,32 @@ import javax.persistence.Id;
 
 @Entity
 public class FriendRequest {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(unique=false)
+
+	@Column(unique = false)
 	private Long owner;
-	@Column(unique=false)
+	@Column(unique = false)
 	private Long friend;
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public Long getOwner() {
 		return owner;
 	}
+
 	public void setOwner(Long owner) {
 		this.owner = owner;
 	}
+
 	public Long getFriend() {
 		return friend;
 	}
+
 	public void setFriend(Long friend) {
 		this.friend = friend;
 	}

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,35 +18,36 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Game {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String title;
 	private String imageUrl;
 	@ManyToOne
 	private Platform platform;
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String summary;
 	@Column
-	@Type(type="date")
+	@Type(type = "date")
 	private Date firstReleaseDate;
-	@Column(nullable=true)
+	@Column(nullable = true)
 	private Float totalRating;
-	@Column(nullable=true)
+	@Column(nullable = true)
 	private Integer totalRatingCount;
-	@OneToMany(mappedBy="game", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
 	private Set<Screenshot> screenshots;
-	@OneToMany
+	@JsonIgnore
+	@OneToMany(cascade= {CascadeType.ALL})
 	private List<GameRating> ratings;
-	
 	@JsonBackReference
 	@ManyToMany(mappedBy = "games")
 	private Set<User> users;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -113,7 +115,7 @@ public class Game {
 	public void setScreenshots(Set<Screenshot> screenshots) {
 		this.screenshots = screenshots;
 	}
-	
+
 	public List<GameRating> getRatings() {
 		return ratings;
 	}
