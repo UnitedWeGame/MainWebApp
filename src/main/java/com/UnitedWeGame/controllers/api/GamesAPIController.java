@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.UnitedWeGame.models.Game;
+import com.UnitedWeGame.models.GameRating;
 import com.UnitedWeGame.models.Platform;
 import com.UnitedWeGame.models.User;
+import com.UnitedWeGame.services.GameRatingService;
 import com.UnitedWeGame.services.GameService;
 import com.UnitedWeGame.services.PlatformService;
 import com.UnitedWeGame.services.TwilioService;
@@ -33,6 +35,8 @@ public class GamesAPIController {
 	SessionFactory sessionFactory;
 	@Autowired
 	TwilioService textService;
+	@Autowired
+	GameRatingService gameRatingService;
 
 	@RequestMapping("")
 	public List<Game> index() {
@@ -42,6 +46,37 @@ public class GamesAPIController {
 	@RequestMapping("/{gameId}")
 	public Game fetchSingleGame(@PathVariable Long gameId) {
 		return gameService.findById(gameId);
+	}
+	
+	@RequestMapping(value = "/{gameId}/addRating", method = RequestMethod.POST)
+	public GameRating createGameRating(@PathVariable long gameId, @RequestBody GameRating gameRating) {
+		Game game = gameService.findById(gameId);
+		User user = userService.getLoggedInUser();
+		GameRating existingRating = gameRatingService.findByUserAndGame(userService.getLoggedInUser(), game);
+		List<GameRating> gameRatings = game.getRatings();
+		List<GameRating> userRatings = user.getGameRatings();
+
+		//If they have already rated the game, don't add a new one, just change previous score
+		if (existingRating == null) {
+			gameRating.setGame(game);
+			gameRating.setUser(user);
+			gameRatingService.saveGameRating(gameRating);
+			gameRatings.add(gameRating);
+			userRatings.add(gameRating);
+			gameService.saveGame(game);
+			userService.saveUser(user);
+			return gameRating;
+		} else {
+			existingRating.setRating(gameRating.getRating());
+			gameRatingService.saveGameRating(existingRating);
+			return existingRating;
+		}	
+	}
+	
+	@RequestMapping("/{gameId}/ratings")
+	public List<GameRating> fetchRatingsForGame(@PathVariable long gameId) {
+		Game game = gameService.findById(gameId);
+		return game.getRatings();
 	}
 
 	@RequestMapping("/{gameId}/{platformTitle}/addToLibrary")

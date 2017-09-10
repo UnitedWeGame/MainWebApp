@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.UnitedWeGame.models.Game;
 import com.UnitedWeGame.models.GameRating;
+import com.UnitedWeGame.models.User;
 import com.UnitedWeGame.repos.GameRatingRepository;
 import com.UnitedWeGame.services.GameRatingService;
 import com.UnitedWeGame.services.GameService;
 import com.UnitedWeGame.services.UserService;
 
 @RestController
-@RequestMapping("/api/gameRating")
+@RequestMapping("/api/gameRatings")
 public class GameRatingAPIController {
 
 	@Autowired
@@ -31,22 +32,21 @@ public class GameRatingAPIController {
 
 	@Autowired
 	UserService userService;
-
-	@RequestMapping(value = "/{gameId}", method = RequestMethod.POST)
-	public GameRating createGameRating(@PathVariable long gameId, @RequestBody GameRating gameRating) {
-		Game game = gameService.findById(gameId);
-		gameRatingService.saveGameRating(gameRating);
-		List<GameRating> gameRatings = game.getRatings();
-		gameRatings.add(gameRating);
-		List<GameRating> userRatings = userService.getLoggedInUser().getGameRatings();
-		userRatings.add(gameRating);
-		gameService.saveGame(game);
-		userService.saveUser(userService.getLoggedInUser());
-		return gameRating;
+	
+	//Check for other end points relating to GameRatings in the GamesAPIController
+	
+	@RequestMapping("/friends")
+	public List<GameRating> fetchAllFriendsRatings() {
+		return gameRatingService.getFriendsRatings(userService.getLoggedInUser());
 	}
-
+	
+	@RequestMapping("/me")
+	public List<GameRating> fetchLoggedInUserRatings() {
+		return gameRatingService.getUserGameRatings(userService.getLoggedInUser());
+	}
+	
 	@RequestMapping("/all")
-	public List<GameRating> test() {
+	public List<GameRating> thisIsOnlyUsedForTestingPurposes() {
 		return (List<GameRating>) gameRepo.findAll();
 	}
 }

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class Screenshot {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@JsonBackReference
 	@ManyToOne

@@ -10,7 +10,8 @@ import com.UnitedWeGame.models.GameRating;
 import com.UnitedWeGame.models.User;
 
 public interface GameRatingRepository extends CrudRepository<GameRating, Long> {
-	//public List<GameRating> findByUserIn(Set<User> users);
+	public List<GameRating> findByUserIn(Set<User> users);
 	public List<GameRating> findByGame(Game game);
-	//public List<GameRating> findByUser(User user);
+	public List<GameRating> findByUser(User user);
+	public GameRating findByUserAndGame(User user, Game game);
 }
