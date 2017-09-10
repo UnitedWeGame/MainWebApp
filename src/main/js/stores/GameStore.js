@@ -7,12 +7,14 @@ class GameStore extends EventEmitter{
         super();
         var component = this;
         this.game = {
+          id: 0,
           title: "Title Not Found",
           firstReleaseDate: "Release Date Not Found",
           userRating: 0,
           communityRating: "No rating found",
           communityRatingCount: "",
           summary: "Game summary not found",
+          platforms: "",
           usersReview: false,
           otherReviews: "No reviews for this game",
           friendsWhoOwn: "No friends own this game",
@@ -28,6 +30,8 @@ class GameStore extends EventEmitter{
     }
 
     setGame(gameInfo){
+      this.game.id = gameInfo.id;
+
       if(gameInfo.title){
         this.game.title = gameInfo.title;
       }
@@ -42,9 +46,13 @@ class GameStore extends EventEmitter{
       if(gameInfo.firstReleaseDate){
         this.game.firstReleaseDate = gameInfo.firstReleaseDate;
       }
+
       if(gameInfo.userRating){
         this.game.userRating = gameInfo.userRating;
       }
+      else
+        this.game.userRating = 0;
+
       if(gameInfo.totalRating){
         this.game.communityRating = gameInfo.totalRating;
       }

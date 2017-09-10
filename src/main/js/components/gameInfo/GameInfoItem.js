@@ -4,6 +4,7 @@ import CustomTabs from "../uiPieces/CustomTabs";
 import {Tab} from "react-toolbox";
 import ReactStars from "react-stars";
 import GameStore from "../../stores/GameStore";
+import * as GameInfoActions from "../../actions/GameInfoActions";
 
 
 
@@ -15,13 +16,6 @@ export default class GameInfoItem extends React.Component {
       const gameInfo = GameStore.getGame();
 
       this.state = {
-        title: gameInfo.title,
-        screenshots: gameInfo.screenshots,
-        firstReleaseDate: gameInfo.firstReleaseDate,
-        userRating: gameInfo.userRating,
-        communityRating: gameInfo.communityRating,
-        communityRatingCount: gameInfo.communityRatingCount,
-        summary: gameInfo.summary,
         gameInfo: gameInfo,
         index: 0
       }
@@ -40,7 +34,6 @@ export default class GameInfoItem extends React.Component {
       this.setState({
           gameInfo: GameStore.getGame()
       });
-      console.log(this.state.gameInfo.summary);
   }
 
 
@@ -50,6 +43,10 @@ export default class GameInfoItem extends React.Component {
 
   // Called when the user makes a new star rating
    ratingChanged = (newRating) => {
+     this.state.gameInfo.userRating = newRating;
+     GameInfoActions.postRating(this.state.gameInfo.id, newRating);
+
+
      console.log(newRating);
   };
 
@@ -73,6 +70,7 @@ export default class GameInfoItem extends React.Component {
 
       var starSettings = {
         count: 5,
+        value: this.state.gameInfo.userRating,
         size: 24,
         color2: "#ffd700"
       }
