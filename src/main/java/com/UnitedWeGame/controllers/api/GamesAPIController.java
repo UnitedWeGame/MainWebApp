@@ -79,7 +79,7 @@ public class GamesAPIController {
 		return game.getRatings();
 	}
 	
-	@RequestMapping("/{gameId}/friendRatings")
+	@RequestMapping("/{gameId}/friendsRatings")
 	public List<GameRating> fetchRatingsForGameByriends(@PathVariable long gameId) {
 		Game game = gameService.findById(gameId);
 		return gameRatingService.getFriendRatingsByGame(userService.getLoggedInUser(), game);
