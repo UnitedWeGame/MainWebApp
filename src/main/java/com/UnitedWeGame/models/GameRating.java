@@ -1,5 +1,6 @@
 package com.UnitedWeGame.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,8 @@ public class GameRating {
 	@ManyToOne
 	private User user;
 	private float rating;
+	@Column(columnDefinition = "TEXT")
+	private String review;
 
 	public Long getId() {
 		return id;
@@ -50,5 +53,13 @@ public class GameRating {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
 	}
 }

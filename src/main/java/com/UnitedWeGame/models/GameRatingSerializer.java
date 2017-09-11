@@ -25,6 +25,7 @@ public class GameRatingSerializer extends StdSerializer<GameRating> {
         jgen.writeStartObject();
         jgen.writeNumberField("id", value.getId());
         jgen.writeStringField("username", value.getUser().getUsername());
+        jgen.writeStringField("review", value.getReview());
         jgen.writeNumberField("rating", value.getRating());
         jgen.writeEndObject();
     }
