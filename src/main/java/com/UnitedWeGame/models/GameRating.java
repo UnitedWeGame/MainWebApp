@@ -6,14 +6,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
+@JsonSerialize(using = GameRatingSerializer.class)
 public class GameRating {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@JsonIgnore
 	@ManyToOne
 	private Game game;
+	@JsonIgnore
 	@ManyToOne
 	private User user;
 	private float rating;

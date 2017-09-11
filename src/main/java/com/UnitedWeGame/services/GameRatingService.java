@@ -27,6 +27,10 @@ public class GameRatingService {
 		return gameRatingRepo.findByUser(user);
 	}
 	
+	public GameRating getUserGameRatingByGame(User user, Game game) {
+		return gameRatingRepo.findByUserAndGame(user, game);
+	}
+	
 	public List<GameRating> getFriendRatingsByGame(User user, Game game) {
 		return gameRatingRepo.findByUserInAndGame(user.getFriends(), game);
 	}

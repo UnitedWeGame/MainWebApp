@@ -14,11 +14,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.UnitedWeGame.services.GameRatingService;
+import com.UnitedWeGame.services.UserService;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 public class Game {
@@ -44,9 +50,18 @@ public class Game {
 	@JsonIgnore
 	@OneToMany(cascade= {CascadeType.ALL})
 	private List<GameRating> ratings;
+	@Transient
+	@JsonSerialize
+	@JsonDeserialize
+	private GameRating userRating;
+	@Transient
+	@JsonSerialize
+	@JsonDeserialize
+	private List<GameRating> friendsRatings;
 	@JsonBackReference
 	@ManyToMany(mappedBy = "games")
 	private Set<User> users;
+
 
 	public Long getId() {
 		return id;
@@ -122,6 +137,22 @@ public class Game {
 
 	public void setRatings(List<GameRating> ratings) {
 		this.ratings = ratings;
+	}
+	
+	public GameRating getUserRating() {
+		return userRating;
+	}
+	
+	public void setUserRating(GameRating gameRating) {
+		this.userRating = gameRating;
+	}
+	
+	public List<GameRating> getFriendsRatings() {
+		return friendsRatings;
+	}
+
+	public void setFriendsRatings(List<GameRating> friendsRatings) {
+		this.friendsRatings = friendsRatings;
 	}
 
 	@Override

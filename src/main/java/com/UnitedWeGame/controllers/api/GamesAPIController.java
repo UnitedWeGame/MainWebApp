@@ -45,7 +45,10 @@ public class GamesAPIController {
 
 	@RequestMapping("/{gameId}")
 	public Game fetchSingleGame(@PathVariable Long gameId) {
-		return gameService.findById(gameId);
+		Game game = gameService.findById(gameId);
+		game.setUserRating(gameRatingService.findByUserAndGame(userService.getLoggedInUser(), game));
+		game.setFriendsRatings(gameRatingService.getFriendRatingsByGame(userService.getLoggedInUser(), game));
+		return game;
 	}
 	
 	@RequestMapping(value = "/{gameId}/addRating", method = RequestMethod.POST)
