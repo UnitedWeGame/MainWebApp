@@ -2,11 +2,13 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 import * as UserActions from "../../actions/UserActions"
 import * as FriendActions from "../../actions/FriendActions"
+import * as LibraryActions from "../../actions/LibraryActions"
 import UserStore from "../../stores/UserStore";
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import {Link as LinkTo} from 'react-toolbox/lib/link';
 import {List, ListItem} from 'react-toolbox/lib/list';
 import CustomMenu from "../uiPieces/CustomMenu.js";
+import Searchbar from "./Searchbar.js";
 
 
 export default class Nav extends React.Component {
@@ -24,6 +26,7 @@ export default class Nav extends React.Component {
     UserActions.getUserData();
     FriendActions.getAllFriends();
     FriendActions.getNowPlaying();
+    LibraryActions.getAllGames(); // Needed for search bar
   }
 
   componentWillMount() {
@@ -107,7 +110,7 @@ export default class Nav extends React.Component {
 							    <ListItem><a href="">Your item</a></ListItem>
 							    <ListItem><a href="">Your item</a></ListItem>
 							  </List>
-							</IconMenu>*/} 
+							</IconMenu>*/}
               	<CustomMenu {...iconMenuSettings} menuRipple>
 							    <a href="/logout"> <MenuItem value='logout' icon='exit_to_app' caption='Logout'/></a>
 							    <MenuItem value='help' icon='favorite' caption='Favorite' />
@@ -128,12 +131,17 @@ export default class Nav extends React.Component {
                 </ul>
               </li>
             </ul>
-            <form class="navbar-form navbar-left hidden-xs">
+            {/*}<form class="navbar-form navbar-left hidden-xs">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search"/>
               </div>
               <button type="submit" class="btn btn-default">Go</button>
-            </form>
+            </form> */}
+            <div class="navbar-form navbar-left hidden-xs">
+              <div class="form-group">
+                  <Searchbar />
+              </div>
+            </div>
           </div>
         </div>
       </nav>
