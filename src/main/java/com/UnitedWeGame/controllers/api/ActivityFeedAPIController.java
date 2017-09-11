@@ -43,18 +43,6 @@ public class ActivityFeedAPIController {
 	@RequestMapping("/friends")
 	public List<ActivityPost> fetchFriendsFeed() {
 		return activityPostService.findAllActiviesByFriends(userService.getLoggedInUser());
-		// Not sure if we want to return just user name, it's more work when we
-		// can just return full user
-		// List<Map<Object, Object>> jsonResp = new ArrayList<>();
-		/*
-		 * for (ActivityPost activity : activityFeed) { Map<Object, Object>
-		 * activityMap = new HashMap<>(); activityMap.put("userId",
-		 * activity.getUser().getId()); activityMap.put("username",
-		 * activity.getUser().getUsername()); activityMap.put("content",
-		 * activity.getContent()); activityMap.put("created_date",
-		 * activity.getCreatedDate()); jsonResp.add(activityMap); } return
-		 * jsonResp;
-		 */
 	}
 
 	@RequestMapping("/{userId}")

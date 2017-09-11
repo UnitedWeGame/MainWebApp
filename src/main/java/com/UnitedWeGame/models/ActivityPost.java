@@ -9,9 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.UnitedWeGame.serializers.ActivityPostSerializer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
+@JsonSerialize(using = ActivityPostSerializer.class)
 public class ActivityPost {
 
 	@Id
@@ -24,6 +27,10 @@ public class ActivityPost {
 	private Date createdDate;
 	@Column(columnDefinition = "TEXT")
 	private String content;
+
+	public long getId() {
+		return id;
+	}
 
 	public User getUser() {
 		return user;
