@@ -2,7 +2,6 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 import * as UserActions from "../../actions/UserActions"
 import * as FriendActions from "../../actions/FriendActions"
-import * as LibraryActions from "../../actions/LibraryActions"
 import UserStore from "../../stores/UserStore";
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import {Link as LinkTo} from 'react-toolbox/lib/link';
@@ -26,7 +25,6 @@ export default class Nav extends React.Component {
     UserActions.getUserData();
     FriendActions.getAllFriends();
     FriendActions.getNowPlaying();
-    LibraryActions.getAllGames(); // Needed for search bar
   }
 
   componentWillMount() {
