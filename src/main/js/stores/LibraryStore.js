@@ -16,20 +16,26 @@ class LibraryStore extends EventEmitter{
     }
 
     // called when user logs in
-    initOwnedGames(games){
+    initOwnedGames(games, platform){
         this.allOwnedGames = games;
-        this.setXBoxGames();
+
+        if(platform == "PS3" || platform == "PS4")
+          this.setPlaystationGames();
+        else if(platform == "Steam")
+          this.setSteamGames();
+        else
+          this.setXboxGames();
     }
 
 
-    setXBoxGames(){
+    setXboxGames(){
         this.shownGames = [];
         var games = this.allOwnedGames;
         for(var i = 0; i < games.length; i++){
 
-            if(games[i].platform.title == "Xbox 360"
-                || games[i].platform.title == "Xbox Live"
-                || games[i].platform.title == "Xbox One"){
+            if(games[i].platform.title == "Xbox360"
+                || games[i].platform.title == "XboxLive"
+                || games[i].platform.title == "XboxOne"){
                 this.shownGames.push(games[i]);
             }
         }
@@ -67,11 +73,11 @@ class LibraryStore extends EventEmitter{
     handleActions(action){
         switch (action.type) {
             case "GET_USER_DATA": {
-                this.initOwnedGames(action.user.games);
+                this.initOwnedGames(action.user.games, action.platform);
                 break;
             }
             case "SHOW_XBOX_GAMES": {
-                this.setXBoxGames();
+                this.setXboxGames();
                 break;
             }
             case "SHOW_STEAM_GAMES": {

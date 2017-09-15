@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import com.UnitedWeGame.models.Game;
 import com.UnitedWeGame.models.OnlineFeed;
+import com.UnitedWeGame.models.Platform;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.Role;
 import com.UnitedWeGame.models.User;
@@ -233,5 +234,13 @@ public class UserService implements UserDetailsService {
 		session.getTransaction().commit();
 		session.close();
 		return feed;
+	}
+	
+	public boolean isFriend(Long userId) {
+		for (User user : getLoggedInUser().getFriends()) {
+			if (user.getId().equals(userId))
+				return true;
+		}
+		return false;
 	}
 }

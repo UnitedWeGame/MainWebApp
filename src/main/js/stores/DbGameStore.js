@@ -20,8 +20,8 @@ class DbGameStore extends EventEmitter{
       this.allGames.PS3 = [];
       this.allGames.PS4 = [];
       this.allGames.Steam = [];
-      this.allGames.XBox360 = [];
-      this.allGames.XBoxOne = [];
+      this.allGames.Xbox360 = [];
+      this.allGames.XboxOne = [];
 
       for(var i = 0; i < games.length; i++){
 
@@ -31,10 +31,10 @@ class DbGameStore extends EventEmitter{
               this.allGames.PS4.push(games[i]);
           if(games[i].platform.title == "Steam")
               this.allGames.Steam.push(games[i]);
-          if(games[i].platform.title == "Xbox 360")
-              this.allGames.XBox360.push(games[i]);
-          if(games[i].platform.title == "Xbox One")
-              this.allGames.XBoxOne.push(games[i]);
+          if(games[i].platform.title == "Xbox360")
+              this.allGames.Xbox360.push(games[i]);
+          if(games[i].platform.title == "XboxOne")
+              this.allGames.XboxOne.push(games[i]);
 
       }
 
@@ -42,8 +42,8 @@ class DbGameStore extends EventEmitter{
       this.allGames.PS3.sort(this.sortFcn);
       this.allGames.PS4.sort(this.sortFcn);
       this.allGames.Steam.sort(this.sortFcn);
-      this.allGames.XBox360.sort(this.sortFcn);
-      this.allGames.XBoxOne.sort(this.sortFcn);
+      this.allGames.Xbox360.sort(this.sortFcn);
+      this.allGames.XboxOne.sort(this.sortFcn);
 
 
       this.emit("change");

@@ -4,6 +4,7 @@ import CustomTabs from "../uiPieces/CustomTabs";
 import {Tab} from "react-toolbox";
 import ReactStars from "react-stars";
 import GameStore from "../../stores/GameStore";
+import * as GameInfoActions from "../../actions/GameInfoActions";
 
 
 
@@ -33,7 +34,6 @@ export default class GameInfoItem extends React.Component {
       this.setState({
           gameInfo: GameStore.getGame()
       });
-      console.log(gameInfo);
   }
 
 
@@ -43,11 +43,18 @@ export default class GameInfoItem extends React.Component {
 
   // Called when the user makes a new star rating
    ratingChanged = (newRating) => {
+     this.state.gameInfo.userRating = newRating;
+     GameInfoActions.postRating(this.state.gameInfo.id, newRating);
+
+
      console.log(newRating);
   };
 
 
     render() {
+
+      const screenshots = this.state.gameInfo.screenshots.map((g) => <div><Screenshot key={g.id} {...g}/></div> );
+
 
       {/* For the screenshot slider */}
       var sliderSettings = {
@@ -63,6 +70,7 @@ export default class GameInfoItem extends React.Component {
 
       var starSettings = {
         count: 5,
+        value: this.state.gameInfo.userRating,
         size: 24,
         color2: "#ffd700"
       }
@@ -89,7 +97,7 @@ export default class GameInfoItem extends React.Component {
       return (
         <div>
           <div style={titleStyle}>
-            <h1>The Legend Of Zelda: The Skyward Sword</h1>
+            <h1>{this.state.gameInfo.title}</h1>
           </div>
             <br/>
             <section>
@@ -99,23 +107,20 @@ export default class GameInfoItem extends React.Component {
                     <br/>
                      <Slider {...sliderSettings} class={imageStyle} >
 
-                      <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg'  /></div>
-                       <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg' /></div>
-                       <div><img src='https://images.igdb.com/igdb/image/upload/t_screenshot_big/ka2i4aehuuibfecyaphh.jpg' /></div>
+                      {screenshots}
 
                      </Slider>
                      <br/>
-                    <h3>Release Date:  </h3> <medium>September 10, 2012</medium>
+                    <h3>Release Date:  </h3> <medium>{this.state.gameInfo.firstReleaseDate}</medium>
                      <br/>
                      <h3>Your Rating:  </h3>
                      <ReactStars {...starSettings} onChange={this.ratingChanged}/>
                      <br/>
                      <h3>Community Rating:  </h3>
-                     <medium>4.5 (out of 5)</medium>
+                     <medium>{this.state.gameInfo.communityRating}</medium>
                      <br/>
                      <h3>Summary:  </h3>
-                     <medium>Long ago, on a dark day, the earth cracked and evil forces rushed out of the fissure. These forces attacked the people of the earth, slaughtering them and destroying their land. They did this in search of the ultimate power, a power capable of granting any wishes of its holder. This power, passed down from the gods of old, was guarded by Her Grace, the goddess of the land. The goddess gathered the surviving humans on a piece of earth and sent it skyward, beyond the clouds. With the humans safe, the goddess joined the land dwellers and fought the evil forces in a war of unmatched scale and ferocity. They eventually sealed the evil forces away, restoring peace to the surface. However, the humans remained in Skyloft, as Hylia knew that the seal on the evil would not hold forever.</medium>
-
+                      <medium>{this.state.gameInfo.summary}</medium>
 
                   </div>
 
@@ -129,5 +134,17 @@ export default class GameInfoItem extends React.Component {
 
       </div>
     );
+  }
+}
+
+class Screenshot extends React.Component {
+  render() {
+    const {id} = this.props;
+    const {url} = this.props;
+    return (
+
+      <div><img src={url}  /></div>
+
+    )
   }
 }

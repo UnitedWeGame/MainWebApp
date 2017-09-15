@@ -1,6 +1,5 @@
 package com.UnitedWeGame.controllers.api;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.UnitedWeGame.models.Game;
+import com.UnitedWeGame.models.GameRating;
 import com.UnitedWeGame.models.Platform;
 import com.UnitedWeGame.models.User;
+import com.UnitedWeGame.services.GameRatingService;
 import com.UnitedWeGame.services.GameService;
 import com.UnitedWeGame.services.PlatformService;
 import com.UnitedWeGame.services.TwilioService;
@@ -23,9 +24,9 @@ import com.UnitedWeGame.services.UserService;
 @RestController
 @RequestMapping("/api/games")
 public class GamesAPIController {
-	
+
 	@Autowired
-	GameService gameService;	
+	GameService gameService;
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -34,42 +35,106 @@ public class GamesAPIController {
 	SessionFactory sessionFactory;
 	@Autowired
 	TwilioService textService;
-	
+	@Autowired
+	GameRatingService gameRatingService;
+
 	@RequestMapping("")
 	public List<Game> index() {
 		return gameService.allGames();
 	}
-	
+
 	@RequestMapping("/{gameId}")
 	public Game fetchSingleGame(@PathVariable Long gameId) {
-		return gameService.findById(gameId);
-	}
-	
-	@RequestMapping("/{gameId}/addToLibrary")
-	public void addGameToUser(@PathVariable Long gameId) {
-		User user = userService.getLoggedInUser();
 		Game game = gameService.findById(gameId);
-		
-		Set<Game> games = user.getGames();
-		System.out.println(game);
-		games.add(game);
-		user.setGames(games);
-		userService.saveUser(user);
+		game.setUserRating(gameRatingService.findByUserAndGame(userService.getLoggedInUser(), game));
+		game.setFriendsRatings(gameRatingService.getFriendRatingsByGame(userService.getLoggedInUser(), game));
+		return game;
 	}
 	
+	@RequestMapping(value = "/{gameId}/addRating", method = RequestMethod.POST)
+	public GameRating createGameRating(@PathVariable long gameId, @RequestBody GameRating gameRating) {
+		Game game = gameService.findById(gameId);
+		User user = userService.getLoggedInUser();
+		GameRating existingRating = gameRatingService.findByUserAndGame(userService.getLoggedInUser(), game);
+		List<GameRating> gameRatings = game.getRatings();
+		List<GameRating> userRatings = user.getGameRatings();
+
+		//If they have already rated the game, don't add a new one, just change previous score
+		if (existingRating == null) {
+			gameRating.setGame(game);
+			gameRating.setUser(user);
+			gameRatingService.saveGameRating(gameRating);
+			gameRatings.add(gameRating);
+			userRatings.add(gameRating);
+			gameService.saveGame(game);
+			userService.saveUser(user);
+			return gameRating;
+		} else {
+			existingRating.setRating(gameRating.getRating());
+			existingRating.setReview(gameRating.getReview());
+			gameRatingService.saveGameRating(existingRating);
+			return existingRating;
+		}	
+	}
+	
+	@RequestMapping("/{gameId}/ratings")
+	public List<GameRating> fetchRatingsForGame(@PathVariable long gameId) {
+		Game game = gameService.findById(gameId);
+		return game.getRatings();
+	}
+	
+	@RequestMapping("/{gameId}/friendsRatings")
+	public List<GameRating> fetchRatingsForGameByriends(@PathVariable long gameId) {
+		Game game = gameService.findById(gameId);
+		return gameRatingService.getFriendRatingsByGame(userService.getLoggedInUser(), game);
+	}
+
+	@RequestMapping("/{gameId}/{platformTitle}/addToLibrary")
+	public String addGameToUser(@PathVariable Long gameId, @PathVariable String platformTitle) {
+		User user = userService.getLoggedInUser();
+		Platform platform = platformService.findPlatform(platformTitle);
+		Game game = gameService.findByIdAndPlatform(gameId, platform);
+
+		if (game != null) {
+			Set<Game> games = user.getGames();
+			if (!games.contains(game))
+				games.add(game);
+			user.setGames(games);
+			userService.saveUser(user);
+			return "Game has been added";
+		}
+		return "Game couldn't be found";
+	}
+
+	@RequestMapping("/{gameId}/{platformTitle}/removeFromLibrary")
+	public String removeGameFromUser(@PathVariable Long gameId, @PathVariable String platformTitle) {
+		User user = userService.getLoggedInUser();
+		Platform platform = platformService.findPlatform(platformTitle);
+		Game game = gameService.findByIdAndPlatform(gameId, platform);
+
+		if (game != null) {
+			Set<Game> games = user.getGames();
+			games.remove(game);
+			user.setGames(games);
+			userService.saveUser(user);
+			return "Game has been removed.";
+		}
+		return "Game couldn't be found";
+	}
+
 	@RequestMapping("/owned/{platform}")
 	public List<Game> gamesOwnedByPlatform(@PathVariable String platform) {
 		return userService.gamesOwnedByPlatform(platform);
 	}
-	
-	@RequestMapping(value="/{platform}", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/{platform}", method = RequestMethod.POST)
 	public Game createGame(@PathVariable String platform, @RequestBody Game game) {
 		Platform platformForGame = platformService.findPlatform(platform);
 		game.setPlatform(platformForGame);
 		gameService.saveGame(game);
 		return game;
 	}
-	
+
 	@RequestMapping("/addPlatform/{gameId}/{platformTitle}")
 	public Game addPlatformToGame(@PathVariable Long gameId, @PathVariable String platformTitle) {
 		Game game = gameService.findById(gameId);
@@ -78,22 +143,22 @@ public class GamesAPIController {
 		gameService.saveGame(game);
 		return game;
 	}
-	
+
 	@RequestMapping("/friendsOwn")
 	public List<User> friendsOwnAll() {
 		return userService.gamesOwnedByFriends();
 	}
-	
+
 	@RequestMapping("/{gameId}/friendsOwn")
 	public List<User> friendsOwn(@PathVariable Long gameId) {
 		return userService.gameOwnedByFriends(gameId);
 	}
-	
+
 	@RequestMapping("/search/{gameTitle}")
 	public List<Game> gameTitleContains(@PathVariable String gameTitle) {
 		return gameService.findByTitleContaining(gameTitle);
 	}
-	
+
 	@RequestMapping("/{gameId}/groupNotification")
 	public String friendsGroupNotification(@PathVariable Long gameId) {
 		String username = userService.getLoggedInUser().getUsername();

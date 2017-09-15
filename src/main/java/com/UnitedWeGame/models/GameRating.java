@@ -1,37 +1,35 @@
 package com.UnitedWeGame.models;
 
-import java.util.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
+import com.UnitedWeGame.serializers.GameRatingSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
-public class OnlineFeed {
+@JsonSerialize(using = GameRatingSerializer.class)
+public class GameRating {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String gamerTag;
+	@JsonIgnore
 	@ManyToOne
 	private Game game;
-	private Date lastActivity;
 	@JsonIgnore
 	@ManyToOne
 	private User user;
+	private float rating;
+	@Column(columnDefinition = "TEXT")
+	private String review;
 
-	public String getGamerTag() {
-		return gamerTag;
-	}
-
-	public void setGamerTag(String gamerTag) {
-		this.gamerTag = gamerTag;
+	public Long getId() {
+		return id;
 	}
 
 	public Game getGame() {
@@ -42,12 +40,12 @@ public class OnlineFeed {
 		this.game = game;
 	}
 
-	public Date getLastActivity() {
-		return lastActivity;
+	public float getRating() {
+		return rating;
 	}
 
-	public void setLastActivity(Date lastActivity) {
-		this.lastActivity = lastActivity;
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 
 	public User getUser() {
@@ -58,7 +56,11 @@ public class OnlineFeed {
 		this.user = user;
 	}
 
-	public long getId() {
-		return id;
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
 	}
 }

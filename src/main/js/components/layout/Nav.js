@@ -3,6 +3,7 @@ import { IndexLink, Link } from "react-router";
 import * as UserActions from "../../actions/UserActions"
 import * as FriendActions from "../../actions/FriendActions"
 import UserStore from "../../stores/UserStore";
+import Searchbar from "./Searchbar.js";
 
 
 export default class Nav extends React.Component {
@@ -120,12 +121,17 @@ export default class Nav extends React.Component {
                 </ul>
               </li>
             </ul>
-            <form class="navbar-form navbar-left hidden-xs">
+            {/*}<form class="navbar-form navbar-left hidden-xs">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search"/>
               </div>
               <button type="submit" class="btn btn-default">Go</button>
-            </form>
+            </form> */}
+            <div class="navbar-form navbar-left hidden-xs">
+              <div class="form-group">
+                  <Searchbar />
+              </div>
+            </div>
           </div>
         </div>
       </nav>

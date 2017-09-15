@@ -12,11 +12,11 @@ import com.UnitedWeGame.services.PlatformService;
 @RestController
 @RequestMapping("/api/platform")
 public class PlatformAPIController {
-	
+
 	@Autowired
 	PlatformService platformService;
-	
-	@RequestMapping(value = "/", method=RequestMethod.POST) 
+
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public Platform createPlatform(@RequestBody Platform platform) {
 		platformService.savePlatform(platform);
 		return platform;

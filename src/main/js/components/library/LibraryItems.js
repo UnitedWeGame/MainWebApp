@@ -11,22 +11,23 @@ export default class LibraryItems extends React.Component {
         super();
         this.openAddGameModal = this.openAddGameModal.bind(this); // for add-game modal
     		this.close = this.close.bind(this); // for add-game modal
+        this.addGame = this.addGame.bind(this);
         this.getLibraryItems = this.getLibraryItems.bind(this);
         this.getDbGames = this.getDbGames.bind(this);
+
         const ownedGameList = LibraryStore.getAll();
 
         this.state = {
             ownedGameList: ownedGameList,
             dbGameList: "empty",
-            xBoxActive: "active",
+            XboxActive: "active",
             steamActive: "",
             psActive: "",
             showModal: false,
-            addedGame: "",
-            formPlatform: "XBox 360",
-            formGameTitles: [{title: "Initialization Placeholder", id: 1}],
-            allgamesHaveBeenRetrieved: false
-
+            addedGameId: "",
+            addedGamePlatform: "",
+            formGameTitles: [{title: "...", id: 1}],
+            allgamesHaveBeenRetrieved: false,
         };
     }
 
@@ -38,6 +39,21 @@ export default class LibraryItems extends React.Component {
     componentWillUnmount() {
         LibraryStore.removeListener("change", this.getLibraryItems);
         DbGameStore.removeListener("change", this.getDbGames);
+    }
+
+    addGame(){
+      if(this.state.addedGameId == "" ||
+        this.state.addedGameId == "select" ||
+        this.state.addedGamePlatform == "" ||
+        this.state.addedGamePlatform == "select"){
+
+          alert("Please select both a game and a platform!")
+          return;
+
+        }
+
+      LibraryActions.addGame(this.state.addedGameId, this.state.addedGamePlatform);
+      this.close();
     }
 
     openAddGameModal() {
@@ -57,31 +73,35 @@ export default class LibraryItems extends React.Component {
 
       if(event.target.value == "Steam"){
         this.setState({ formGameTitles: gameList.Steam});
+        this.setState({ addedGamePlatform: "Steam"});
+
       }
       else if(event.target.value == "PS3"){
         this.setState({ formGameTitles: gameList.PS3});
+        this.setState({ addedGamePlatform: "PS3"});
+
       }
       else if(event.target.value == "PS4"){
         this.setState({ formGameTitles: gameList.PS4});
+        this.setState({ addedGamePlatform: "PS4"});
+
       }
-      else if(event.target.value == "XBox 360"){
-        this.setState({ formGameTitles: gameList.XBox360});
+      else if(event.target.value == "Xbox 360"){
+        this.setState({ formGameTitles: gameList.Xbox360});
+        this.setState({ addedGamePlatform: "Xbox360"});
+
       }
-      else if(event.target.value == "XBox One"){
-        this.setState({ formGameTitles: gameList.XBoxOne});
+      else if(event.target.value == "Xbox One"){
+        this.setState({ formGameTitles: gameList.XboxOne});
+        this.setState({ addedGamePlatform: "XboxOne"});
+
       }
 
     }
 
     handleTitleChange(event){
-      let fieldName = event.target.name;
-      let fieldVal = event.target.value;
-      console.log(fieldName + " " + fieldVal);
+      this.setState({addedGameId: event.target.value});
     }
-
-    handleChange = (value) => {
-    this.setState({addedGame: value});
-  };
 
     getDbGames(){
         this.setState({
@@ -97,10 +117,10 @@ export default class LibraryItems extends React.Component {
 
 
     togglePlatform(platform, event){
-        if(platform == "XBox"){
-            LibraryActions.showXBoxGames();
+        if(platform == "Xbox"){
+            LibraryActions.showXboxGames();
             this.setState({
-                xBoxActive: "active",
+                XboxActive: "active",
                 steamActive: "",
                 psActive: ""
             });
@@ -108,7 +128,7 @@ export default class LibraryItems extends React.Component {
         else if(platform == "Steam"){
             LibraryActions.showSteamGames();
             this.setState({
-                xBoxActive: "",
+                XboxActive: "",
                 steamActive: "active",
                 psActive: ""
             });
@@ -116,7 +136,7 @@ export default class LibraryItems extends React.Component {
         else if(platform == "PS"){
             LibraryActions.showPlaystationGames();
             this.setState({
-                xBoxActive: "",
+                XboxActive: "",
                 steamActive: "",
                 psActive: "active"
             });
@@ -128,17 +148,17 @@ export default class LibraryItems extends React.Component {
     render() {
         const games = this.state.ownedGameList.map((g) => <LibraryItem key={g.id} {...g}/> );
         const gameTitles = this.state.formGameTitles.map((g) => <FormGameTitle key={g.id} {...g}/> );
-
         const spacingStyle = {
         	marginLeft: "10px"
         };
 
         return (
             <div>
+
                 <div>
                     <ButtonToolbar>
                         <ButtonGroup bsSize="large">
-                            <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "XBox")} active={this.state.xBoxActive}>XBox</Button>
+                            <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "Xbox")} active={this.state.XboxActive}>Xbox</Button>
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "Steam")} active={this.state.steamActive}>Steam</Button>
                             <Button bsStyle="default" onClick={this.togglePlatform.bind(this, "PS")} active={this.state.psActive}>Playstation</Button>
                         </ButtonGroup>
@@ -159,7 +179,6 @@ export default class LibraryItems extends React.Component {
     		            	<Modal.Title>Add a Game</Modal.Title>
     		          	</Modal.Header>
     		          	<Modal.Body>
-
                     <FormGroup controlId="formControlsSelect">
                       <ControlLabel>Platform</ControlLabel>
                       <FormControl componentClass="select" placeholder="select" onChange={this.handlePlatformChange.bind(this)}>
@@ -167,8 +186,8 @@ export default class LibraryItems extends React.Component {
                         <option value="PS3">PS3</option>
                         <option value="PS4">PS4</option>
                         <option value="Steam">Steam</option>
-                        <option value="XBox 360">XBox 360</option>
-                        <option value="XBox One">XBox One</option>
+                        <option value="Xbox 360">Xbox 360</option>
+                        <option value="Xbox One">Xbox One</option>
 
                       </FormControl>
                       <br/>
@@ -180,9 +199,10 @@ export default class LibraryItems extends React.Component {
                     </FormGroup>
 
     		          </Modal.Body>
+
     		          <Modal.Footer>
                     <ButtonToolbar>
-                      <Button bsStyle="success" onClick={this.close}>Add</Button>
+                      <Button bsStyle="success" onClick={this.addGame}>Add</Button>
       		            <Button onClick={this.close}>Cancel</Button>
                     </ButtonToolbar>
     		          </Modal.Footer>
@@ -195,11 +215,12 @@ export default class LibraryItems extends React.Component {
 
 class FormGameTitle extends React.Component {
   render() {
+    const {id} = this.props;
     const {title} = this.props;
 
     return (
 
-       <option value="{title}">{title}</option>
+       <option value={id}>{title}</option>
 
     )
   }

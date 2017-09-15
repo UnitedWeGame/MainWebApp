@@ -17,23 +17,22 @@ import com.UnitedWeGame.services.UserService;
 @RestController
 @RequestMapping("/api/gamerids")
 public class GamerIdentifierAPIController {
-	
+
 	@Autowired
 	UserService userService;
 	@Autowired
 	GamerIdentifierService gamerIdService;
-	
-	@RequestMapping(value = "", method=RequestMethod.POST) 
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public GamerIdentifier createGametag(@RequestBody GamerIdentifier gamerIdentifier) {
 		User user = userService.getLoggedInUser();
-		gamerIdService.save(gamerIdentifier);
 		Set<GamerIdentifier> identifiers = user.getGamerIdentifiers();
 		identifiers.add(gamerIdentifier);
 		user.setGamerIdentifiers(identifiers);
 		userService.saveUser(user);
 		return gamerIdentifier;
 	}
-	
+
 	@RequestMapping("/{gamerIdentifier}")
 	public User getUserByGamerIdentifier(@PathVariable String gamerIdentifier) {
 		return userService.getUserByGamerIdentifier(gamerIdentifier);
