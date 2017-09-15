@@ -71,6 +71,7 @@ public class GamesAPIController {
 			return gameRating;
 		} else {
 			existingRating.setRating(gameRating.getRating());
+			existingRating.setReview(gameRating.getReview());
 			gameRatingService.saveGameRating(existingRating);
 			return existingRating;
 		}	
