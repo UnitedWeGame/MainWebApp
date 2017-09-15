@@ -26,7 +26,7 @@ ReactDOM.render(
         </Route>
         <Route component={LayoutNoSideStatus}>
           <Route path="/game*" component={GameInfo}></Route>
-          <Route path="profile" name="profile" component={Profile}></Route>
+          <Route path="/profile/:userID" name="profile" component={Profile}></Route>
         </Route>
     </Router>,
     app);

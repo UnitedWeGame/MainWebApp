@@ -11,23 +11,27 @@ export default class Nav extends React.Component {
     super();
 
     this.setUsername = this.setUsername.bind(this);
+    this.setUserID = this.setUserID.bind(this);
     const username = UserStore.getUsername();
+    const userID = UserStore.getUserID();
     this.state = {
         collapsed: true,
         usernameDisplay: username
     };
 
-    UserActions.getUserData();
+    UserActions.getCurrentUserData();
     FriendActions.getAllFriends();
     FriendActions.getNowPlaying();
   }
 
   componentWillMount() {
     UserStore.on("change", this.setUsername);
+    UserStore.on("change", this.setUserID);
   }
 
   componentWillUnmount() {
     UserStore.removeListener("change", this.setUsername);
+    UserStore.removeListener("change", this.setUserID);
   }
 
   setUsername(){
@@ -36,6 +40,11 @@ export default class Nav extends React.Component {
     });
   }
 
+  setUserID(){
+    this.setState({
+      userID: UserStore.getUserID()
+    });
+  }
 
   toggleCollapse() {
     const collapsed = !this.state.collapsed;
@@ -46,7 +55,7 @@ export default class Nav extends React.Component {
 
   render() {
 
-  	var iconMenuSettings = {
+    var iconMenuSettings = {
         inverse: true,
         icon:'more_vert',
         position:'topRight'
@@ -93,7 +102,7 @@ export default class Nav extends React.Component {
                 <Link to="library" onClick={this.toggleCollapse.bind(this)}>Library</Link>
               </li>
               <li class={profileClass}>
-                <Link to="profile" onClick={this.toggleCollapse.bind(this)}><strong>{this.state.username}</strong></Link>
+                <Link to={`profile/${this.state.userID}`} onClick={this.toggleCollapse.bind(this)}><strong>{this.state.username}</strong></Link>
               </li>
               <li>
                 <a href="/logout"> Logout</a>

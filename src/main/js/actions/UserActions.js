@@ -1,13 +1,13 @@
 import dispatcher from "../dispatcher";
 
-export function getUserData(){
+export function getCurrentUserData(){
     var name;
     $.get( "/api/users/me", function( data ) {
         //user = data;
         dispatcher.dispatch({
-                type: "GET_USER_DATA",
-                user: data
-            });
+            type: "GET_CURRENT_USER_DATA",
+            user: data
+        });
     });
 
 }
