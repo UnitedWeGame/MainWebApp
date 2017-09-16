@@ -8,8 +8,7 @@ export function getCurrentUserData(){
         //user = data;
         dispatcher.dispatch({
             type: "GET_CURRENT_USER_DATA",
-            user: data,
-            platform: platform
+            user: data
             });
     });
 

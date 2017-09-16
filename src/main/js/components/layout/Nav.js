@@ -17,7 +17,8 @@ export default class Nav extends React.Component {
     const userID = UserStore.getUserID();
     this.state = {
         collapsed: true,
-        usernameDisplay: username
+        usernameDisplay: username,
+        userID: userID
     };
 
     UserActions.getCurrentUserData();
@@ -37,7 +38,7 @@ export default class Nav extends React.Component {
 
   setUsername(){
     this.setState({
-      username: UserStore.getUsername()
+      usernameDisplay: UserStore.getUsername()
     });
   }
 
@@ -103,7 +104,7 @@ export default class Nav extends React.Component {
                 <Link to="library" onClick={this.toggleCollapse.bind(this)}>Library</Link>
               </li>
               <li class={profileClass}>
-                <Link to={`profile/${this.state.userID}`} onClick={this.toggleCollapse.bind(this)}><strong>{this.state.username}</strong></Link>
+                <Link to={`profile/${this.state.userID}`} onClick={this.toggleCollapse.bind(this)}><strong>{this.state.usernameDisplay}</strong></Link>
               </li>
               <li>
                 <a href="/logout"> Logout</a>
