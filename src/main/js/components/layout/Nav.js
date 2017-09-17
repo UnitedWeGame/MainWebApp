@@ -2,12 +2,7 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 import * as UserActions from "../../actions/UserActions"
 import * as FriendActions from "../../actions/FriendActions"
-import * as LibraryActions from "../../actions/LibraryActions"
 import UserStore from "../../stores/UserStore";
-import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
-import {Link as LinkTo} from 'react-toolbox/lib/link';
-import {List, ListItem} from 'react-toolbox/lib/list';
-import CustomMenu from "../uiPieces/CustomMenu.js";
 import Searchbar from "./Searchbar.js";
 
 
@@ -17,32 +12,41 @@ export default class Nav extends React.Component {
     super();
 
     this.setUsername = this.setUsername.bind(this);
+    this.setUserID = this.setUserID.bind(this);
     const username = UserStore.getUsername();
+    const userID = UserStore.getUserID();
     this.state = {
         collapsed: true,
-        usernameDisplay: username
+        usernameDisplay: username,
+        userID: userID
     };
 
-    UserActions.getUserData();
+    UserActions.getCurrentUserData();
     FriendActions.getAllFriends();
     FriendActions.getNowPlaying();
-    LibraryActions.getAllGames(); // Needed for search bar
   }
 
   componentWillMount() {
     UserStore.on("change", this.setUsername);
+    UserStore.on("change", this.setUserID);
   }
 
   componentWillUnmount() {
     UserStore.removeListener("change", this.setUsername);
+    UserStore.removeListener("change", this.setUserID);
   }
 
   setUsername(){
     this.setState({
-      username: UserStore.getUsername()
+      usernameDisplay: UserStore.getUsername()
     });
   }
 
+  setUserID(){
+    this.setState({
+      userID: UserStore.getUserID()
+    });
+  }
 
   toggleCollapse() {
     const collapsed = !this.state.collapsed;
@@ -53,7 +57,7 @@ export default class Nav extends React.Component {
 
   render() {
 
-  	var iconMenuSettings = {
+    var iconMenuSettings = {
         inverse: true,
         icon:'more_vert',
         position:'topRight'
@@ -100,25 +104,12 @@ export default class Nav extends React.Component {
                 <Link to="library" onClick={this.toggleCollapse.bind(this)}>Library</Link>
               </li>
               <li class={profileClass}>
-                <Link to="profile" onClick={this.toggleCollapse.bind(this)}><strong>{this.state.username}</strong></Link>
+                <Link to={`profile/${this.state.userID}`} onClick={this.toggleCollapse.bind(this)}><strong>{this.state.usernameDisplay}</strong></Link>
               </li>
               <li>
-              {/*
-              <IconMenu icon='more_vert' position='topRight' menuRipple>
-							  <List>
-							    <ListItem value='logout' leftIcon='exit_to_app' caption='Logout'><a href="/logout">Logout</a></ListItem>
-							    <ListItem><a href="">Your item</a></ListItem>
-							    <ListItem><a href="">Your item</a></ListItem>
-							  </List>
-							</IconMenu>*/}
-              	<CustomMenu {...iconMenuSettings} menuRipple>
-							    <a href="/logout"> <MenuItem value='logout' icon='exit_to_app' caption='Logout'/></a>
-							    <MenuItem value='help' icon='favorite' caption='Favorite' />
-							    <MenuItem value='settings' icon='open_in_browser' caption='Open in app' />
-							    <MenuDivider />
-							    <MenuItem value='signout' icon='delete' caption='Delete' disabled />
-							  </CustomMenu>
-              			{/*<ToolLink href='/logout' label='Logout' icon='exit_to_app' />*/}
+                <a href="/logout"> Logout</a>
+              </li> 
+              <li>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" onClick={this.toggleCollapse.bind(this)} aria-haspopup="true" aria-expanded={collapsed}> <span class="caret"></span></a>

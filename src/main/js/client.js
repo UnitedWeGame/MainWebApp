@@ -22,11 +22,11 @@ ReactDOM.render(
             <Route path="activity" name="activity" component={Activity}></Route>
             <Route path="friends" name="friends" component={Friends}></Route>
             <Route path="library" name="library" component={Library}></Route>
-            <Route path="profile" name="profile" component={Profile}></Route>
             <Route path="settings" name="settings" component={Settings}></Route>
         </Route>
         <Route component={LayoutNoSideStatus}>
           <Route path="/game*" component={GameInfo}></Route>
+          <Route path="/profile/:userID" name="profile" component={Profile}></Route>
         </Route>
     </Router>,
     app);

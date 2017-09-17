@@ -1,9 +1,10 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
-class UserStore extends EventEmitter{
+class GeneralUserStore extends EventEmitter{
     constructor(){
         super();
+        this.users = [];
         this.user = [];
     }
 
@@ -13,6 +14,10 @@ class UserStore extends EventEmitter{
 
     getUserID(){
         return this.user.id;
+    }
+
+    getUser(){
+        return this.user;
     }
 
     getGames(){
@@ -28,16 +33,25 @@ class UserStore extends EventEmitter{
         this.emit("change");
     }
 
+    setUsers(users){
+        this.users = users;
+        this.emit("change");
+    }
+
 
     handleActions(action){
         switch (action.type) {
-            case "GET_CURRENT_USER_DATA": {
+            case "GET_ALL_USERS": {
+                this.setUsers(action.users);
+                break;
+            }
+            case "GET_USER_DATA": {
                 this.setUser(action.user);
                 break;
             }
         }
     }
 }
-const userStore = new UserStore();
-dispatcher.register(userStore.handleActions.bind(userStore));
-export default userStore;
+const generalUserStore = new GeneralUserStore();
+dispatcher.register(generalUserStore.handleActions.bind(generalUserStore));
+export default generalUserStore;

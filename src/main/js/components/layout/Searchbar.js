@@ -1,5 +1,8 @@
 import React from "react";
+import { hashHistory } from 'react-router';
 import {Menu, MenuDivider, MenuHeader, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
+import {groupBy, map} from 'lodash';
+import * as LibraryActions from "../../actions/LibraryActions"
 import DbGameStore from "../../stores/DbGameStore";
 
 
@@ -7,88 +10,92 @@ export default class Searchbar extends React.Component {
 
   constructor(props) {
       super(props);
-      this.initList = this.initList.bind(this);
-      this.updateList = this.updateList.bind(this);
-
-      //const dbGameList = DbGameStore.getAll();
-
-      //const peopleList = PeopleStore.getAll();
+      this.setSearchList = this.setSearchList.bind(this);
+      this.addGamesToList = this.addGamesToList.bind(this);
+      this.addPeopleToList = this.addPeopleToList.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+      this.renderMenu = this.renderMenu.bind(this);
 
       this.state = {
         disabled: false,
-        minLength: 2,
         selectHintOnEnter: false,
-        dbGameList: [{id: 0, name: "Games not yet loaded", type: "games"}],
-        listData: [{id: 1, name: "Games and people not yet loaded", type: "games"}]
+        listData: [{id: 1, name: "Games and people not yet loaded", type: "games"}],
       };
 
-      //console.log("db game list: " + this.state.dbGameList[0].title).
-      //this.state.listData = this.initList()
-      //listData = this.initList();
+      LibraryActions.getAllGames();
+
     }
 
     componentWillMount() {
-        DbGameStore.on("change", this.updateList);
+        DbGameStore.on("change", this.setSearchList);
     }
 
     componentWillUnmount() {
-        DbGameStore.removeListener("change", this.updateList);
+        DbGameStore.removeListener("change", this.setSearchList);
     }
 
-    getDbGames(){
-        this.setState({
-            dbGameList: DbGameStore.getAll()
-        });
+    // used to properly re-render app when redirecting to a game page
+    componentWillReceiveProps(nextProps){
+      this.setState({
+        children: nextProps.children
+      })
     }
 
-    // merge games and people into a single list
-    initList(){
-      if(this.state.dbGameList == null){
-        console.log("db game was not yet initialized")
-        return [{id: 0, name: "nothing to show", type: "games"}];
-      }
-      var dbGameList = this.state.dbGameList;
-      console.log(" size of game list: " + dbGameList.length)
-      var peopleList = [{name: "logangsta"},
-          {name: "jacksonmeister"},
-          {name: "kelpaso"},
-          {name: "weetermachine"}
-      ];
-
-      var gamesAndPeopleList = [];
-
-      var id = 0;
-      for(id; id < dbGameList.length; id++){
-        gamesAndPeopleList.push(dbGameList[id]);
-        gamesAndPeopleList[id].id = id;
-        gamesAndPeopleList[id].name = dbGameList[id].title;
-
-        gamesAndPeopleList[id].type = "games";
-        console.log("game added to list")
-      }
-
-      var peopleListIdx = 0;
-      for(id; id < dbGameList.length + peopleList.length; id++, peopleListIdx++){
-        gamesAndPeopleList.push(peopleList[peopleListIdx]);
+    addPeopleToList(peopleList, gamesAndPeopleList){
+      var initLength = gamesAndPeopleList.length
+      var id = gamesAndPeopleList.length;
+      var peopleIdx = 0;
+      for(id; id < (initLength + peopleList.length); id++, peopleIdx++){
+        gamesAndPeopleList.push(peopleList[peopleIdx]);
         gamesAndPeopleList[id].id = id;
         gamesAndPeopleList[id].type = "people";
-        console.log("person added to list")
+        console.log("person added to list");
       }
-
-      console.log("the game/people list was successfully initialized and has size: " + gamesAndPeopleList.length)
 
       return gamesAndPeopleList;
     }
 
-    updateList(){
-      // console.log("DB store changed")
-      // this.state.dbGameList = DbGameStore.getAll();
-      // console.log("dbGameList is this big: " + this.state.dbGameList);
-      // this.initList();
+    addGamesToList(games){
+      var gameList = [];
+
+      gameList = games.PS3.concat(games.PS4).concat(games.Steam).concat(games.Xbox360).concat(games.XboxOne);
+      for(var i = 0; i < gameList.length; i++){
+        gameList[i].name = gameList[i].title;
+        gameList[i].type = "games";
+        console.log("game added to list")
+      }
+
+      return gameList;
     }
 
-    handleChange(){
+    // merge games and people into a single list
+    setSearchList(){
+      var id = 0;
+      var gamesList = DbGameStore.getAll();
+      var gamesAndPeopleList = [];
+
+      gamesAndPeopleList = this.addGamesToList(gamesList)
+
+      var peopleList = [{name: "logangsta"},
+      {name: "jacksonmeister"},
+      {name: "kelpaso"},
+      {name: "weetermachine"}
+    ];
+
+    gamesAndPeopleList = this.addPeopleToList(peopleList, gamesAndPeopleList)
+    console.log("the game/people list was successfully initialized and has size: " + gamesAndPeopleList.length)
+    this.setState({listData: gamesAndPeopleList})
+  }
+
+    handleChange(selectedOptions){
+
       console.log("a search item was selected")
+      console.log("this many items selected: "  + selectedOptions)
+      console.log(selectedOptions[0])
+      if(selectedOptions[0].type == "games"){
+        LibraryActions.getGameInfo(selectedOptions[0].id)
+        hashHistory.push('/game');
+      }
     }
 
     renderMenu(results, menuProps) {
@@ -104,7 +111,7 @@ export default class Searchbar extends React.Component {
           map(grouped[type], listObj => {
             const item =
               <MenuItem key={idx} option={listObj} position={idx}>
-                {listObj.id}
+                {listObj.name}
               </MenuItem>;
 
             idx++;
@@ -117,6 +124,7 @@ export default class Searchbar extends React.Component {
   }
 
     render() {
+
       const {
         disabled,
         emptyLabel,
@@ -125,32 +133,21 @@ export default class Searchbar extends React.Component {
       } = this.state;
 
       const props = {};
-      props.renderMenu = this.renderMenu;
+      {/*props.renderMenu = this.renderMenu;*/}
 
-      var myData = [
-        {id: 1, name: 'FIFA 16', type: 'games'},
-        {id: 2, name: 'Titanfall', type: 'games'},
-        {id: 3, name: 'Nuka', type: 'games'},
-        {id: 4, name: 'Subnautica', type: 'games'},
-        {id: 5, name: 'FIFA 17', type: 'games'},
-        {id: 6, name: 'jacksonmeister', type: 'people'},
-        {id: 7, name: 'logangsta', type: 'people'},
-        {id: 8, name: 'weetermachine', type: 'people'},
-        {id: 9, name: 'kelpaso', type: 'people'},
-        {id: 10, name: 'loser', type: 'people'},
-        {id: 11, name: 'weakling', type: 'people'},
-        {id: 12, name: 'klutzGamer', type: 'people'},
-      ];
+      var listData = this.state.listData
 
       return (
         <div>
           <Typeahead
-            {...this.state}
+            {...props}
             emptyLabel={emptyLabel ? '' : undefined}
             labelKey="name"
-            options={myData}
+            options={listData}
             placeholder="Search..."
             onChange={this.handleChange}
+            minLength={1}
+
 
           />
         </div>
