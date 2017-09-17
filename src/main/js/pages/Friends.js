@@ -1,7 +1,8 @@
 import React from "react";
 import FriendStore from "../stores/FriendStore";
 import Friend from "../components/friend/Friend"
-
+import CustomTabs from "../components/uiPieces/CustomTabs";
+import {Tab} from "react-toolbox";
 
 export default class Friends extends React.Component {
     constructor(){
@@ -11,6 +12,7 @@ export default class Friends extends React.Component {
 
         this.state = {
             friendList: friendList,
+            index: 0
         };
     }
 
@@ -28,7 +30,10 @@ export default class Friends extends React.Component {
         });
     }
 
-   
+    handleTabChange = (index) => {
+      this.setState({index});
+    };
+
 
     render() {
         const friends = this.state.friendList.map((person) => <Friend key={person.id} {...person}/> );
@@ -37,7 +42,12 @@ export default class Friends extends React.Component {
             <div class="well">
                 <h1 class="text-center">Friends</h1>
                 <br/>
-                <div>{friends}</div>
+                <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
+                  <Tab label='My Friends'>
+                    <div>{friends}</div>
+                  </Tab>
+                  <Tab label='Suggested'><large>Not yet implemented</large></Tab>
+                </CustomTabs>
             </div>
         );
     }

@@ -32,7 +32,18 @@ export function getNowPlaying(){
         dispatcher.dispatch({
                 type: "UPDATE_NOW_PLAYING",
                 friends: friends
-            });
+        });
     setTimeout(getNowPlaying, 5000);
+    });
+}
+
+
+export function removeFriend(id){
+    $.get( "/api/friends/" + id + "/removeFriend", function( data ) {
+      console.log(data);
+      dispatcher.dispatch({
+              type: "REMOVE_FRIEND",
+              friendId: id
+      });
     });
 }

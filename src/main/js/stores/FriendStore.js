@@ -8,7 +8,7 @@ class FriendStore extends EventEmitter{
         this.allFriends = [];
         this.friendsPlayingNow = [];
 
-        
+
     }
 
     getAll(){
@@ -32,6 +32,20 @@ class FriendStore extends EventEmitter{
         this.emit("change");
     }
 
+    removeFriend(friendId){
+      for(var i = this.allFriends.length-1; i>=0; i--) {
+        if( this.allFriends[i].id == friendId)
+          this.allFriends.splice(i,1);
+      }
+
+      for(var i = this.friendsPlayingNow.length-1; i>=0; i--) {
+        if( this.friendsPlayingNow[i].id == friendId)
+          this.friendsPlayingNow.splice(i,1);
+      }
+
+      this.emit("change");
+    }
+
     handleActions(action){
         switch (action.type) {
             case "GET_ALL_FRIENDS_DATA": {
@@ -41,6 +55,10 @@ class FriendStore extends EventEmitter{
             }
             case "UPDATE_NOW_PLAYING":{
                 this.setPlayingNow(action.friends);
+                break;
+            }
+            case "REMOVE_FRIEND": {
+                this.removeFriend(action.friendId);
                 break;
             }
         }

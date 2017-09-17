@@ -1,31 +1,49 @@
 import React from "react";
+import * as FriendActions from "../../actions/FriendActions"
 import FriendStore from "../../stores/FriendStore";
-import {Button, ButtonToolbar, ButtonGroup, Overlay, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
+import {Button, ButtonToolbar, ButtonGroup, Glyphicon, Overlay, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
+import { Link } from "react-router";
 
 export default class Friend extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
-            showModal: false
+            showUserInfoModal: false,
+            showRemoveFriendModal: false
         };
 
-		this.open = this.open.bind(this);
-		this.close = this.close.bind(this);
+		this.openInfoModal = this.openInfoModal.bind(this);
+		this.closeInfoModal = this.closeInfoModal.bind(this);
+    this.openRemoveFriendModal = this.openRemoveFriendModal.bind(this);
+    this.closeRemoveFriendModal = this.closeRemoveFriendModal.bind(this);
 
     }
 
-  	open() {
-    	this.setState({ showModal: true });
+    removeFriend(id) {
+      FriendActions.removeFriend(id);
+      this.closeRemoveFriendModal();
+    }
+
+  	openInfoModal() {
+    	this.setState({ showUserInfoModal: true });
   	}
 
-    close() {
-    	this.setState({ showModal: false });
+    closeInfoModal() {
+    	this.setState({ showUserInfoModal: false });
   	}
 
+    openRemoveFriendModal() {
+      this.setState({ showRemoveFriendModal: true });
+    }
+
+    closeRemoveFriendModal() {
+      this.setState({ showRemoveFriendModal: false });
+    }
 
     render() {
         const {username} = this.props;
+        const {id} = this.props;
         const {imageUrl} = this.props;
         const {games} = this.props;
         const {gamerIdentifiers} = this.props;
@@ -49,10 +67,19 @@ export default class Friend extends React.Component {
         	display: "inlineBlock",
         	width: "30px"
         }
-        
+
+        const hrStyle = {
+          border: "none",
+          background: "#D3D3D3",
+          color: "#D3D3D3"
+        }
+
         const tooltip = (
-  			<Tooltip id="tooltip"><strong>Click to see their gamer info.</strong></Tooltip>
-  		);
+  			<Tooltip id="tooltip"><strong>See their profile.</strong></Tooltip>
+  		  );
+
+
+
 
         return (
             <div class="autosize-container">
@@ -60,13 +87,16 @@ export default class Friend extends React.Component {
                 <img src={imageUrl} alt="Profile Picture"/>
                  &nbsp;&nbsp;
     				<OverlayTrigger placement="right" overlay={tooltip}>
-      					<Button bsStyle="link" bsSize="large" onClick={this.open}><strong>{username}</strong></Button>
-    				</OverlayTrigger>
+      					<Link to={`profile/${id}`}><strong>{username}</strong></Link>
+            </OverlayTrigger>
+                <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
+                    <Glyphicon glyph="remove" />
+                </Button>
                 </span>
-                 
-                <hr/>
 
-		        <Modal show={this.state.showModal} onHide={this.close}>
+                <hr style={hrStyle}/>
+
+		        <Modal show={this.state.showUserInfoModal} onHide={this.closeInfoModal}>
 		          	<Modal.Header closeButton>
 		            	<Modal.Title><h3>{username}</h3></Modal.Title>
 		          	</Modal.Header>
@@ -81,9 +111,23 @@ export default class Friend extends React.Component {
 
 		          </Modal.Body>
 		          <Modal.Footer>
-		            <Button onClick={this.close}>Close</Button>
+		            <Button onClick={this.closeInfoModal}>Close</Button>
 		          </Modal.Footer>
 		        </Modal>
+
+            {/* Modal asking user to verify they want to unfriend someone*/}
+            <Modal show={this.state.showRemoveFriendModal} onHide={this.closeRemoveFriendModal}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Are you sure you want to unfriend {username}?</Modal.Title>
+                </Modal.Header>
+
+              <Modal.Footer>
+                <ButtonToolbar>
+                  <Button bsStyle="danger" onClick={this.removeFriend.bind(this, id)}>Unfriend</Button>
+                  <Button onClick={this.closeRemoveFriendModal}>Cancel</Button>
+                </ButtonToolbar>
+              </Modal.Footer>
+            </Modal>
             </div>
         );
     }
