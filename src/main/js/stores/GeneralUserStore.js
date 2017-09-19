@@ -20,6 +20,10 @@ class GeneralUserStore extends EventEmitter{
         return this.user;
     }
 
+    getAllUsers(){
+        return this.users;
+    }
+
     getGames(){
         return this.user.games;
     }

@@ -2,8 +2,10 @@ import React from "react";
 import { hashHistory } from 'react-router';
 import {Menu, MenuDivider, MenuHeader, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
 import {groupBy, map} from 'lodash';
-import * as LibraryActions from "../../actions/LibraryActions"
+import * as LibraryActions from "../../actions/LibraryActions";
+import * as GeneralUserActions from "../../actions/GeneralUserActions";
 import DbGameStore from "../../stores/DbGameStore";
+import GeneralUserStore from "../../stores/GeneralUserStore";
 
 
 export default class Searchbar extends React.Component {
@@ -23,6 +25,7 @@ export default class Searchbar extends React.Component {
       };
 
       LibraryActions.getAllGames();
+      GeneralUserActions.getAllUsers();
 
     }
 
@@ -42,14 +45,14 @@ export default class Searchbar extends React.Component {
     }
 
     addPeopleToList(peopleList, gamesAndPeopleList){
-      var initLength = gamesAndPeopleList.length
-      var id = gamesAndPeopleList.length;
-      var peopleIdx = 0;
-      for(id; id < (initLength + peopleList.length); id++, peopleIdx++){
-        gamesAndPeopleList.push(peopleList[peopleIdx]);
-        gamesAndPeopleList[id].id = id;
-        gamesAndPeopleList[id].type = "people";
-        console.log("person added to list");
+      for(var i = 0; i < peopleList.length; i++){
+        var person = {
+                    id: peopleList[i].id,
+                    name: peopleList[i].username,
+                    type: "People"
+        };
+        gamesAndPeopleList.push(person);
+        console.log("Person added to search bar list")
       }
 
       return gamesAndPeopleList;
@@ -61,7 +64,7 @@ export default class Searchbar extends React.Component {
       gameList = games.PS3.concat(games.PS4).concat(games.Steam).concat(games.Xbox360).concat(games.XboxOne);
       for(var i = 0; i < gameList.length; i++){
         gameList[i].name = gameList[i].title;
-        gameList[i].type = "games";
+        gameList[i].type = "Games";
       }
 
       return gameList;
@@ -75,11 +78,7 @@ export default class Searchbar extends React.Component {
 
       gamesAndPeopleList = this.addGamesToList(gamesList)
 
-      var peopleList = [{name: "logangsta"},
-      {name: "jacksonmeister"},
-      {name: "kelpaso"},
-      {name: "weetermachine"}
-    ];
+      var peopleList = GeneralUserStore.getAllUsers();
 
     gamesAndPeopleList = this.addPeopleToList(peopleList, gamesAndPeopleList)
     console.log("the game/people list was successfully initialized and has size: " + gamesAndPeopleList.length)
@@ -91,9 +90,12 @@ export default class Searchbar extends React.Component {
       console.log("a search item was selected")
       console.log("this many items selected: "  + selectedOptions)
       console.log(selectedOptions[0])
-      if(selectedOptions[0].type == "games"){
+      if(selectedOptions[0].type == "Games"){
         LibraryActions.getGameInfo(selectedOptions[0].id)
         hashHistory.push('/game');
+      }
+      else if(selectedOptions[0].type == "People"){
+        hashHistory.push('/profile/' + selectedOptions[0].id);
       }
     }
 
