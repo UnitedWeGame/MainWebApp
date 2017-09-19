@@ -18,7 +18,7 @@ class LibraryStore extends EventEmitter{
     // called when user logs in
     initOwnedGames(games, platform){
         this.allOwnedGames = games;
-
+        console.log("The platform is: " + platform)
         if(platform == "PS3" || platform == "PS4")
           this.setPlaystationGames();
         else if(platform == "Steam")
@@ -72,7 +72,7 @@ class LibraryStore extends EventEmitter{
 
     handleActions(action){
         switch (action.type) {
-            case "GET_USER_DATA": {
+            case "GET_CURRENT_USER_DATA": {
                 this.initOwnedGames(action.user.games, action.platform);
                 break;
             }
