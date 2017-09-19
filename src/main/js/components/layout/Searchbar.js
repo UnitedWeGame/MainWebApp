@@ -1,11 +1,14 @@
 import React from "react";
 import { hashHistory } from 'react-router';
-import {Menu, MenuDivider, MenuHeader, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
+import {Menu, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
 import {groupBy, map} from 'lodash';
 import * as LibraryActions from "../../actions/LibraryActions";
 import * as GeneralUserActions from "../../actions/GeneralUserActions";
 import DbGameStore from "../../stores/DbGameStore";
 import GeneralUserStore from "../../stores/GeneralUserStore";
+
+const MenuDivider = props => <li className="divider" role="separator" />;
+const MenuHeader = props => <li {...props} className="dropdown-header" />;
 
 
 export default class Searchbar extends React.Component {
@@ -16,7 +19,6 @@ export default class Searchbar extends React.Component {
       this.addGamesToList = this.addGamesToList.bind(this);
       this.addPeopleToList = this.addPeopleToList.bind(this);
       this.handleChange = this.handleChange.bind(this);
-      this.renderMenu = this.renderMenu.bind(this);
 
       this.state = {
         disabled: false,
@@ -52,7 +54,6 @@ export default class Searchbar extends React.Component {
                     type: "People"
         };
         gamesAndPeopleList.push(person);
-        console.log("Person added to search bar list")
       }
 
       return gamesAndPeopleList;
@@ -81,15 +82,11 @@ export default class Searchbar extends React.Component {
       var peopleList = GeneralUserStore.getAllUsers();
 
     gamesAndPeopleList = this.addPeopleToList(peopleList, gamesAndPeopleList)
-    console.log("the game/people list was successfully initialized and has size: " + gamesAndPeopleList.length)
     this.setState({listData: gamesAndPeopleList})
   }
 
     handleChange(selectedOptions){
 
-      console.log("a search item was selected")
-      console.log("this many items selected: "  + selectedOptions)
-      console.log(selectedOptions[0])
       if(selectedOptions[0].type == "Games"){
         LibraryActions.getGameInfo(selectedOptions[0].id)
         hashHistory.push('/game');
@@ -99,10 +96,39 @@ export default class Searchbar extends React.Component {
       }
     }
 
-    renderMenu(results, menuProps) {
-      console.log("renderMenu was executed")
+    render() {
+
+      const {
+        disabled,
+        emptyLabel,
+        minLength,
+        selectHintOnEnter,
+      } = this.state;
+
+      const props = {};
+      var listData = this.state.listData
+
+      return (
+        <div>
+          <Typeahead
+            {...props}
+            emptyLabel={emptyLabel ? '' : undefined}
+            labelKey="name"
+            options={listData}
+            placeholder="Search..."
+            onChange={this.handleChange}
+            minLength={1}
+            renderMenu={this._renderMenu}
+
+
+          />
+        </div>
+      )
+    }
+
+    _renderMenu(results, menuProps) {
       let idx = 0;
-      const grouped = groupBy(results, r => r.type); // type is "games" or "people"
+      const grouped = groupBy(results, r => r.type); // type is "Games" or "People"
       const items = Object.keys(grouped).sort().map(type => {
         return [
           !!idx && <MenuDivider key={`${type}-divider`} />,
@@ -123,35 +149,4 @@ export default class Searchbar extends React.Component {
 
       return <Menu {...menuProps}>{items}</Menu>;
   }
-
-    render() {
-
-      const {
-        disabled,
-        emptyLabel,
-        minLength,
-        selectHintOnEnter,
-      } = this.state;
-
-      const props = {};
-      {/*props.renderMenu = this.renderMenu;*/}
-
-      var listData = this.state.listData
-
-      return (
-        <div>
-          <Typeahead
-            {...props}
-            emptyLabel={emptyLabel ? '' : undefined}
-            labelKey="name"
-            options={listData}
-            placeholder="Search..."
-            onChange={this.handleChange}
-            minLength={1}
-
-
-          />
-        </div>
-      )
-    }
   }
