@@ -32,26 +32,20 @@ export function getAllGames(){
 export function addGame(id, platform){
     $.get( "/api/games/" + id + "/" + platform + "/addToLibrary/", function( data ) {
       console.log(data);
-      UserActions.getUserData(platform);
+      UserActions.getCurrentUserData(platform);
     });
-    console.log("/api/games/" + id + "/" + platform + "/addToLibrary/")
 }
 
 export function removeGame(id, platform){
     $.get( "/api/games/" + id + "/" + platform + "/removeFromLibrary/", function( data ) {
-      console.log(data);
-      UserActions.getUserData(platform);
+      UserActions.getCurrentUserData(platform);
     });
-    console.log("/api/games/" + id + "/" + platform + "/removeFromLibrary/")
 }
 
 
 export function sendTextInvite(gameId){
-	console.log("sending text for game number: " + gameId);
 
     $.get( "/api/games/"+ gameId + "/groupNotification", function( data ) {
-    	console.log("Response from server after trying to send texts: ");
-    	console.log(data);
     });
 
 }

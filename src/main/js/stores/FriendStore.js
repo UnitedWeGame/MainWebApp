@@ -20,9 +20,6 @@ class FriendStore extends EventEmitter{
     }
 
     setAll(friends){
-        console.log("IN THE SET ALL FUNCTION");
-        console.log(friends);
-
         this.allFriends = friends;
         this.emit("change");
     }
@@ -50,7 +47,6 @@ class FriendStore extends EventEmitter{
         switch (action.type) {
             case "GET_ALL_FRIENDS_DATA": {
                 this.setAll(action.friends);
-                console.log(" IN THE HANDLE ACTIONS FUNCTION");
                 break;
             }
             case "UPDATE_NOW_PLAYING":{
