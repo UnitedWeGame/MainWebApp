@@ -28,9 +28,7 @@ export default class NowPlaying extends React.Component {
 
     render() {
         const friends = this.state.friendList.map((person) => <FriendPlaying key={person.ID} {...person}/> );
-        
-        console.log("In the render now playing list");
-        console.log(friends);    
+
         return (
             <div class="well pre-scrollable">
                 {/*<h3 class="text-center"> Playing Now: </h3>*/}
@@ -50,7 +48,7 @@ class FriendPlaying extends React.Component {
 
         return (
             <div class="autosize-container" id="friend">
-                <p> 
+                <p>
                  <strong>{gamerTag}</strong> is playing</p>
                 <p>{game} <br/> on {platform}</p>
                 <img style={{width: 70, height: 70}} src={imageUrl} alt="Mountain View"/>

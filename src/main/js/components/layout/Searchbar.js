@@ -1,9 +1,14 @@
 import React from "react";
 import { hashHistory } from 'react-router';
-import {Menu, MenuDivider, MenuHeader, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
+import {Menu, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
 import {groupBy, map} from 'lodash';
-import * as LibraryActions from "../../actions/LibraryActions"
+import * as LibraryActions from "../../actions/LibraryActions";
+import * as GeneralUserActions from "../../actions/GeneralUserActions";
 import DbGameStore from "../../stores/DbGameStore";
+import GeneralUserStore from "../../stores/GeneralUserStore";
+
+const MenuDivider = props => <li className="divider" role="separator" />;
+const MenuHeader = props => <li {...props} className="dropdown-header" />;
 
 
 export default class Searchbar extends React.Component {
@@ -14,7 +19,6 @@ export default class Searchbar extends React.Component {
       this.addGamesToList = this.addGamesToList.bind(this);
       this.addPeopleToList = this.addPeopleToList.bind(this);
       this.handleChange = this.handleChange.bind(this);
-      this.renderMenu = this.renderMenu.bind(this);
 
       this.state = {
         disabled: false,
@@ -23,6 +27,7 @@ export default class Searchbar extends React.Component {
       };
 
       LibraryActions.getAllGames();
+      GeneralUserActions.getAllUsers();
 
     }
 
@@ -42,14 +47,13 @@ export default class Searchbar extends React.Component {
     }
 
     addPeopleToList(peopleList, gamesAndPeopleList){
-      var initLength = gamesAndPeopleList.length
-      var id = gamesAndPeopleList.length;
-      var peopleIdx = 0;
-      for(id; id < (initLength + peopleList.length); id++, peopleIdx++){
-        gamesAndPeopleList.push(peopleList[peopleIdx]);
-        gamesAndPeopleList[id].id = id;
-        gamesAndPeopleList[id].type = "people";
-        console.log("person added to list");
+      for(var i = 0; i < peopleList.length; i++){
+        var person = {
+                    id: peopleList[i].id,
+                    name: peopleList[i].username,
+                    type: "People"
+        };
+        gamesAndPeopleList.push(person);
       }
 
       return gamesAndPeopleList;
@@ -61,7 +65,7 @@ export default class Searchbar extends React.Component {
       gameList = games.PS3.concat(games.PS4).concat(games.Steam).concat(games.Xbox360).concat(games.XboxOne);
       for(var i = 0; i < gameList.length; i++){
         gameList[i].name = gameList[i].title;
-        gameList[i].type = "games";
+        gameList[i].type = "Games";
       }
 
       return gameList;
@@ -75,32 +79,56 @@ export default class Searchbar extends React.Component {
 
       gamesAndPeopleList = this.addGamesToList(gamesList)
 
-      var peopleList = [{name: "logangsta"},
-      {name: "jacksonmeister"},
-      {name: "kelpaso"},
-      {name: "weetermachine"}
-    ];
+      var peopleList = GeneralUserStore.getAllUsers();
 
     gamesAndPeopleList = this.addPeopleToList(peopleList, gamesAndPeopleList)
-    console.log("the game/people list was successfully initialized and has size: " + gamesAndPeopleList.length)
     this.setState({listData: gamesAndPeopleList})
   }
 
     handleChange(selectedOptions){
 
-      console.log("a search item was selected")
-      console.log("this many items selected: "  + selectedOptions)
-      console.log(selectedOptions[0])
-      if(selectedOptions[0].type == "games"){
+      if(selectedOptions[0].type == "Games"){
         LibraryActions.getGameInfo(selectedOptions[0].id)
         hashHistory.push('/game');
       }
+      else if(selectedOptions[0].type == "People"){
+        hashHistory.push('/profile/' + selectedOptions[0].id);
+      }
     }
 
-    renderMenu(results, menuProps) {
-      console.log("renderMenu was executed")
+    render() {
+
+      const {
+        disabled,
+        emptyLabel,
+        minLength,
+        selectHintOnEnter,
+      } = this.state;
+
+      const props = {};
+      var listData = this.state.listData
+
+      return (
+        <div>
+          <Typeahead
+            {...props}
+            emptyLabel={emptyLabel ? '' : undefined}
+            labelKey="name"
+            options={listData}
+            placeholder="Search..."
+            onChange={this.handleChange}
+            minLength={1}
+            renderMenu={this._renderMenu}
+
+
+          />
+        </div>
+      )
+    }
+
+    _renderMenu(results, menuProps) {
       let idx = 0;
-      const grouped = groupBy(results, r => r.type); // type is "games" or "people"
+      const grouped = groupBy(results, r => r.type); // type is "Games" or "People"
       const items = Object.keys(grouped).sort().map(type => {
         return [
           !!idx && <MenuDivider key={`${type}-divider`} />,
@@ -121,35 +149,4 @@ export default class Searchbar extends React.Component {
 
       return <Menu {...menuProps}>{items}</Menu>;
   }
-
-    render() {
-
-      const {
-        disabled,
-        emptyLabel,
-        minLength,
-        selectHintOnEnter,
-      } = this.state;
-
-      const props = {};
-      {/*props.renderMenu = this.renderMenu;*/}
-
-      var listData = this.state.listData
-
-      return (
-        <div>
-          <Typeahead
-            {...props}
-            emptyLabel={emptyLabel ? '' : undefined}
-            labelKey="name"
-            options={listData}
-            placeholder="Search..."
-            onChange={this.handleChange}
-            minLength={1}
-
-
-          />
-        </div>
-      )
-    }
   }
