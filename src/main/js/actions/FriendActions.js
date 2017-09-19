@@ -7,8 +7,6 @@ export function getAllFriends(){
                 type: "GET_ALL_FRIENDS_DATA",
                 friends: data
             });
-        console.log("In the action");
-        console.log("Received this data: " + data);
     });
 
 }

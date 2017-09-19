@@ -62,7 +62,6 @@ export default class Searchbar extends React.Component {
       for(var i = 0; i < gameList.length; i++){
         gameList[i].name = gameList[i].title;
         gameList[i].type = "games";
-        console.log("game added to list")
       }
 
       return gameList;
