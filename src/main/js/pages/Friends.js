@@ -1,6 +1,7 @@
 import React from "react";
 import FriendStore from "../stores/FriendStore";
-import Friend from "../components/friend/Friend"
+import Friend from "../components/friend/Friend";
+import SuggestedFriend from "../components/friend/SuggestedFriend";
 import CustomTabs from "../components/uiPieces/CustomTabs";
 import {Tab} from "react-toolbox";
 
@@ -9,15 +10,18 @@ export default class Friends extends React.Component {
         super();
         this.getFriends = this.getFriends.bind(this);
         const friendList = FriendStore.getAll();
+        const suggestedFriendList = FriendStore.getSuggestedFriends();
 
         this.state = {
             friendList: friendList,
+            suggestedFriendList: suggestedFriendList,
             index: 0
         };
     }
 
     componentWillMount() {
         FriendStore.on("change", this.getFriends);
+
     }
 
     componentWillUnmount() {
@@ -26,7 +30,8 @@ export default class Friends extends React.Component {
 
     getFriends(){
         this.setState({
-            friendList: FriendStore.getAll()
+            friendList: FriendStore.getAll(),
+            suggestedFriendList: FriendStore.getSuggestedFriends()
         });
     }
 
@@ -37,6 +42,8 @@ export default class Friends extends React.Component {
 
     render() {
         const friends = this.state.friendList.map((person) => <Friend key={person.id} {...person}/> );
+        const suggestedFriends = this.state.suggestedFriendList.map((person) => <SuggestedFriend key={person.id} {...person}/> );
+
 
         return (
             <div class="well">
@@ -46,7 +53,9 @@ export default class Friends extends React.Component {
                   <Tab label='My Friends'>
                     <div>{friends}</div>
                   </Tab>
-                  <Tab label='Suggested'><large>Not yet implemented</large></Tab>
+                  <Tab label='Suggested'>
+                    <div>{suggestedFriends}</div>
+                  </Tab>
                 </CustomTabs>
             </div>
         );

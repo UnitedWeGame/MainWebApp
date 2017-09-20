@@ -21,7 +21,7 @@ export default class Friend extends React.Component {
     }
 
     removeFriend(id) {
-      FriendActions.removeFriend(id);
+      FriendActions.sendFriendRequest(id);
       this.closeRemoveFriendModal();
     }
 
@@ -74,8 +74,12 @@ export default class Friend extends React.Component {
           color: "#D3D3D3"
         }
 
-        const tooltip = (
+        const tooltipProfile = (
   			<Tooltip id="tooltip"><strong>See their profile.</strong></Tooltip>
+  		  );
+
+        const tooltipRemove = (
+  			<Tooltip id="tooltip"><strong>Unfriend</strong></Tooltip>
   		  );
 
 
@@ -86,12 +90,15 @@ export default class Friend extends React.Component {
                 <span>
                 <img src={imageUrl} alt="Profile Picture"/>
                  &nbsp;&nbsp;
-    				<OverlayTrigger placement="right" overlay={tooltip}>
-      					<Link to={`profile/${id}`}><strong>{username}</strong></Link>
-            </OverlayTrigger>
-                <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
+                 <OverlayTrigger placement="right" overlay={tooltipProfile}>
+      					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>
+                 </OverlayTrigger>
+                 <OverlayTrigger placement="left" overlay={tooltipRemove}>
+                    <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
                     <Glyphicon glyph="remove" />
-                </Button>
+                    </Button>
+                </OverlayTrigger>
+
                 </span>
 
                 <hr style={hrStyle}/>

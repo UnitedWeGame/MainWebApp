@@ -7,6 +7,11 @@ class FriendStore extends EventEmitter{
         var component = this;
         this.allFriends = [];
         this.friendsPlayingNow = [];
+        this.suggestedFriends = [
+          {id: 1010, username: "TheBeast", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
+          {id: 1011, username: "Prince$$", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"},
+          {id: 1012, username: "PWNER99", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/mjustxpafje74fzjbeuy.jpg"}
+        ];
 
 
     }
@@ -17,6 +22,10 @@ class FriendStore extends EventEmitter{
 
     getPlayingNow(){
         return this.friendsPlayingNow;
+    }
+
+    getSuggestedFriends(){
+        return this.suggestedFriends;
     }
 
     setAll(friends){

@@ -45,3 +45,13 @@ export function removeFriend(id){
       });
     });
 }
+
+export function sendFriendRequest(id){
+    $.get( "/api/users/" + id + "/requestFriend", function( data ) {
+      console.log(data);
+      dispatcher.dispatch({
+              type: "FRIEND_REQUEST_SENT",
+              friendId: id
+      });
+    });
+}
