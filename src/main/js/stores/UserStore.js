@@ -5,6 +5,11 @@ class UserStore extends EventEmitter{
     constructor(){
         super();
         this.user = [];
+
+        this.notifications = [
+          {id: 1, user: "MarioMaster", verb: "wants to be friends!", type: "friendRequest", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
+          {id: 2, user: "Game4Life", verb: "wants to be friends!", type: "friendRequest", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"}
+        ];
     }
 
     getUsername(){
@@ -21,6 +26,10 @@ class UserStore extends EventEmitter{
 
     getImageUrl(){
         return this.user.imageUrl;
+    }
+
+    getNotifications(){
+        return this.notifications;
     }
 
     setUser(user){

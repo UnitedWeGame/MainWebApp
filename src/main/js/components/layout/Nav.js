@@ -1,5 +1,6 @@
 import React from "react";
-import { IndexLink, Link } from "react-router";
+import { hashHistory, IndexLink, Link } from "react-router";
+import {ButtonToolbar, DropdownButton, MenuItem} from "react-bootstrap"
 import * as UserActions from "../../actions/UserActions"
 import * as FriendActions from "../../actions/FriendActions"
 import UserStore from "../../stores/UserStore";
@@ -11,6 +12,7 @@ export default class Nav extends React.Component {
   constructor() {
     super();
 
+    this.onDropdownSelect = this.onDropdownSelect.bind(this);
     this.setUsername = this.setUsername.bind(this);
     this.setUserID = this.setUserID.bind(this);
     const username = UserStore.getUsername();
@@ -52,6 +54,24 @@ export default class Nav extends React.Component {
     const collapsed = !this.state.collapsed;
     this.setState({collapsed});
     console.log("toggled");
+  }
+
+  onDropdownSelect(eventKey) {
+    console.log("Drop down items selected: " + eventKey)
+    if(eventKey == 1){
+      console.log("Should direct to notifications")
+      hashHistory.push("/notifications");
+      return;
+    }
+
+    else if(eventKey == 2){
+      hashHistory.push("/settings");
+      return;
+    }
+
+    else if(eventKey == 3){
+      hashHistory.push("/logout");
+    }
   }
 
 
@@ -108,26 +128,15 @@ export default class Nav extends React.Component {
               </li>
               <li>
                 <a href="/logout"> Logout</a>
-              </li> 
-              <li>
               </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" onClick={this.toggleCollapse.bind(this)} aria-haspopup="true" aria-expanded={collapsed}> <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </li>
+                <DropdownButton bsStyle="link" title=""  id="dropdown">
+                  <MenuItem eventKey="1" onSelect={this.onDropdownSelect}>Notifications</MenuItem>
+                  <MenuItem eventKey="2" onSelect={this.onDropdownSelect}>Settings</MenuItem>
+                  <MenuItem divider />
+                  <MenuItem eventKey="3" onSelect={this.onDropdownSelect}>Logout</MenuItem>
+                </DropdownButton>
             </ul>
-            {/*}<form class="navbar-form navbar-left hidden-xs">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search"/>
-              </div>
-              <button type="submit" class="btn btn-default">Go</button>
-            </form> */}
+
             <div class="navbar-form navbar-left hidden-xs">
               <div class="form-group">
                   <Searchbar />
