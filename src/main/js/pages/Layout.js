@@ -56,12 +56,10 @@ export default class Layout extends React.Component {
                         <div class="col-md-1">
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                                 {this.props.children}
                         </div>
-                        <div class="col-md-1">
-                          <br/>
-                        </div>
+                        
 
                      </div>
                 </div>
