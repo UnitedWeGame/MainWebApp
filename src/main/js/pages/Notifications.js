@@ -31,8 +31,12 @@ export default class Notifications extends React.Component {
     render() {
       const notifications = this.state.notificationList.map((n) => <Notification key={n.id} {...n}/> );
 
+      const pageStyle = {
+        backgroundColor: "#272A2F"
+      }
+
         return (
-            <div>
+            <div class="well">
                 <h1 class="text-center">Notifications</h1>
                 <br/>
                 {notifications}
