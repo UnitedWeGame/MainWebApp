@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
@@ -28,7 +29,6 @@ import org.springframework.stereotype.Service;
 
 import com.UnitedWeGame.models.Game;
 import com.UnitedWeGame.models.OnlineFeed;
-import com.UnitedWeGame.models.Platform;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.Role;
 import com.UnitedWeGame.models.User;
@@ -191,7 +191,12 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public List<OnlineFeed> getUserFeed() {
-		StatelessSession session = sessionFactory.openStatelessSession();
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
 		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
 		Date currentDate = new Date();
