@@ -1,6 +1,6 @@
 import React from "react";
 import { hashHistory, IndexLink, Link } from "react-router";
-import {ButtonToolbar, DropdownButton, MenuItem} from "react-bootstrap"
+import {Badge, ButtonToolbar, DropdownButton, MenuItem} from "react-bootstrap"
 import * as UserActions from "../../actions/UserActions"
 import * as FriendActions from "../../actions/FriendActions"
 import UserStore from "../../stores/UserStore";
@@ -13,14 +13,17 @@ export default class Nav extends React.Component {
     super();
 
     this.onDropdownSelect = this.onDropdownSelect.bind(this);
+    this.setNotificationCount = this.setNotificationCount.bind(this);
     this.setUsername = this.setUsername.bind(this);
     this.setUserID = this.setUserID.bind(this);
     const username = UserStore.getUsername();
     const userID = UserStore.getUserID();
+    var notificationCount =  UserStore.getNotificationCount();
     this.state = {
         collapsed: true,
         usernameDisplay: username,
-        userID: userID
+        userID: userID,
+        notificationCount: notificationCount
     };
 
     UserActions.getCurrentUserData();
@@ -31,11 +34,21 @@ export default class Nav extends React.Component {
   componentWillMount() {
     UserStore.on("change", this.setUsername);
     UserStore.on("change", this.setUserID);
+    UserStore.on("change", this.setNotificationCount);
+
   }
 
   componentWillUnmount() {
     UserStore.removeListener("change", this.setUsername);
     UserStore.removeListener("change", this.setUserID);
+    UserStore.removeListener("change", this.setNotificationCount);
+
+  }
+
+  setNotificationCount(){
+    this.setState({
+      notificationCount: UserStore.getNotificationCount()
+    });
   }
 
   setUsername(){
@@ -130,7 +143,7 @@ export default class Nav extends React.Component {
                 <a href="/logout"> Logout</a>
               </li>
                 <DropdownButton bsStyle="link" title=""  id="dropdown">
-                  <MenuItem eventKey="1" onSelect={this.onDropdownSelect}>Notifications</MenuItem>
+                  <MenuItem eventKey="1" onSelect={this.onDropdownSelect}>Notifications &nbsp;&nbsp; <Badge>{this.state.notificationCount}</Badge></MenuItem>
                   <MenuItem eventKey="2" onSelect={this.onDropdownSelect}>Settings</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey="3" onSelect={this.onDropdownSelect}>Logout</MenuItem>

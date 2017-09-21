@@ -55,3 +55,16 @@ export function sendFriendRequest(id){
       });
     });
 }
+
+export function acceptFriendRequest(requestId){
+    console.log("except friend request api call")
+    $.get( "/api/requests/" + requestId + "/acceptRequest", function( data ) {
+      console.log(data);
+    });
+}
+
+export function denyFriendRequest(requestId){
+    $.get( "/api/requests/" + requestId + "/denyRequest", function( data ) {
+      console.log(data);
+    });
+}

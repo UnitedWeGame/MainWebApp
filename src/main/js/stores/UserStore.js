@@ -32,6 +32,19 @@ class UserStore extends EventEmitter{
         return this.notifications;
     }
 
+    getNotificationCount(){
+        return this.notifications.length;
+    }
+
+    removeNotification(id){
+      for(var i = this.notifications.length-1; i>=0; i--) {
+        if( this.notifications[i].id == id)
+          this.notifications.splice(i,1);
+      }
+
+      this.emit("change");
+    }
+
     setUser(user){
         this.user = user;
         this.emit("change");

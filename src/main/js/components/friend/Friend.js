@@ -21,7 +21,7 @@ export default class Friend extends React.Component {
     }
 
     removeFriend(id) {
-      FriendActions.sendFriendRequest(id);
+      FriendActions.removeFriend(id);
       this.closeRemoveFriendModal();
     }
 
