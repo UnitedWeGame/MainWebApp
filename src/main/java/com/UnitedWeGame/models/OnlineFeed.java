@@ -25,6 +25,7 @@ public class OnlineFeed {
 	@JsonIgnore
 	@ManyToOne
 	private User user;
+	private String platform;
 
 	public String getGamerTag() {
 		return gamerTag;
@@ -60,5 +61,13 @@ public class OnlineFeed {
 
 	public long getId() {
 		return id;
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
 	}
 }
