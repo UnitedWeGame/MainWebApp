@@ -9,6 +9,7 @@ import Activity from "./pages/Activity";
 import Friends from "./pages/Friends";
 import GameInfo from "./pages/GameInfo";
 import Library from "./pages/Library";
+import Notifications from "./pages/Notifications";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 
@@ -22,6 +23,7 @@ ReactDOM.render(
             <Route path="activity" name="activity" component={Activity}></Route>
             <Route path="friends" name="friends" component={Friends}></Route>
             <Route path="library" name="library" component={Library}></Route>
+            <Route path="notifications" component={Notifications}></Route>
             <Route path="settings" name="settings" component={Settings}></Route>
         </Route>
         <Route component={LayoutNoSideStatus}>

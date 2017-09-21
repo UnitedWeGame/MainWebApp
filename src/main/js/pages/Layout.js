@@ -12,10 +12,7 @@ export default class Layout extends React.Component {
         const entirePageStyle = {
             background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')",
             backgroundSize: "cover",
-            webkitBackgroundSize: "cover",
-            mozBackgroundSize: "cover",
-            oBackgroundSize: "cover",
-            paddingBottom: "200px"
+            paddingBottom: "300px"
 
         };
 
@@ -59,7 +56,7 @@ export default class Layout extends React.Component {
                         <div class="col-md-7">
                                 {this.props.children}
                         </div>
-                        
+
 
                      </div>
                 </div>
