@@ -21,7 +21,10 @@ class GeneralUserStore extends EventEmitter{
     }
 
     getGames(){
-        return this.user.games;
+        var lib = $.map(this.user['games'], function(value,index){
+          return [value];
+        });
+        return lib;
     }
 
     getImageUrl(){
