@@ -1,0 +1,16 @@
+<div layout:decorator="layout/main" layout:fragment="content">
+
+	<div class="row">
+		<div class="well col-md-6">
+			<img src="https://upload.wikimedia.org/wikipedia/en/1/16/Xbox_Live_Logo.png"/>
+			<h2>Onboarding</h2>
+			<form action="#" th:action="@{/onboarding-xbox}" th:object="${gamertag}" method="post">
+				<div class="form-group">
+					<label for="identifier">Gamertag</label>
+					<input id="identifier" type="text" th:field="*{identifier}" class="form-control"></input>
+				</div>
+				<input type="submit" class="btn btn-success"></input><br/>
+			</form>
+		</div>
+	</div>
+</div>

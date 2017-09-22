@@ -27,6 +27,7 @@ public class ActivityPostSerializer extends StdSerializer<ActivityPost> {
         jgen.writeNumberField("userId", value.getUser().getId());
         jgen.writeStringField("username", value.getUser().getUsername());
         jgen.writeStringField("content", value.getContent());
+        jgen.writeStringField("imageUrl", value.getUser().getImageUrl());
         jgen.writeStringField("timestamp", value.getCreatedDate().toGMTString());
         jgen.writeEndObject();
     }
