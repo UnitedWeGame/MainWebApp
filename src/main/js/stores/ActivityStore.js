@@ -5,8 +5,23 @@ class ActivityStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
-        //this.activityItem = [];
         this.activityItem = [
+            {
+                id: 1,
+                userId: 4444,
+                username: "jacksonmeister",
+                content: "said: I'm the best",
+                timestamp: "21 Sep 2017 17:44:32 GMT"
+            },
+            {
+                id: 1,
+                userId: 4444,
+                username: "jacksonmeister",
+                content: "said: Never mind",
+                timestamp: "21 Sep 2017 17:44:32 GMT"
+            }
+        ];
+        /*this.activityItem = [
             {
                 "login": "weetermachine",
                 "ID": "123",
@@ -42,7 +57,7 @@ class ActivityStore extends EventEmitter{
                 "object": "Family Game Time",
                 "imageUrl": "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"
             }
-        ];
+        ];*/
     }
 
     getAll(){
@@ -50,7 +65,13 @@ class ActivityStore extends EventEmitter{
     }
 
     addPost(post){
+        console.log("this is the post: " + post);
         this.activityItem.unshift(post);
+        this.emit("change");
+    }
+
+    getActivity(activity){
+        this.activityItem = activity;
         this.emit("change");
     }
 
@@ -58,6 +79,10 @@ class ActivityStore extends EventEmitter{
         switch (action.type) {
             case "CREATE_POST": {
                 this.addPost(action.post);
+                break;
+            }
+            case "GET_FRIENDS_ACTIVITY": {
+                this.getActivity(action.activity);
                 break;
             }
         }

@@ -28,7 +28,8 @@ export default class PostCreator extends React.Component {
             imageUrl: UserStore.getImageUrl()
         };
         
-        PostActions.createPost(newPost);
+        //PostActions.createPost(newPost);
+        PostActions.postStatus(this.state.value);
         event.preventDefault();
         this.setState({value: ''});
     }
