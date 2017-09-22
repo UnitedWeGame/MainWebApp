@@ -12,11 +12,13 @@ public class Profile {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String aboutMe;
+	private String coverPhoto;
 
 	// Used for copying one profile to another. Could probably use some cloning,
 	// will look into later..
 	public void updateAttributes(Profile profile) {
 		this.aboutMe = profile.getAboutMe();
+		this.coverPhoto = profile.getCoverPhoto();
 	}
 
 	public String getAboutMe() {
@@ -25,5 +27,13 @@ public class Profile {
 
 	public void setAboutMe(String aboutMe) {
 		this.aboutMe = aboutMe;
+	}
+
+	public String getCoverPhoto() {
+		return coverPhoto;
+	}
+
+	public void setCoverPhoto(String coverPhoto) {
+		this.coverPhoto = coverPhoto;
 	}
 }

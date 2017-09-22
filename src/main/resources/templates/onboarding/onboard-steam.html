@@ -2,9 +2,9 @@
 
 	<div class="row">
 		<div class="well col-md-6">
-			<img src="https://upload.wikimedia.org/wikipedia/en/1/16/Xbox_Live_Logo.png"/>
+			<img src="http://store.akamai.steamstatic.com/public/shared/images/header/globalheader_logo.png?t=962016"/>
 			<h2>Onboarding</h2>
-			<form action="#" th:action="@{/onboarding}" th:object="${gamertag}" method="post">
+			<form action="#" th:action="@{/onboarding-steam}" th:object="${gamertag}" method="post">
 				<div class="form-group">
 					<label for="identifier">Gamertag</label>
 					<input id="identifier" type="text" th:field="*{identifier}" class="form-control"></input>

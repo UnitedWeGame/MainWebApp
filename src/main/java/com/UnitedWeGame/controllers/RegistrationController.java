@@ -38,16 +38,34 @@ public class RegistrationController {
 	@Autowired
 	UserValidator userValidator;
 
-	@GetMapping("/onboarding")
-	public String onboarding(Model model) {
+	@GetMapping("/onboarding-xbox")
+	public String onboardingXbox(Model model) {
 		model.addAttribute("gamertag", new GamerIdentifier());
-		return "onboarding/onboard";
+		return "onboarding/onboard-xbox";
 	}
 	
-	@PostMapping("/onboarding")
-	public String onboarding(@Valid @ModelAttribute GamerIdentifier gamerIdentifier, BindingResult bindingResult) {
+	@PostMapping("/onboarding-xbox")
+	public String onboardingXbox(@Valid @ModelAttribute GamerIdentifier gamerIdentifier, BindingResult bindingResult) {
 		User user = userService.getLoggedInUser();
 		gamerIdentifier.setPlatform("Xbox Live");
+		Set<GamerIdentifier> identifiers = user.getGamerIdentifiers();
+		identifiers.add(gamerIdentifier);
+		user.setGamerIdentifiers(identifiers);
+		gamerIdentifierService.save(gamerIdentifier);
+		userService.saveUser(user);
+		return "redirect:/onboarding-steam";
+	}
+	
+	@GetMapping("/onboarding-steam")
+	public String onboardingSteam(Model model) {
+		model.addAttribute("gamertag", new GamerIdentifier());
+		return "onboarding/onboard-steam";
+	}
+	
+	@PostMapping("/onboarding-steam")
+	public String onboardingSteam(@Valid @ModelAttribute GamerIdentifier gamerIdentifier, BindingResult bindingResult) {
+		User user = userService.getLoggedInUser();
+		gamerIdentifier.setPlatform("Steam");
 		Set<GamerIdentifier> identifiers = user.getGamerIdentifiers();
 		identifiers.add(gamerIdentifier);
 		user.setGamerIdentifiers(identifiers);
@@ -82,7 +100,7 @@ public class RegistrationController {
 		
 		redirectAttrib.addFlashAttribute("success",
 				"You have successfully registered. Feel free to edit your profile now!");
-		return "redirect:/onboarding";
+		return "redirect:/onboarding-xbox";
 	}
 	
 	@GetMapping("/logout")
