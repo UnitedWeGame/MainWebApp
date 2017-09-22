@@ -2,10 +2,13 @@ import dispatcher from "../dispatcher";
 
 export function getFriendsActivity(){
     $.get( "/api/activityFeed/friends", function( data ) {
+        console.log("data from activity: ");
+        console.log(data);
         dispatcher.dispatch({
             type: "GET_FRIENDS_ACTIVITY",
             activity: data
         });
+        setTimeout(getFriendsActivity, 5000);
     });
 }
 

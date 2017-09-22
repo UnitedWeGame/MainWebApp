@@ -1,12 +1,14 @@
 import React from "react";
 import ActivityStore from "../../stores/ActivityStore";
 import FriendStore from "../../stores/FriendStore";
+import * as PostActions from "../../actions/PostActions";
 
 export default class ActivityFeed extends React.Component {
     constructor(){
         super();
         this.getActivity = this.getActivity.bind(this);
         this.getFriends = this.getFriends.bind(this);
+        PostActions.getFriendsActivity();
         const activityList = ActivityStore.getAll();
         const friendList = FriendStore.getAll();
 
