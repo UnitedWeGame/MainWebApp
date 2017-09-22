@@ -60,7 +60,7 @@ export default class GameInfoItem extends React.Component {
       var sliderSettings = {
         dots: true,
         infinite: true,
-        autoplaySpeed: 5000,
+        autoplaySpeed: 3000,
         fade: true,
         speed: 30,
         centerMode: true,
