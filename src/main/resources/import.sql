@@ -594,3 +594,5 @@ INSERT INTO game (image_url, title, platform_title) VALUES('http://images.igdb.c
 INSERT INTO game (image_url, title, platform_title) VALUES('http://images.igdb.com/igdb/image/upload/t_cover_big/fkfre6ivehi6dty87zk4.jpg','LOST PLANET','Xbox360');
 INSERT INTO game (image_url, title, platform_title) VALUES('http://images.igdb.com/igdb/image/upload/t_cover_big/v4rjuqgovsfy35xozq7a.jpg','Soulcalibur IV','Xbox360');
 
+UPDATE game SET image_url = 'http://unitedwegame.herokuapp.com/No_Image_Found_Steam.png'
+WHERE image_url LIKE 'http://unitedwegame.herokuapp.com/no-image-found.jpg' AND platform_title LIKE 'Steam';
