@@ -27,17 +27,10 @@ public class ActivityFeedAPIController {
 	UserService userService;
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ActivityPost createActivity(@RequestBody String json) {
-		ActivityPost activity = new ActivityPost();
-		try {
-			JSONObject jsonObj = new JSONObject(json);
-			activity.setContent(jsonObj.getString("content"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		activity.setUser(userService.getLoggedInUser());
-		activityPostService.createActivity(activity);
-		return activity;
+	public ActivityPost createActivity(@RequestBody ActivityPost activityPost) {	
+		activityPost.setUser(userService.getLoggedInUser());
+		activityPostService.createActivity(activityPost);
+		return activityPost;
 	}
 
 	@RequestMapping("/friends")
