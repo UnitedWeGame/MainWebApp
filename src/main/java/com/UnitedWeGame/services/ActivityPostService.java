@@ -2,6 +2,7 @@ package com.UnitedWeGame.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,12 @@ public class ActivityPostService {
 	
 	public List<ActivityPost> findAllActiviesByFriends(User user) {
 		return activityFeedRepo.findByUserInOrderByCreatedDateDesc(user.getFriends());
+	}
+	
+	public List<ActivityPost> findAllActivityFeed(User user) {
+		Set<User> users = user.getFriends();
+		users.add(user);
+		return activityFeedRepo.findByUserInOrderByCreatedDateDesc(users);
 	}
 	
 	public ActivityPost createActivity(ActivityPost activity) {
