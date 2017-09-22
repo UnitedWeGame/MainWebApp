@@ -37,6 +37,11 @@ public class ActivityFeedAPIController {
 	public List<ActivityPost> fetchFriendsFeed() {
 		return activityPostService.findAllActiviesByFriends(userService.getLoggedInUser());
 	}
+	
+	@RequestMapping("/")
+	public List<ActivityPost> fetchFeed() {
+		return activityPostService.findAllActivityFeed(userService.getLoggedInUser());
+	}
 
 	@RequestMapping("/{userId}")
 	public List<ActivityPost> getFeedForUser(@PathVariable long userId) {
