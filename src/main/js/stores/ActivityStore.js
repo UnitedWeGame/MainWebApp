@@ -22,7 +22,7 @@ class ActivityStore extends EventEmitter{
     getActivity(activity){
         console.log("activity: ");
         console.log(activity);
-        this.activityItem = activity.concat(this.activityItem);
+        this.activityItem = activity;
         this.emit("change");
     }
 

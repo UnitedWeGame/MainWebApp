@@ -1,7 +1,7 @@
 import dispatcher from "../dispatcher";
 
 export function getFriendsActivity(){
-    $.get( "/api/activityFeed/friends", function( data ) {
+    $.get( "/api/activityFeed/", function( data ) {
         console.log("data from activity: ");
         console.log(data);
         dispatcher.dispatch({
@@ -17,13 +17,14 @@ export function getFriendsActivity(){
 export function postStatus(text){
     text = "said: " + text;
     $.ajax({
-         url: "/api/activityFeed/",
+         url: "/api/activityFeed",
          type:"POST",
          data: JSON.stringify({ "content": text }),
          contentType:"application/json; charset=utf-8",
          dataType:"json",
          success: function(response ){
-         console.log("this is the response: " +response);
+         console.log("this is the response: ");
+         console.log(response);
                 dispatcher.dispatch({
                     type: "CREATE_POST",
                     post: response
