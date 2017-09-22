@@ -1,5 +1,42 @@
 import dispatcher from "../dispatcher";
 
+export function getFriendsActivity(){
+    $.get( "/api/activityFeed/friends", function( data ) {
+        dispatcher.dispatch({
+            type: "GET_FRIENDS_ACTIVITY",
+            activity: data
+        });
+    });
+}
+
+
+
+export function postStatus(text){
+    text = "said: " + text;
+    $.ajax({
+         url: "/api/activityFeed/",
+         type:"POST",
+         data: JSON.stringify({ "content": text }),
+         contentType:"application/json; charset=utf-8",
+         dataType:"json",
+         success: function(response ){
+         console.log("this is the response: " +response);
+                dispatcher.dispatch({
+                    type: "CREATE_POST",
+                    post: response
+                });
+         }
+        })
+    //var data = "{\"content\": \""+text+"\"}";
+        //{ content: text }
+    /*$.post("/api/activityFeed/", 
+        JSON.stringify({ "content": text })
+        , 
+        function(response){
+        
+    });*/
+}
+
 export function createPost(post) {
     /*var ID = Date.now();
     var login;
