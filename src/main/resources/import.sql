@@ -79,8 +79,8 @@ insert into users_friends values (8888, 4444)
 insert into users_friends values (8888, 6666)
 
 insert into game (image_url, title, platform_title, summary, first_release_date) values ('test.com', 'MLP', 'Xbox360', 'MLP YAY', '2017-Aug-28');
-insert into online_feed (gamer_tag, last_activity, game_id, user_id, platform) values ('weeterMachine', now(), 11123, 2222, 'XBOX')
-insert into online_feed (gamer_tag, last_activity, game_id, user_id, platform) values ('yourMom', now(), 11123, 2222, 'XBOX')
+insert into online_feed (gamer_tag, last_activity, game_id, user_id, platform) values ('weeterMachine', now(), 11123, 4444, 'Xbox Live')
+insert into online_feed (gamer_tag, last_activity, game_id, user_id, platform) values ('logangsta', now(), 9254, 4444, 'Steam')
 
 
 
