@@ -113,7 +113,7 @@ class MinLibraryItem extends React.Component {
     return(
       <div> 
         <span>
-        <img width="50" height="65" src={imageUrl} alt="Profile Picture"/>
+        <img width="50" src={imageUrl} alt="Profile Picture"/>
           &nbsp;&nbsp;
           <strong>{title}</strong> 
         </span>
