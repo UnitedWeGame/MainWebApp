@@ -2,9 +2,11 @@ import React from "react";
 import FriendStore from "../stores/FriendStore";
 import GeneralUserStore from "../stores/GeneralUserStore";
 import * as GeneralUserActions from "../actions/GeneralUserActions";
-import { Tab, Tabs, Image, Jumbotron } from "react-bootstrap";
+import { Image, Jumbotron } from "react-bootstrap";
+import {Tab} from "react-toolbox";
 import Friend from "../components/friend/Friend";
 import LibrarySearch from "../components/library/LibrarySearch";
+import CustomTabs from "../components/uiPieces/CustomTabs";
 
 export default class Profile extends React.Component {
 constructor(props){
@@ -13,7 +15,6 @@ constructor(props){
     this.getFriends = this.getFriends.bind(this);
     this.getUser = this.getUser.bind(this);
     this.getGames = this.getGames.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
     const friendList = FriendStore.getAll();
     var user = GeneralUserStore.getUser();
     var games = GeneralUserStore.getGames();
@@ -22,7 +23,7 @@ constructor(props){
         friendList: friendList,
         user: user,
         games: games,
-        activeTab: props.activeTab || 1
+        index: 0
     };
     GeneralUserActions.getUserData(props.params.userID);
   }
@@ -57,13 +58,9 @@ constructor(props){
     });
   }
 
-  handleSelect(selectedTab) {
-    // The active tab must be set into the state so that
-    // the Tabs component knows about the change and re-renders.
-    this.setState({
-      activeTab: selectedTab
-    });
-  }
+  handleTabChange = (index) => {
+    this.setState({index});
+  };
 
   render() {
     const { params } = this.props;
@@ -81,39 +78,25 @@ constructor(props){
       opacity: 1.0
     };
 
-  /*const gridInstance = (
-    <Grid>
-      <Row className="show-grid">
-        <Col md={12}> <h2> Game Library: </h2>  </Col>
-      </Row>
-      <hr/>
-      <Row className="show-grid">
-        <Col sm={6} md={6}> <h2>Friends: </h2> <br/> {friends}  <br/></Col>
-        <Col sm={6} md={6}> <h2>Groups: </h2> <br/><br/></Col>
-      </Row>
-    </Grid>
-  );*/
-
-  const controlPanel = (
-    <Tabs activeKey={this.state.activeTab} onSelect={this.handleSelect}>
-        <Tab eventKey={1} title="Library">
-          {library}
-          <LibrarySearch/>
-        </Tab>
-        <Tab eventKey={2} title="Friends">{friends}</Tab>
-        <Tab eventKey={3} title="Groups">Tab 3 content</Tab>
-      </Tabs>
+    const controlPanel = (
+    <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
+      <Tab label='Library'>
+        {library}
+        <LibrarySearch/>
+      </Tab>
+      <Tab label='Friends'><large>{friends}</large></Tab>
+      <Tab label='Groups'><large>To do...</large></Tab>
+    </CustomTabs>
     );
 
       return (
-          <div>
-            <Jumbotron style={headerStyle}>
-              <Image className={profilePicClass} width="150" src={this.state.user.imageUrl} circle responsive/> 
-              <h2>{this.state.user.username} </h2>
-            </Jumbotron>
-            {controlPanel}
-            
-          </div>
+        <div>
+          <Jumbotron style={headerStyle}>
+            <Image className={profilePicClass} width="150" src={this.state.user.imageUrl} circle responsive/> 
+            <h2>{this.state.user.username} </h2>
+          </Jumbotron>
+          {controlPanel}
+        </div>
       );
     }
 }
@@ -131,7 +114,6 @@ class MinLibraryItem extends React.Component {
       <div> 
         <span>
         <img width="50" src={imageUrl} alt="Profile Picture"/>
-          {/*<Image width="75" src={imageUrl} rounded responsive/> */}
           &nbsp;&nbsp;
           <strong>{title}</strong> 
         </span>
