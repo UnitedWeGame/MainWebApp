@@ -1,5 +1,5 @@
 import React from "react";
-import {Button} from "react-bootstrap";
+import {Button, ButtonToolbar} from "react-bootstrap";
 import NotificationStore from "../stores/NotificationStore";
 import * as FriendActions from "../actions/FriendActions";
 
@@ -93,19 +93,20 @@ class Notification extends React.Component {
           &nbsp;&nbsp;
           <strong>{user} {verb}</strong>
           &nbsp;&nbsp;&nbsp;&nbsp;
+          <ButtonToolbar className="pull-right">
           <Button
             bsStyle={btn1Style}
             onClick={this.btn1onClick.bind(this, type, id)}
             >
               {btn1Text}
           </Button>
-          &nbsp;&nbsp;
           <Button
             bsStyle={btn2Style}
             onClick={this.btn2onClick.bind(this, type, id)}
             >
               {btn2Text}
           </Button>
+          </ButtonToolbar>
         </span>
         <hr/>
       </div>

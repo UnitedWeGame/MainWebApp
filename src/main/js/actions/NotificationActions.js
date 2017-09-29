@@ -10,7 +10,7 @@ export function getFriendRequests(){
                   friendRequests: data
           });
       }
-      setTimeout(getFriendRequests, 120000); // 2 minutes
+      setTimeout(getFriendRequests, 60000); // 1 minute
 
     });
 }
