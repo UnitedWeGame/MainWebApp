@@ -167,7 +167,7 @@ public class GamesAPIController {
 		String body = String.format("Hello, your friend %s would like to play %s", username, game.getTitle());
 		body += ". Generated SMS sent from United We Game, please do not reply.";
 		for (User user : users) {
-			if (user.getPhoneNum() != null && !user.getPhoneNum().equals(""))
+			if (user.getPhoneNum() != null && !user.getPhoneNum().equals("") && user.getProfile().isSmsEnabled())
 				textService.sendSMS(user.getPhoneNum(), body);
 		}
 		return "Text messages sent.";
