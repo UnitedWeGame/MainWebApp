@@ -1,9 +1,11 @@
 import React from "react";
 import { hashHistory, IndexLink, Link } from "react-router";
-import {Badge, ButtonToolbar, DropdownButton, MenuItem} from "react-bootstrap"
-import * as UserActions from "../../actions/UserActions"
-import * as FriendActions from "../../actions/FriendActions"
+import {Badge, ButtonToolbar, DropdownButton, MenuItem} from "react-bootstrap";
+import * as UserActions from "../../actions/UserActions";
+import * as FriendActions from "../../actions/FriendActions";
+import * as NotificationActions from "../../actions/NotificationActions";
 import UserStore from "../../stores/UserStore";
+import NotificationStore from "../../stores/NotificationStore";
 import Searchbar from "./Searchbar.js";
 
 
@@ -18,7 +20,7 @@ export default class Nav extends React.Component {
     this.setUserID = this.setUserID.bind(this);
     const username = UserStore.getUsername();
     const userID = UserStore.getUserID();
-    var notificationCount =  UserStore.getNotificationCount();
+    var notificationCount =  NotificationStore.getNotificationCount();
     this.state = {
         collapsed: true,
         usernameDisplay: username,
@@ -29,6 +31,8 @@ export default class Nav extends React.Component {
     UserActions.getCurrentUserData();
     FriendActions.getAllFriends();
     FriendActions.getNowPlaying();
+    NotificationActions.getFriendRequests();
+
   }
 
   componentWillMount() {
@@ -47,7 +51,7 @@ export default class Nav extends React.Component {
 
   setNotificationCount(){
     this.setState({
-      notificationCount: UserStore.getNotificationCount()
+      notificationCount: NotificationStore.getNotificationCount()
     });
   }
 

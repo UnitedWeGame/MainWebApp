@@ -1,6 +1,6 @@
 import React from "react";
 import {Button} from "react-bootstrap";
-import UserStore from "../stores/UserStore";
+import NotificationStore from "../stores/NotificationStore";
 import * as FriendActions from "../actions/FriendActions";
 
 export default class Notifications extends React.Component {
@@ -8,7 +8,7 @@ export default class Notifications extends React.Component {
     constructor(){
       super();
       this.updateNotificationList = this.updateNotificationList.bind(this);
-      const notificationList = UserStore.getNotifications();
+      const notificationList = NotificationStore.getNotifications();
 
       this.state = {
         notificationList: notificationList
@@ -16,16 +16,16 @@ export default class Notifications extends React.Component {
     }
 
     componentWillMount() {
-        UserStore.on("change", this.updateNotificationList);
+        NotificationStore.on("change", this.updateNotificationList);
     }
 
     componentWillUnmount() {
-        UserStore.removeListener("change", this.updateNotificationList);
+        NotificationStore.removeListener("change", this.updateNotificationList);
     }
 
     updateNotificationList() {
       this.setState({
-          notificationList: UserStore.getNotifications()
+          notificationList: NotificationStore.getNotifications()
       })
     }
 
@@ -55,7 +55,7 @@ class Notification extends React.Component {
 
   btn1onClick(type, requestId){
     if(type == "friendRequest"){
-      UserStore.removeNotification(requestId);
+      NotificationStore.removeNotification(requestId);
       FriendActions.acceptFriendRequest(requestId);
     }
   }
@@ -63,7 +63,7 @@ class Notification extends React.Component {
   btn2onClick(type, requestId){
 
     if(type == "friendRequest"){
-      UserStore.removeNotification(requestId);
+      NotificationStore.removeNotification(requestId);
       FriendActions.denyFriendRequest(requestId);
     }
   }
