@@ -1,7 +1,10 @@
 package com.UnitedWeGame.controllers.api;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,9 +90,21 @@ public class UsersAPIController {
 	}
 
 	@RequestMapping("/requests/pending")
-	public Set<FriendRequest> listAllRequestsForMe() {
+	public List<Map<Object, Object>> listAllRequestsForMe() {
 		User user = userService.getLoggedInUser();
-		return requestService.allRequestsToAccept(user.getId());
+		Set<FriendRequest> requests = requestService.allRequestsToAccept(user.getId());
+		List<Map<Object, Object>> response = new ArrayList<>();
+		for (FriendRequest request : requests) {
+			Map<Object, Object> requestResp = new HashMap<>();
+			requestResp.put("id", request.getId());
+			requestResp.put("owner", request.getOwner());
+			requestResp.put("friend", request.getFriend());
+			User owner = userService.findById(request.getOwner());
+			requestResp.put("ownerUsername", owner.getUsername());
+			requestResp.put("ownerImageUrl", owner.getImageUrl());
+			response.add(requestResp);
+		}
+		return response;
 	}
 
 	@RequestMapping("/requests/{requestId}/acceptRequest")
