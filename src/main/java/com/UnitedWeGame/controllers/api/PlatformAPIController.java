@@ -12,7 +12,7 @@ import com.UnitedWeGame.services.PlatformService;
 @RestController
 @RequestMapping("/api/platform")
 public class PlatformAPIController {
-
+	
 	@Autowired
 	PlatformService platformService;
 

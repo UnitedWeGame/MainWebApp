@@ -72,6 +72,7 @@ public class UserService implements UserDetailsService {
 		roles.add(role);
 		// Assign every user with a default blank profile
 		Profile profile = new Profile();
+		profile.setSmsEnabled(true);
 		profileRepo.save(profile);
 		user.setProfile(profile);
 		user.setRoles(roles);

@@ -21,14 +21,14 @@ insert into game (id, image_url, title, platform_title, summary, first_release_d
 
 
 
-insert into profile values (3333, 'Hello, Im Logan', 'http://fbcoverstreet.com/content/Ps2AWabysTFnG4Cwmd3fDTwB96a8bfU1jcbAPWXVIvkQkVLA67cReBU66zAZAdXN.jpg')
+insert into profile values (3333, 'Hello, Im Logan', 'http://fbcoverstreet.com/content/Ps2AWabysTFnG4Cwmd3fDTwB96a8bfU1jcbAPWXVIvkQkVLA67cReBU66zAZAdXN.jpg', true)
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (2222, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8016789986', 'logangster', 3333, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/mjustxpafje74fzjbeuy.jpg')
 insert into user_library values (2222, 11123)
 insert into user_library values (2222, 111234)
 insert into gamer_identifier (identifier, platform, user_id) values ('Logangsta', 'Xbox Live', 2222)
 insert into gamer_identifier (identifier, platform, user_id) values ('76561197967080913', 'Steam', 2222)
 
-insert into profile values (5555, 'Hello, Im Jackson', 'http://www.coverphotos.tk/web/image-thumbnails/233/338-md.jpg')
+insert into profile values (5555, 'Hello, Im Jackson', 'http://www.coverphotos.tk/web/image-thumbnails/233/338-md.jpg', true)
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (4444, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8019138949', 'jacksonmeister', 5555, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg')
 insert into user_library values (4444, 11123)
 insert into user_library values (4444, 11125)
@@ -40,7 +40,7 @@ insert into user_library values (4444, 10233)
 
 
 
-insert into profile values (7777, 'Hello, Im Chris', 'http://www.f-covers.com/cover/tes-skyrim-elder-scrolls-video-game-games-gaming-facebook-cover-timeline-banner-for-fb.jpg')
+insert into profile values (7777, 'Hello, Im Chris', 'http://www.f-covers.com/cover/tes-skyrim-elder-scrolls-video-game-games-gaming-facebook-cover-timeline-banner-for-fb.jpg', true)
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (6666, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8014139990', 'weetermachine', 7777, now(), 'http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png')
 insert into user_library values (6666, 11123)
 insert into user_library values (6666, 111234)
@@ -48,7 +48,7 @@ insert into gamer_identifier (identifier, platform, user_id) values ('weetermach
 insert into gamer_identifier (identifier, platform, user_id) values ('76561198015600919', 'Steam', 6666)
 
 
-insert into profile values (9999, 'Hello, Im Kelsey', 'http://fbcoverstreet.com/content/hDMRz5MHncV1tPFA96tn8DLyommiaSBkYaDNFzVY5ItYZaMq43gJOCle2XlNRmpV.jpg')
+insert into profile values (9999, 'Hello, Im Kelsey', 'http://fbcoverstreet.com/content/hDMRz5MHncV1tPFA96tn8DLyommiaSBkYaDNFzVY5ItYZaMq43gJOCle2XlNRmpV.jpg', true)
 insert into users (id, email, password, phone_num, username, profile_id, last_activity, image_url) values (8888, 'email@email.com', '$2a$10$B3817q3eSePRvTpSqewAZeKwZX1l2HoLyeRnX0VdEBE4gnJg76ZFe', '8015574857', 'kelpaso', 9999, now(), 'https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg')
 insert into gamer_identifier (identifier, platform, user_id) values ('76561198026286466', 'Steam', 8888)
 insert into user_library values (8888, 11123)

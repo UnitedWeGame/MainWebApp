@@ -13,6 +13,7 @@ public class Profile {
 	private long id;
 	private String aboutMe;
 	private String coverPhoto;
+	private boolean smsEnabled;
 
 	// Used for copying one profile to another. Could probably use some cloning,
 	// will look into later..
@@ -35,5 +36,13 @@ public class Profile {
 
 	public void setCoverPhoto(String coverPhoto) {
 		this.coverPhoto = coverPhoto;
+	}
+
+	public boolean isSmsEnabled() {
+		return smsEnabled;
+	}
+
+	public void setSmsEnabled(boolean smsEnabled) {
+		this.smsEnabled = smsEnabled;
 	}
 }
