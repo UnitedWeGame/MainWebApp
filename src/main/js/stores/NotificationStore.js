@@ -6,8 +6,8 @@ class NotificationStore extends EventEmitter{
         super();
 
         this.notifications = [
-          {id: 1, user: "MarioMaster", verb: "wants to be friends!", type: "friendRequest", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
-          {id: 2, user: "Game4Life", verb: "wants to be friends!", type: "friendRequest", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"}
+          {id: 98, user: "MarioMaster", verb: "wants to be friends!", type: "friendRequest", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
+          {id: 99, user: "Game4Life", verb: "wants to be friends!", type: "friendRequest", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"}
         ];
     }
 
@@ -30,10 +30,22 @@ class NotificationStore extends EventEmitter{
       this.emit("change");
     }
 
+    // returns true if the friend request is already in the notification list
+    notificationListContains(friendRequest){
+      var containsRequest = false;
+      const notifications = this.notifications
+      for(var i = 0; i < notifications.length; i++){
+        if(notifications[i].id == friendRequest.id)
+          containsRequest = true;
+      }
+      return containsRequest;
+    }
+
     updateFriendRequests(friendRequests){
+      var listChanged = false;
       for(var i = 0; i < friendRequests.length; i++){
         var request = friendRequests[i]
-        if(!notificationListContains(request)){
+        if(!this.notificationListContains(request)){
           var notification = {};
           notification.id = request.id;
           notification.type = "friendRequest";
@@ -41,20 +53,15 @@ class NotificationStore extends EventEmitter{
           notification.imageUrl = request.ownerImageUrl;
           notification.verb = "wants to be friends!";
           this.notifications.unshift(notification); // add to the front of array
+          listChanged = true;
         }
       }
+      if(listChanged)
+        this.emit("change");
+
     }
 
-      // returns true if the friend request is already in the notification list
-      notificationListContains(friendRequest){
-        var containsRequest = false;
-        const notifications = this.notifications
-        for(var i = 0; i < notifications.length; i++){
-          if(notifications[i].id == friendRequest.id)
-            containsRequest = true;
-        }
-        return containsRequest;
-      }
+
 
     handleActions(action){
         switch (action.type) {

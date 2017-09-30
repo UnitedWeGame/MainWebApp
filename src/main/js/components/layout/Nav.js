@@ -38,14 +38,14 @@ export default class Nav extends React.Component {
   componentWillMount() {
     UserStore.on("change", this.setUsername);
     UserStore.on("change", this.setUserID);
-    UserStore.on("change", this.setNotificationCount);
+    NotificationStore.on("change", this.setNotificationCount);
 
   }
 
   componentWillUnmount() {
     UserStore.removeListener("change", this.setUsername);
     UserStore.removeListener("change", this.setUserID);
-    UserStore.removeListener("change", this.setNotificationCount);
+    NotificationStore.removeListener("change", this.setNotificationCount);
 
   }
 
