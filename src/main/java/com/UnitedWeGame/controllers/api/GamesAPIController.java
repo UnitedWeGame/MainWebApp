@@ -1,5 +1,6 @@
 package com.UnitedWeGame.controllers.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -166,9 +167,14 @@ public class GamesAPIController {
 		List<User> users = userService.gameOwnedByFriends(gameId);
 		String body = String.format("Hello, your friend %s would like to play %s", username, game.getTitle());
 		body += ". Generated SMS sent from United We Game, please do not reply.";
+		List<Long> userIds = new ArrayList<>();
 		for (User user : users) {
-			if (user.getPhoneNum() != null && !user.getPhoneNum().equals("") && user.getProfile().isSmsEnabled())
+			if (user.getPhoneNum() != null && !user.getPhoneNum().equals("") && user.getProfile().isSmsEnabled()
+					&& !userIds.contains(user.getId())) {
 				textService.sendSMS(user.getPhoneNum(), body);
+				// Avoid sending multiple text messages
+				userIds.add(user.getId());
+			}
 		}
 		return "Text messages sent.";
 	}
