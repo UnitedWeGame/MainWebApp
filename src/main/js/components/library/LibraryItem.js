@@ -23,6 +23,8 @@ export default class LibraryItem extends React.Component {
     }
 
     handleInvite(id, event) {
+        if (this.state.inviteButtonText == "Sent!")
+          return;
         LibraryActions.sendTextInvite(id);
         this.setState({
             inviteButtonText: "Sent!"
