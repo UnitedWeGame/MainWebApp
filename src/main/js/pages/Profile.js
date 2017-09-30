@@ -22,18 +22,14 @@ constructor(props){
     this.onFriendRequestClick = this.onFriendRequestClick.bind(this);
     this.openRequestSentModal = this.openRequestSentModal.bind(this);
     this.closeRequestSentModal = this.closeRequestSentModal.bind(this);
-
+    this.updateFriendRequestButton = this.updateFriendRequestButton.bind(this);
 
     const friendList = FriendStore.getAll();
     var user = GeneralUserStore.getUser();
     var userID = GeneralUserStore.getUserID();
     var games = GeneralUserStore.getGames();
-    const loggedInUser = UserStore.getUsername();
+    const loggedInUserID = UserStore.getUserID();
     var showFriendRequestButton = false;
-    if(!this.isFriend(friendList, userID))
-      if(!this.isUser(user, loggedInUser))
-        showFriendRequestButton = true;
-    console.log("should a show friend request button: " + showFriendRequestButton)
 
     this.state = {
         btnDisabled: false,
@@ -41,7 +37,7 @@ constructor(props){
         friendList: friendList,
         games: games,
         index: 0,
-        loggedInUser: loggedInUser,
+        loggedInUserID: loggedInUserID,
         showFriendRequestButton: showFriendRequestButton,
         showRequestSentModal: false,
         user: user,
@@ -55,12 +51,16 @@ constructor(props){
     FriendStore.on("change", this.getFriends);
     GeneralUserStore.on("change", this.getUser);
     GeneralUserStore.on("change", this.getGames);
+    GeneralUserStore.on("change", this.updateFriendRequestButton);
+
   }
 
   componentWillUnmount() {
     FriendStore.removeListener("change", this.getFriends);
     GeneralUserStore.removeListener("change", this.getUser);
     GeneralUserStore.removeListener("change", this.getGames);
+    GeneralUserStore.removeListener("change", this.updateFriendRequestButton);
+
   }
 
   getUser(){
@@ -68,6 +68,7 @@ constructor(props){
       user: GeneralUserStore.getUser(),
       userID: GeneralUserStore.getUserID()
     });
+
   }
 
   getFriends(){
@@ -94,29 +95,44 @@ constructor(props){
     this.setState({ showModal: false});
   }
 
+  updateFriendRequestButton(){
+    if(!this.isFriend() && !this.isUser())
+      this.setState({ showFriendRequestButton: true});
+  }
+
   // returns true if the user featured on the profile page is a friend of
   // the logged-in user
-  isFriend(friendList, userID){
+  isFriend(){
+    if(!this.state.userID)
+      return true;
     console.log("in the isFriend Function")
+    console.log("user: " + this.state.user)
+    console.log("userID: " + this.state.userID)
+    console.log("friend list is this long: " + this.state.friendList.length)
     var alreadyFriends = false;
-    var friends = friendList; // friends of logged-in user
+    var friends = this.state.friendList; // friends of logged-in user
     for(var i = 0; i < friends.length; i++){
-      if(userID == friends[i].id){
+      if(this.state.userID == friends[i].id){
         alreadyFriends = true;
         break;
       }
     }
+    console.log("isFriend returned: " + alreadyFriends)
     return alreadyFriends;
   }
 
   // returns true if the user featured on the profile page is the logged-in user
-  isUser(user, loggedInUser){
-    console.log("loggedin user is: " + loggedInUser);
-
-    if(loggedInUser == user)
+  isUser(){
+    if(!this.state.userID)
       return true;
-    else
+    if(this.state.loggedInUserID == this.state.userID){
+    console.log("isUser returned: true")
+      return true;
+    }
+    else{
+      console.log("isUser returned: false")
       return false;
+    }
   }
 
   onFriendRequestClick(){
