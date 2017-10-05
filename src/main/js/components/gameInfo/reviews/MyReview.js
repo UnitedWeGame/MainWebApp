@@ -48,7 +48,7 @@ export default class MyReview extends React.Component {
       edit: false
     };
 
-    if(myReview){
+    if(!myReview){
       return(
         <div>
         <h2>My Review</h2>
@@ -67,15 +67,17 @@ export default class MyReview extends React.Component {
     else{
       return(
         <div>
+        <h2>My Review</h2>
         <medium>{"You haven't left a review"}</medium>
-        <Button className="pull-right" bsStyle="link">Write a review</Button>
+        &nbsp;&nbsp;
+        <Button  bsSize="small" bsStyle="link" onClick={this.openWriteReviewModal}>Write a review</Button>
 
         <Modal show={this.state.showWriteReviewModal} onHide={this.closeWriteReviewModal}>
             <Modal.Header closeButton>
               <Modal.Title>Write a review for {gameTitle}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <h2>Rating</h2>
+            <h3>Rating</h3>
             <ReactStars {...starSettings}/>
             <br/>
             <form>
@@ -84,6 +86,7 @@ export default class MyReview extends React.Component {
                   type="text"
                   placeholder="E.g., Awesome game!"
                 />
+              <br/>
               <ControlLabel>Review</ControlLabel>
                 <FormControl componentClass="textarea" placeholder="Write review here"/>
             </form>
