@@ -46,8 +46,6 @@ export default class GameInfoItem extends React.Component {
    ratingChanged = (newRating) => {
      this.state.gameInfo.myRating = newRating;
      GameInfoActions.postRating(this.state.gameInfo.id, newRating);
-
-
      console.log(newRating);
   };
 
