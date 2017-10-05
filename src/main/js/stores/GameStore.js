@@ -10,12 +10,14 @@ class GameStore extends EventEmitter{
           id: 0,
           title: "Title Not Found",
           firstReleaseDate: "Release Date Not Found",
-          userRating: 0,
+          myRating: 4,
           communityRating: "No rating found",
           communityRatingCount: "",
           summary: "Game summary not found",
           platforms: "",
-          usersReview: false,
+          myReview: {
+            title: "Sweet game!",
+            review: "This is one of my favorite games. Great for multiplayer, but also fun playing solo. At first I was a little hesitant to buy because of the big price tag. But I'm glad I did!"},
           otherReviews: "No reviews for this game",
           friendsWhoOwn: "No friends own this game",
           screenshots: [{id: 0, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg"},
@@ -47,11 +49,9 @@ class GameStore extends EventEmitter{
         this.game.firstReleaseDate = gameInfo.firstReleaseDate;
       }
 
-      if(gameInfo.userRating){
-        this.game.userRating = gameInfo.userRating;
+      if(gameInfo.myRating){
+        this.game.myRating = gameInfo.myRating;
       }
-      else
-        this.game.userRating = 0;
 
       if(gameInfo.totalRating){
         this.game.communityRating = gameInfo.totalRating;
@@ -62,8 +62,8 @@ class GameStore extends EventEmitter{
       if(gameInfo.summary){
         this.game.summary = gameInfo.summary;
       }
-      if(gameInfo.usersReview){
-        this.game.usersReview = gameInfo.usersReview;
+      if(gameInfo.myReview){
+        this.game.myReview = gameInfo.myReview;
       }
       if(gameInfo.otherReviews){
         this.game.otherReviews = gameInfo.otherReviews;
