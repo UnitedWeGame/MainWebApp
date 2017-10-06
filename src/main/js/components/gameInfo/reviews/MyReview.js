@@ -95,7 +95,7 @@ export default class MyReview extends React.Component {
         <div>
         <h2>My Review</h2>
         <hr/>
-        <h3>{headline}</h3>
+        <h4><i>&quot;{headline}&quot;</i></h4>
         <ReactStars {...noEditStarSettings}/>
         &nbsp;&nbsp;
         <br/>

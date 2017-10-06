@@ -5,6 +5,7 @@ import {Tab} from "react-toolbox";
 import ReactStars from "react-stars";
 import GameStore from "../../stores/GameStore";
 import * as GameInfoActions from "../../actions/GameInfoActions";
+import FriendReviews from "./reviews/FriendReviews";
 import MyReview from "./reviews/MyReview";
 
 
@@ -127,8 +128,9 @@ export default class GameInfoItem extends React.Component {
                 <Tab label='Reviews'>
                   <MyReview gameInfo={this.state.gameInfo}/>
                   <br/>
-                  <h2>Friend Reviews</h2>
-
+                  <hr/>
+                  <br/>
+                  <FriendReviews friendReviews={this.state.gameInfo.friendReviews}/>
                 </Tab>
 
 
