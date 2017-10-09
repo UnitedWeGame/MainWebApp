@@ -7,3 +7,18 @@ export function postRating(id, rating){
 
     });
 }
+
+export function postGameReview(id, headline, review, rating){
+    //var data = {"rating": rating};
+    //$.post( "/api/games/" + id + "/addRating/", data, function( response ) {
+      //console.log(response);
+
+    //});
+    
+    dispatcher.dispatch({
+                type: "NEW_GAME_REVIEW",
+                headline: headline,
+                review: review,
+                rating: rating
+            });
+}

@@ -5,6 +5,8 @@ import {Tab} from "react-toolbox";
 import ReactStars from "react-stars";
 import GameStore from "../../stores/GameStore";
 import * as GameInfoActions from "../../actions/GameInfoActions";
+import FriendReviews from "./reviews/FriendReviews";
+import MyReview from "./reviews/MyReview";
 
 
 
@@ -43,10 +45,8 @@ export default class GameInfoItem extends React.Component {
 
   // Called when the user makes a new star rating
    ratingChanged = (newRating) => {
-     this.state.gameInfo.userRating = newRating;
+     this.state.gameInfo.myRating = newRating;
      GameInfoActions.postRating(this.state.gameInfo.id, newRating);
-
-
      console.log(newRating);
   };
 
@@ -70,7 +70,7 @@ export default class GameInfoItem extends React.Component {
 
       var starSettings = {
         count: 5,
-        value: this.state.gameInfo.userRating,
+        value: this.state.gameInfo.myRating,
         size: 24,
         color2: "#ffd700"
       }
@@ -123,10 +123,17 @@ export default class GameInfoItem extends React.Component {
                       <medium>{this.state.gameInfo.summary}</medium>
 
                   </div>
-
-
                 </Tab>
-                <Tab label='Reviews'><large>There are no reviews</large></Tab>
+
+                <Tab label='Reviews'>
+                  <MyReview gameInfo={this.state.gameInfo}/>
+                  <br/>
+                  <hr/>
+                  <br/>
+                  <FriendReviews friendReviews={this.state.gameInfo.friendReviews}/>
+                </Tab>
+
+
                 <Tab label='Friends Who Own'><large>To do...</large></Tab>
                 <Tab label='Invite'><large>Not yet implemented</large></Tab>
               </CustomTabs>
