@@ -17,7 +17,8 @@ class GameStore extends EventEmitter{
           platforms: "",
           myReview: {
             title: "Sweet game!",
-            review: "This is one of my favorite games. Great for multiplayer, but also fun playing solo. At first I was a little hesitant to buy because of the big price tag. But I'm glad I did!"},
+            review: "This is one of my favorite games. Great for multiplayer, but also fun playing solo. At first I was a little hesitant to buy because of the big price tag. But I'm glad I did!"
+          },
           friendReviews: [
             {
               userID: 2222,
@@ -47,6 +48,12 @@ class GameStore extends EventEmitter{
            {id: 2, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/ka2i4aehuuibfecyaphh.jpg"}]
         };
 
+        this.myDefaultReview = {
+            title: "Sweet game!",
+            review: "This is one of my favorite games. Great for multiplayer, but also fun playing solo. At first I was a little hesitant to buy because of the big price tag. But I'm glad I did!"
+        };
+        this.myDefaultRating = 4;
+
     }
 
     getGame(){
@@ -74,6 +81,9 @@ class GameStore extends EventEmitter{
       if(gameInfo.myRating){
         this.game.myRating = gameInfo.myRating;
       }
+      else
+        this.game.myRating = this.myDefaultRating;
+
 
       if(gameInfo.totalRating){
         this.game.communityRating = gameInfo.totalRating;
@@ -84,9 +94,17 @@ class GameStore extends EventEmitter{
       if(gameInfo.summary){
         this.game.summary = gameInfo.summary;
       }
+
       if(gameInfo.myReview){
         this.game.myReview = gameInfo.myReview;
+        console.log("got my review from the server")
       }
+      else{
+        Object.assign(this.game.myReview, this.myDefaultReview);
+        console.log("using my default review...\nreview: " + this.game.myReview.title)
+      }
+
+
       if(gameInfo.otherReviews){
         this.game.otherReviews = gameInfo.otherReviews;
       }
@@ -98,11 +116,25 @@ class GameStore extends EventEmitter{
         this.emit("change");
     }
 
+    handleNewReview(headline, review, rating){
+      this.game.myReview.title = headline;
+      this.game.myReview.review = review;
+      this.game.myRating = rating;
+
+      console.log("game store updated with new review:\nheadline: " + 
+        headline + "\nreview: " + review + "\nrating" + rating);
+      this.emit("change");
+    }
+
 
     handleActions(action){
         switch (action.type) {
             case "GET_GAME_INFO": {
                 this.setGame(action.gameInfo);
+                break;
+            }
+            case "NEW_GAME_REVIEW": {
+                this.handleNewReview(action.headline, action.review, action.rating);
                 break;
             }
         }

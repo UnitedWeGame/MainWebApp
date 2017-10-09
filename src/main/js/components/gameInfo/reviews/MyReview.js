@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, ButtonToolbar, ControlLabel, FormControl, Modal} from "react-bootstrap";
 import ReactStars from "react-stars";
+import * as GameInfoActions from "../../../actions/GameInfoActions"
 
 export default class MyReview extends React.Component {
   constructor(props){
@@ -11,14 +12,26 @@ export default class MyReview extends React.Component {
       this.handleReviewTextChange = this.handleReviewTextChange.bind(this);
       this.handleReviewTitleChange = this.handleReviewTitleChange.bind(this);
       this.ratingChanged = this.ratingChanged.bind(this);
+      var tempReviewTitle = "";
+      var tempReviewText = "";
+      var tempReviewRating = 0;
+
+      // if user has already left a review for this game,
+      // initialize some variables for editing the review
+      if(this.props.gameInfo.myReview.title){
+        tempReviewTitle = this.props.gameInfo.myReview.title;
+        tempReviewText = this.props.gameInfo.myReview.review;
+        tempReviewRating = this.props.gameInfo.myRating;
+      }
+
 
       this.state = {
           reviewRating: this.props.gameInfo.myRating,
           reviewTitle: this.props.gameInfo.myReview.title,
           reviewText: this.props.gameInfo.myReview.review,
-          newReviewRating: 0,
-          newReviewTitle: "",
-          newReviewText: "",
+          tempReviewRating: tempReviewRating,
+          tempReviewTitle: tempReviewTitle,
+          tempReviewText: tempReviewText,
           showNewReviewModal: false,
 
       };
@@ -37,31 +50,37 @@ export default class MyReview extends React.Component {
   }
 
   handleReviewSubmission(){
-    console.log("new review:\nrating:  " + this.state.newReviewRating + "\nheadline: " + this.state.newReviewTitle + "\nreview: " + this.state.newReviewText)
+    console.log("new review:\nrating:  " + this.state.tempReviewRating + "\nheadline: " + this.state.tempReviewTitle + "\nreview: " + this.state.tempReviewText)
     this.setState({
-      reviewRating: this.state.newReviewRating,
-      reviewTitle: this.state.newReviewTitle,
-      reviewText: this.state.reviewText
+      reviewRating: this.state.tempReviewRating,
+      reviewTitle: this.state.tempReviewTitle,
+      reviewText: this.state.tempReviewText
     });
+
+    // update game info store
+    GameInfoActions.postGameReview(
+      this.props.gameInfo.id, this.state.tempReviewTitle, 
+      this.state.tempReviewText, this.state.tempReviewRating
+      );
+
     // send info to server and update client
     this.closeNewReviewModal();
   }
 
   handleReviewTextChange(e){
-    this.setState({ newReviewText: e.target.value });
-    console.log("newReviewText: " + e.target.value)
+    this.setState({ tempReviewText: e.target.value });
+    console.log("tempReviewText: " + e.target.value)
   }
 
   handleReviewTitleChange(e){
-    this.setState({ newReviewTitle: e.target.value });
-    console.log("newReviewTitle: " + e.target.value)
+    this.setState({ tempReviewTitle: e.target.value });
+    console.log("tempReviewTitle: " + e.target.value)
   }
 
   // Called when the user makes a new star rating in a review
    ratingChanged = (newRating) => {
      this.setState({
-       reviewRating: newRating,
-       newReviewRating: newRating
+       tempReviewRating: newRating
      });
      console.log("star rating changed: " + newRating)
   };
@@ -69,37 +88,34 @@ export default class MyReview extends React.Component {
 
   render(){
 
-    const myRating = this.props.gameInfo.myRating;
-    const headline = this.props.gameInfo.myReview.title;
-    const myReview = this.props.gameInfo.myReview.review;
     const gameTitle = this.props.gameInfo.title;
 
     {/*The star rating component shown in the new review modal*/}
     const starSettings = {
       count: 5,
-      value: this.state.reviewRating,
+      value: this.state.tempReviewRating,
       size: 24,
       color2: "#ffd700",
     };
 
     const noEditStarSettings = {
       count: 5,
-      value: myRating,
+      value: this.state.reviewRating,
       size: 24,
       color2: "#ffd700",
       edit: false
     };
 
-    if(myReview != ""){
+    if(this.state.reviewText != ""){
       return(
         <div>
         <h2>My Review</h2>
         <hr/>
-        <h4><i>&quot;{headline}&quot;</i></h4>
+        <h4><i>&quot;{this.state.reviewTitle}&quot;</i></h4>
         <ReactStars {...noEditStarSettings}/>
         &nbsp;&nbsp;
         <br/>
-        <medium>{myReview}</medium>
+        <medium>{this.state.reviewText}</medium>
         <Button bsSize="small" bsStyle="link" onClick={this.openNewReviewModal}>edit</Button>
 
         <Modal show={this.state.showNewReviewModal} onHide={this.closeNewReviewModal}>
@@ -114,7 +130,7 @@ export default class MyReview extends React.Component {
               <ControlLabel>Review Title</ControlLabel>
                 <FormControl
                   type="text"
-                  value={this.state.reviewTitle}
+                  value={this.state.tempReviewTitle}
                   placeholder="E.g., Awesome game!"
                   onChange={this.handleReviewTitleChange}
                 />
@@ -122,7 +138,7 @@ export default class MyReview extends React.Component {
               <ControlLabel>Review</ControlLabel>
                 <FormControl
                   componentClass="textarea"
-                  value={this.state.reviewText}
+                  value={this.state.tempReviewText}
                   placeholder="Write review here"
                   onChange={this.handleReviewTextChange}
                 />
