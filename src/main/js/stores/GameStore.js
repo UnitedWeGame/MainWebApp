@@ -97,11 +97,9 @@ class GameStore extends EventEmitter{
 
       if(gameInfo.myReview){
         this.game.myReview = gameInfo.myReview;
-        console.log("got my review from the server")
       }
       else{
         Object.assign(this.game.myReview, this.myDefaultReview);
-        console.log("using my default review...\nreview: " + this.game.myReview.title)
       }
 
 
@@ -121,8 +119,6 @@ class GameStore extends EventEmitter{
       this.game.myReview.review = review;
       this.game.myRating = rating;
 
-      console.log("game store updated with new review:\nheadline: " + 
-        headline + "\nreview: " + review + "\nrating" + rating);
       this.emit("change");
     }
 

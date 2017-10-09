@@ -50,31 +50,27 @@ export default class MyReview extends React.Component {
   }
 
   handleReviewSubmission(){
-    console.log("new review:\nrating:  " + this.state.tempReviewRating + "\nheadline: " + this.state.tempReviewTitle + "\nreview: " + this.state.tempReviewText)
     this.setState({
       reviewRating: this.state.tempReviewRating,
       reviewTitle: this.state.tempReviewTitle,
       reviewText: this.state.tempReviewText
     });
 
-    // update game info store
+    // send info to server and update client
     GameInfoActions.postGameReview(
       this.props.gameInfo.id, this.state.tempReviewTitle, 
       this.state.tempReviewText, this.state.tempReviewRating
       );
 
-    // send info to server and update client
     this.closeNewReviewModal();
   }
 
   handleReviewTextChange(e){
     this.setState({ tempReviewText: e.target.value });
-    console.log("tempReviewText: " + e.target.value)
   }
 
   handleReviewTitleChange(e){
     this.setState({ tempReviewTitle: e.target.value });
-    console.log("tempReviewTitle: " + e.target.value)
   }
 
   // Called when the user makes a new star rating in a review
@@ -82,7 +78,6 @@ export default class MyReview extends React.Component {
      this.setState({
        tempReviewRating: newRating
      });
-     console.log("star rating changed: " + newRating)
   };
 
 
