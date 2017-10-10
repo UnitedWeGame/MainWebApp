@@ -4,18 +4,26 @@ import {Button, ButtonToolbar, ButtonGroup, Modal, Overlay, OverlayTrigger, Popo
 import * as LibraryActions from "../../actions/LibraryActions";
 
 export default class LibraryItem extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.openRemoveGameModal = this.openRemoveGameModal.bind(this);
     		this.closeRemoveGameModal = this.closeRemoveGameModal.bind(this);
+        this.handleInvite = this.handleInvite.bind(this);
+        var imgWidth = 264;
+        var imgHeight = 305;
+        if(this.props.platform.title == "Steam"){
+          imgWidth = 368;
+          imgHeight = 138;
+        }
         this.state = {
+          imgWidth: imgWidth,
+          imgHeight: imgHeight,
           inviteSentCount: 0,
           inviteButtonText: "Invite friends via text",
           showModal: false
         };
 
         console.log("inviteSentCount: " + this.state.inviteSentCount);
-        //this.handleInvite = this.handleInvite.bind(this);
     }
 
     getGameInfo(id, event) {
@@ -34,9 +42,7 @@ export default class LibraryItem extends React.Component {
     removeGame(id, platform, event) {
       console.log("game to remove: " + id + ", " + platform)
       LibraryActions.removeGame(id, platform);
-      // add logic to show the games for the correct platform
-      //if(platform == "PS3" || platform == "PS4")
-      //  LibraryActions.showPlaystationGames();
+      
     }
 
     openRemoveGameModal() {
@@ -67,7 +73,7 @@ export default class LibraryItem extends React.Component {
         const popoverClickRootClose = (
             <Popover id="popover-trigger-click-root-close" title={title}>
                 <ButtonGroup vertical>
-                    <Button bsStyle="success" onClick={this.handleInvite.bind(this, id)} block>{this.state.inviteButtonText}</Button>
+                    <Button bsStyle="success" onClick={() => this.handleInvite(id)} block>{this.state.inviteButtonText}</Button>
                     <Button onClick={this.getGameInfo.bind(this, id)}><Link to="game">Game information</Link></Button>
                     <Button>Write a review</Button>
                     <Button>Read friend reviews</Button>
@@ -98,7 +104,7 @@ export default class LibraryItem extends React.Component {
                     </Modal>
 
                     <OverlayTrigger trigger="click" rootClose placement="right" overlay={popoverClickRootClose}>
-                        <img src={imageUrl} style={coverStyle} alt="Game cover"/>
+                        <img src={imageUrl} style={coverStyle} width={this.state.imgWidth} height={this.state.imgHeight} alt="Game cover"/>
                     </OverlayTrigger>
             </span>
 
