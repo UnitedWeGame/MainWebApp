@@ -51,6 +51,7 @@
     "react": "^15.0.0",
     "react-bootstrap": "0.30.8",
     "react-bootstrap-typeahead": "^1.4.2",
+    "react-chat-window": "^1.0.5",
     "react-dom": "^15.0.0",
     "react-router": "^2.3.0",
     "react-slick": "^0.14.11",
