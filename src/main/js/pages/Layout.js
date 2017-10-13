@@ -4,9 +4,47 @@ import { Link } from "react-router";
 import Nav from "../components/layout/Nav";
 import OnlineNow from "../components/status/OnlineNow";
 import NowPlaying from "../components/status/NowPlaying";
+//import {Launcher} from "react-chat-window";
+
 
 
 export default class Layout extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+          messageList: [],
+          newMessagesCount: 0,
+          isOpen: false
+        };
+      }
+
+      onMessageWasSent(message) {
+        this.setState({
+          messageList: [...this.state.messageList, message]
+        })
+      }
+
+      sendMessage(text) {
+        if (text.length > 0) {
+          const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
+          this.setState({
+            newMessagesCount: newMessagesCount,
+            messageList: [...this.state.messageList, {
+              author: 'them',
+              type: 'text',
+              data: { text }
+            }]
+          })
+        }
+      }
+
+      handleClick() {
+        this.setState({
+          isOpen: !this.state.isOpen,
+          newMessagesCount: 0
+        })
+      }
+
     render() {
         const { location } = this.props;
         const entirePageStyle = {
@@ -56,6 +94,8 @@ export default class Layout extends React.Component {
                         <div class="col-md-7">
                                 {this.props.children}
                         </div>
+
+                           
 
 
                      </div>

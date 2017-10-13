@@ -9,8 +9,8 @@ export default class LibraryItem extends React.Component {
         this.openRemoveGameModal = this.openRemoveGameModal.bind(this);
     		this.closeRemoveGameModal = this.closeRemoveGameModal.bind(this);
         this.handleInvite = this.handleInvite.bind(this);
-        var imgWidth = 264;
-        var imgHeight = 305;
+        var imgWidth = 264*.9;
+        var imgHeight = 305*.9;
         if(this.props.platform.title == "Steam"){
           imgWidth = 368;
           imgHeight = 138;
@@ -66,7 +66,7 @@ export default class LibraryItem extends React.Component {
             cursor: "pointer"
         }
         const itemStyle = {
-            margin: 25,
+            margin: '10px 10px 10px 10px',
         };
 
 
@@ -103,7 +103,7 @@ export default class LibraryItem extends React.Component {
                       </Modal.Footer>
                     </Modal>
 
-                    <OverlayTrigger trigger="click" rootClose placement="right" overlay={popoverClickRootClose}>
+                    <OverlayTrigger trigger="click" rootClose placement="left" overlay={popoverClickRootClose}>
                         <img src={imageUrl} style={coverStyle} width={this.state.imgWidth} height={this.state.imgHeight} alt="Game cover"/>
                     </OverlayTrigger>
             </span>

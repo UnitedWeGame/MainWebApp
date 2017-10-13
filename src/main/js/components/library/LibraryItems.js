@@ -148,9 +148,20 @@ export default class LibraryItems extends React.Component {
     render() {
         const games = this.state.ownedGameList.map((g) => <LibraryItem key={g.id} {...g}/> );
         const gameTitles = this.state.formGameTitles.map((g) => <FormGameTitle key={g.id} {...g}/> );
+        
         const spacingStyle = {
         	marginLeft: "10px"
         };
+        
+        const libraryGameStyle = {
+            width:'70%',
+            display:'flex',
+            flexDirection:'row',
+            justifyContent:'flex-start',
+            alignItems:'flex-start',
+            flexWrap:'wrap'
+        }
+
 
         return (
             <div>
@@ -170,7 +181,7 @@ export default class LibraryItems extends React.Component {
 
                 <br/>
 
-                <div class="row well">
+                <div class="row well" style={libraryGameStyle}>
                     {games}
                 </div>
 
