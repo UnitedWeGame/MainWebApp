@@ -2,7 +2,7 @@ package com.UnitedWeGame.models;
 
 public class UserSettings {
 	
-	private boolean smsEnabled;
+	private boolean smsEnabled = true;
 	private String email;
 	private String imageUrl;
 	private String coverPhoto;
