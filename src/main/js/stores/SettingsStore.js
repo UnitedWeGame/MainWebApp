@@ -24,7 +24,7 @@ class SettingsStore extends EventEmitter{
       case "UPDATE_SETTINGS": {
         this.updateUserSettings(action.settings);
         break;
-    }
+      }
     }
   }
 }
