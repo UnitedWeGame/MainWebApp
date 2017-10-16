@@ -41,7 +41,7 @@ public class UserSettingsAPIController {
 		
 		
 		if (!StringUtils.isEmpty(userSettings.getXboxGamertag())) 
-			updateGamerIdentifier(GamerIdentifier.XBOX, userSettings.getSteamId(), identifiers);
+			updateGamerIdentifier(GamerIdentifier.XBOX, userSettings.getXboxGamertag(), identifiers);
 		
 		
 		if(!StringUtils.isEmpty(userSettings.getPsnGamertag())) 
