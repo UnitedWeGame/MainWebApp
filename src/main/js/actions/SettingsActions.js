@@ -2,6 +2,7 @@ import dispatcher from "../dispatcher";
 
 export function updateSettings(settings){
 	console.log("in updateSettings")
+	console.log(settings.imageURL)
   $.ajax({
 		url: "/api/userSettings",
 		type:"POST",
@@ -17,10 +18,10 @@ export function updateSettings(settings){
 		success: function(response ){
 			console.log("this is the response: ");
 			console.log(response);
-	      dispatcher.dispatch({
-          type: "UPDATE_SETTINGS",
-          settings: response
-	      });
-			}
+      dispatcher.dispatch({
+        type: "UPDATE_SETTINGS",
+        settings: response
+      });
+		}
   })
 }
