@@ -23,6 +23,58 @@ class UserStore extends EventEmitter{
         return this.user.imageUrl;
     }
 
+    getCoverPhoto(){
+        if(this.user.profile)
+            return this.user.profile.coverPhoto;
+        else
+            return null;
+    }
+
+    getEmail(){
+        return this.user.email;
+    }
+
+    getSteamId(){
+        const gamerIds = this.user.gamerIdentifiers;
+        for (var key in gamerIds){
+            if (gamerIds.hasOwnProperty(key) && gamerIds[key].platform == 'Steam'){
+                return gamerIds[key].identifier;
+            }
+        }
+        return '';
+    }
+
+    getXboxGamertag(){
+        const gamerIds = this.user.gamerIdentifiers;
+        for (var key in gamerIds){
+            if (gamerIds.hasOwnProperty(key) && gamerIds[key].platform == 'Xbox Live'){
+                return gamerIds[key].identifier;
+            }
+        }
+        return '';
+    }
+
+    getPsnGamertag(){
+        const gamerIds = this.user.gamerIdentifiers;
+        for (var key in gamerIds){
+            if (gamerIds.hasOwnProperty(key) && gamerIds[key].platform == 'Whatever string we use for psn'){
+                return gamerIds[key].identifier;
+            }
+        }
+        return '';
+    }
+
+    getSmsEnabled(){
+        if(this.user.profile)
+            return this.user.profile.smsEnabled;
+        else
+            return null;
+    }
+
+    getAboutMe(){
+        return this.user.profile.aboutMe;
+    }
+
     setUser(user){
         this.user = user;
         this.emit("change");
