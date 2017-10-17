@@ -20,6 +20,10 @@ class GeneralUserStore extends EventEmitter{
         return this.user;
     }
 
+    getCoverPhoto(){
+        return this.user.profile.coverPhoto;
+    }
+
     getAllUsers(){
         return this.users;
     }

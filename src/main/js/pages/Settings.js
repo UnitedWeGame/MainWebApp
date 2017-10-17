@@ -1,27 +1,34 @@
 import React from "react";
-//import { ToggleButtonGroup, ToggleButton} from 'react-bootstrap';
 import {Button, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
-import * as SettingsActions from "../actions/SettingsActions";
-import SettingsStore from "../stores/SettingsStore";
+import * as UserActions from "../actions/UserActions";
+import UserStore from "../stores/UserStore";
 
 export default class Settings extends React.Component {
 	constructor(props, context) {
     super(props, context);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    const settings = SettingsStore.getUserSettings();
+    //const settings = SettingsStore.getUserSettings();
 
-  	this.state = { imageURL: '', coverPhoto: '',
-  	 steamId: '', xboxGamertag: '', psnGamertag: '', email: '', onlyFriendsViewProf: true,
-  	 onlyFriendsChat: true, onlyFriendsSMS: true, smsEnabled: true, settings: settings};
+    var email = (UserStore.getEmail()) ? UserStore.getEmail() : '';
+    var imageURL = (UserStore.getImageUrl()) ? UserStore.getImageUrl() : 'http://www.pgconnects.com/sanfrancisco/wp-content/uploads/sites/5/2015/04/generic-profile-grey-380x380.jpg';
+    var coverPhoto = (UserStore.getCoverPhoto()) ? UserStore.getCoverPhoto() : 'http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg'
+    var steamId = UserStore.getSteamId();
+    var xboxGamertag = UserStore.getXboxGamertag();
+    var psnGamertag = UserStore.getPsnGamertag();
+    var smsEnabled = UserStore.getSmsEnabled();
+
+  	this.state = { imageURL: imageURL, coverPhoto: coverPhoto,
+  	 steamId: steamId, xboxGamertag: xboxGamertag, psnGamertag: psnGamertag, 
+     email: email, smsEnabled: smsEnabled};
   
   }
 
 	handleSubmit(event){
 		event.preventDefault();
-    SettingsActions.updateSettings(this.state);
-		console.log("in handleSubmit");
-		console.log(this.state);
+    UserActions.updateSettings(this.state);
+    
+    //SettingsActions.updateSettings(this.state);
 	}
 
   handleInputChange(event) {
@@ -32,14 +39,6 @@ export default class Settings extends React.Component {
     this.setState({
       [name]: value
     });
-  }
-
-  getSettings(){
-    this.setState({
-      settings: SettingsStore.userSettings()
-    });
-    console.log("settings:");
-    console.log(this.state.settings);
   }
 
   render() {
@@ -120,24 +119,6 @@ export default class Settings extends React.Component {
         </FormGroup>
 
 		    	<h3> Privacy Settings: </h3>
-		    	
-		    	<Checkbox 
-		    	onChange={this.handleInputChange}
-		    	checked={this.state.onlyFriendsViewProf}
-		    	name="onlyFriendsViewProf">
-		    	Only friends can see my profile.</Checkbox>
-
-		    	<Checkbox 
-		    	onChange={this.handleInputChange}
-		    	checked={this.state.onlyFriendsChat}
-		    	name="onlyFriendsChat">
-		    	Only friends can chat directly with me.</Checkbox>
-
-		    	<Checkbox 
-		    	onChange={this.handleInputChange}
-		    	checked={this.state.onlyFriendsSMS}
-		    	name="onlyFriendsSMS">
-		    	Only friends can send me SMS invites.</Checkbox>
 
 		    	<Checkbox 
 		    	onChange={this.handleInputChange}
