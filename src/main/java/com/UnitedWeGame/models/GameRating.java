@@ -25,6 +25,7 @@ public class GameRating {
 	@ManyToOne
 	private User user;
 	private float rating;
+	private String reviewTitle;
 	@Column(columnDefinition = "TEXT")
 	private String review;
 
@@ -62,5 +63,13 @@ public class GameRating {
 
 	public void setReview(String review) {
 		this.review = review;
+	}
+
+	public String getReviewTitle() {
+		return reviewTitle;
+	}
+
+	public void setReviewTitle(String reviewTitle) {
+		this.reviewTitle = reviewTitle;
 	}
 }
