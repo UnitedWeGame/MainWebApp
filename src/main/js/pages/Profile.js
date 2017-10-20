@@ -156,10 +156,14 @@ constructor(props){
     if(this.state.showFriendRequestButton)
         coverBtnStyle = { display: "initial" };
 
-
+    var coverPhotoUrl = "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')";
+    if(this.state.user.profile){
+      const profile = this.state.user.profile;
+      coverPhotoUrl = "url('"+profile.coverPhoto+"')";
+    }
 
     const headerStyle = {
-      background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')",
+      background: coverPhotoUrl,
       backgroundSize: "cover",
       backgroundPosition: "center"
     };
@@ -171,8 +175,8 @@ constructor(props){
     const controlPanel = (
     <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
       <Tab label='Library'>
-        {library}
         <LibrarySearch/>
+        {library}
       </Tab>
       <Tab label='Friends'><large>{friends}</large></Tab>
       <Tab label='Groups'><large>To do...</large></Tab>
