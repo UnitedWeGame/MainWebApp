@@ -6,9 +6,11 @@ import UserStore from "../stores/UserStore";
 export default class Settings extends React.Component {
 	constructor(props, context) {
     super(props, context);
+    UserActions.getCurrentUserData();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    //const settings = SettingsStore.getUserSettings();
+
+    this.setUser = this.setUser.bind(this);
 
     var email = (UserStore.getEmail()) ? UserStore.getEmail() : '';
     var imageURL = (UserStore.getImageUrl()) ? UserStore.getImageUrl() : 'http://www.pgconnects.com/sanfrancisco/wp-content/uploads/sites/5/2015/04/generic-profile-grey-380x380.jpg';
@@ -24,11 +26,31 @@ export default class Settings extends React.Component {
   
   }
 
+  componentWillMount() {
+    UserStore.on("change", this.setUser);
+
+  }
+
+  componentWillUnmount() {
+    UserStore.removeListener("change", this.setUser);
+
+  }
+
+  setUser(){
+    this.setState({ 
+      imageURL: UserStore.getImageUrl(), 
+      coverPhoto: UserStore.getCoverPhoto(),
+      steamId: UserStore.getSteamId(), 
+      xboxGamertag: UserStore.getXboxGamertag(), 
+      psnGamertag: UserStore.getPsnGamertag(), 
+      email: UserStore.getEmail(), 
+      smsEnabled: UserStore.getSmsEnabled()
+    });
+  }
+
 	handleSubmit(event){
-		event.preventDefault();
+		//event.preventDefault();
     UserActions.updateSettings(this.state);
-    
-    //SettingsActions.updateSettings(this.state);
 	}
 
   handleInputChange(event) {
