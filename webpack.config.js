@@ -36,6 +36,18 @@ module.exports = {
                 "postcss-loader" // has separate config, see postcss.config.js nearby
               ]
             },
+            {
+                test: /\.svg$/,
+                loader: 'svg-react-loader', 
+                query: {
+                    classIdPrefix: '[name]-[hash:8]__',
+                    xmlnsTest: /^xmlns.*$/
+                }
+            },
+            {
+                test: /\.png$/,
+                loader: 'file-loader'
+            }
         ]
     },
     output: {

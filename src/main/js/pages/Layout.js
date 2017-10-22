@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import Nav from "../components/layout/Nav";
 import OnlineNow from "../components/status/OnlineNow";
 import NowPlaying from "../components/status/NowPlaying";
-//import {Launcher} from "react-chat-window";
+import {Launcher} from "react-chat-window";
 
 
 
@@ -64,7 +64,6 @@ export default class Layout extends React.Component {
             paddingTop: "5px"
         };
 
-        console.log("layout");
         return (
             <div style={entirePageStyle}>
 
@@ -86,6 +85,22 @@ export default class Layout extends React.Component {
                                 <OnlineNow/>
                             </div>
 
+                            <br/><br/>
+
+                            <div style={sideStatusPanel}>
+                                <Launcher
+                                    agentProfile={{
+                                      teamName: 'react-live-chat',
+                                      imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+                                    }}
+                                    onMessageWasSent={this.onMessageWasSent.bind(this)}
+                                    messageList={this.state.messageList}
+                                    newMessagesCount={this.state.newMessagesCount}
+                                    handleClick={this.handleClick.bind(this)}
+                                    isOpen={this.state.isOpen}
+                                />
+                            </div>
+
                         </div>
 
                         <div class="col-md-1">
@@ -94,9 +109,6 @@ export default class Layout extends React.Component {
                         <div class="col-md-7">
                                 {this.props.children}
                         </div>
-
-                           
-
 
                      </div>
                 </div>
