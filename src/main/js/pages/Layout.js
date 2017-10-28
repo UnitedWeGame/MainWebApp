@@ -50,8 +50,12 @@ export default class Layout extends React.Component {
         const entirePageStyle = {
             background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')",
             backgroundSize: "cover",
-            paddingBottom: "300px"
+            paddingBottom: "300px",
+        };
 
+        const chatStyle = {
+          zIndex: "1000000",
+          position: "relative"
         };
 
         const containerStyle = {
@@ -69,17 +73,19 @@ export default class Layout extends React.Component {
 
                 <Nav location={location} />
 
-                <Launcher
-                    agentProfile={{
-                      teamName: 'react-live-chat',
-                      imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-                    }}
-                    onMessageWasSent={this.onMessageWasSent.bind(this)}
-                    messageList={this.state.messageList}
-                    newMessagesCount={this.state.newMessagesCount}
-                    handleClick={this.handleClick.bind(this)}
-                    isOpen={this.state.isOpen}
-                />
+                <div style={chatStyle}>
+                  <Launcher
+                      agentProfile={{
+                        teamName: 'react-live-chat',
+                        imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+                      }}
+                      onMessageWasSent={this.onMessageWasSent.bind(this)}
+                      messageList={this.state.messageList}
+                      newMessagesCount={this.state.newMessagesCount}
+                      handleClick={this.handleClick.bind(this)}
+                      isOpen={this.state.isOpen}
+                  />
+                </div>
 
                 <div class="container" style={containerStyle}>
                     <div class="row">

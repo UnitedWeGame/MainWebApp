@@ -1,5 +1,5 @@
 .sc-header {
-  background: #4e8cff;
+  background: #58c362;
   min-height: 75px;
   border-top-left-radius: 9px;
   border-top-right-radius: 9px;
@@ -27,7 +27,7 @@
 }
 
 .sc-header--team-name:hover {
-  background: #4882ed;
+  background: #363b3e;
 }
 
 .sc-header--close-button {
@@ -41,7 +41,7 @@
 }
 
 .sc-header--close-button:hover {
-  background: #4882ed;
+  background: #363b3e;
 }
 
 .sc-header--close-button img {

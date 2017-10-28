@@ -36,7 +36,7 @@
 .sc-user-input--text:empty:before {
   content: attr(placeholder);
   display: block; /* For Firefox */
-  color: rgba(86, 88, 103, 0.3);
+  color: rgba(86, 88, 103, 0.7);
   outline: none;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .sc-user-input--send-icon path {
-  fill: rgba(86, 88, 103, 0.3);
+  fill: rgba(86, 88, 103, 0.5);
 }
 
 .sc-user-input--send-icon:hover path {
@@ -101,7 +101,7 @@
 }
 
 .sc-user-input--emoji-icon path, .sc-user-input--emoji-icon circle {
-  fill: rgba(86, 88, 103, 0.3);
+  fill: rgba(86, 88, 103, 0.5);
 }
 
 .sc-user-input--emoji-icon-wrapper:focus .sc-user-input--emoji-icon path,
