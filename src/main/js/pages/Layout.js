@@ -69,6 +69,18 @@ export default class Layout extends React.Component {
 
                 <Nav location={location} />
 
+                <Launcher
+                    agentProfile={{
+                      teamName: 'react-live-chat',
+                      imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+                    }}
+                    onMessageWasSent={this.onMessageWasSent.bind(this)}
+                    messageList={this.state.messageList}
+                    newMessagesCount={this.state.newMessagesCount}
+                    handleClick={this.handleClick.bind(this)}
+                    isOpen={this.state.isOpen}
+                />
+
                 <div class="container" style={containerStyle}>
                     <div class="row">
 
@@ -84,23 +96,6 @@ export default class Layout extends React.Component {
                                 <h2 class="text-center">Online Now</h2>
                                 <OnlineNow/>
                             </div>
-
-                            <br/><br/>
-
-                            <div style={sideStatusPanel}>
-                                <Launcher
-                                    agentProfile={{
-                                      teamName: 'react-live-chat',
-                                      imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-                                    }}
-                                    onMessageWasSent={this.onMessageWasSent.bind(this)}
-                                    messageList={this.state.messageList}
-                                    newMessagesCount={this.state.newMessagesCount}
-                                    handleClick={this.handleClick.bind(this)}
-                                    isOpen={this.state.isOpen}
-                                />
-                            </div>
-
 
                         </div>
 
