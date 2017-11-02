@@ -1,15 +1,44 @@
 import React from "react";
 import {Launcher} from "react-chat-window";
+import ChatStore from"../../stores/ChatStore";
 
 
 export default class ChatWindow extends React.Component {
     constructor() {
         super();
+        this.updateCurrentChat = this.updateCurrentChat.bind(this);
+        var isOpen = ChatStore.getIsOpen();
+        var partners = ChatStore.getCurrentPartners()[0];
+        var chatImgUrl = ChatStore.getCurrentChatImgUrl();
+        var messageList = ChatStore.getCurrentMessageList();
+        var newMessagesCount = ChatStore.getCurrentNewMessagesCount();
+
+
         this.state = {
-          messageList: [],
-          newMessagesCount: 0,
-          isOpen: false
+          messageList: messageList,
+          newMessagesCount: newMessagesCount,
+          isOpen: isOpen,
+          partners: partners,
+          chatImgUrl: chatImgUrl
         };
+      }
+
+      componentWillMount(){
+        ChatStore.on("change", this.updateCurrentChat);
+      }
+
+      componentWillUnmount(){
+        ChatStore.removeListener("change", this.updateCurrentChat);
+      }
+
+      updateCurrentChat(){
+        this.setState({
+          isOpen: ChatStore.getIsOpen(),
+          partners: ChatStore.getCurrentPartners(),
+          chatImgUrl: ChatStore.getCurrentChatImgUrl(),
+          messageList: ChatStore.getCurrentMessageList(),
+          newMessagesCount: ChatStore.getCurrentNewMessagesCount()
+        })
       }
 
       onMessageWasSent(message) {
@@ -45,8 +74,8 @@ export default class ChatWindow extends React.Component {
             <div>
               <Launcher
                   agentProfile={{
-                    teamName: 'react-live-chat',
-                    imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+                    teamName: this.state.partners,
+                    imageUrl: this.state.chatImgUrl
                   }}
                   onMessageWasSent={this.onMessageWasSent.bind(this)}
                   messageList={this.state.messageList}

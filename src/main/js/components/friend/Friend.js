@@ -1,8 +1,10 @@
 import React from "react";
-import * as FriendActions from "../../actions/FriendActions"
-import FriendStore from "../../stores/FriendStore";
 import {Button, ButtonToolbar, ButtonGroup, Glyphicon, Overlay, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import { Link } from "react-router";
+import * as FriendActions from "../../actions/FriendActions"
+import FriendStore from "../../stores/FriendStore";
+import * as ChatActions from "../../actions/ChatActions";
+
 
 export default class Friend extends React.Component {
     constructor(props){
@@ -17,6 +19,7 @@ export default class Friend extends React.Component {
 		this.closeInfoModal = this.closeInfoModal.bind(this);
     this.openRemoveFriendModal = this.openRemoveFriendModal.bind(this);
     this.closeRemoveFriendModal = this.closeRemoveFriendModal.bind(this);
+    this.startChat = this.startChat.bind(this);
 
     }
 
@@ -39,6 +42,10 @@ export default class Friend extends React.Component {
 
     closeRemoveFriendModal() {
       this.setState({ showRemoveFriendModal: false });
+    }
+
+    startChat(username, imageUrl){
+      ChatActions.startSoloChat(username, imageUrl);
     }
 
     render() {
@@ -82,6 +89,10 @@ export default class Friend extends React.Component {
   			<Tooltip id="tooltip"><strong>Unfriend</strong></Tooltip>
   		  );
 
+        const tooltipChat = (
+  			<Tooltip id="tooltip"><strong>Send/Read messages</strong></Tooltip>
+  		  );
+
 
 
 
@@ -93,11 +104,20 @@ export default class Friend extends React.Component {
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
       					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>
                  </OverlayTrigger>
-                 <OverlayTrigger placement="left" overlay={tooltipRemove}>
-                    <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
-                    <Glyphicon glyph="remove" />
+
+                 <ButtonToolbar className="pull-right">
+                 <OverlayTrigger placement="bottom" overlay={tooltipChat}>
+                    <Button bsStyle="link" bsSize="small" onClick={this.startChat.bind(this, username, imageUrl)}>
+                    <Glyphicon glyph="comment" />
                     </Button>
                 </OverlayTrigger>
+
+                <OverlayTrigger placement="bottom" overlay={tooltipRemove}>
+                   <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
+                   <Glyphicon glyph="remove" />
+                   </Button>
+               </OverlayTrigger>
+               </ButtonToolbar>
 
                 </span>
 
