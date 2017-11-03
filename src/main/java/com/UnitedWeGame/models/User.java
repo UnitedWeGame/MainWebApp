@@ -6,20 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 
@@ -47,6 +34,10 @@ public class User {
 	private String phoneNum;
 	private Date lastActivity;
 	private String imageUrl;
+
+	@ElementCollection(targetClass=Long.class)
+	private Set<Long> groups = new HashSet<>();
+
 
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -225,4 +216,11 @@ public class User {
 		this.gameRatings = gameRatings;
 	}
 
+	public Set<Long> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set<Long> groups) {
+		this.groups = groups;
+	}
 }
