@@ -60,6 +60,7 @@ export default class ChatWindow extends React.Component {
       clickChatWindow(){
         console.log("In the clickChatWindow() !")
         const el = findDOMNode(this.refs.chatwindow);
+        console.log("Eleement is : " + el);
         $(el).click();
       }
 
