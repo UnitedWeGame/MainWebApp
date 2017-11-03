@@ -13,15 +13,11 @@ class ActivityStore extends EventEmitter{
     }
 
     addPost(post){
-        console.log("this is the post: " );
-        console.log(post);
         this.activityItem.unshift(post);
         this.emit("change");
     }
 
     getActivity(activity){
-        console.log("activity: ");
-        console.log(activity);
         this.activityItem = activity;
         this.emit("change");
     }

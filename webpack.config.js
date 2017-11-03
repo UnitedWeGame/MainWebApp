@@ -14,7 +14,7 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'es2015'],
+                    presets: ['react', 'env'],
                     //presets: ['react', 'es2015', 'stage-0'],
                     plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
                 }
@@ -36,6 +36,10 @@ module.exports = {
                 "postcss-loader" // has separate config, see postcss.config.js nearby
               ]
             },
+            {
+                test: /\.png$|\.svg$/,
+                loader: 'file-loader'
+            }
         ]
     },
     output: {

@@ -28,6 +28,16 @@ class GeneralUserStore extends EventEmitter{
         return this.users;
     }
 
+    getUsers(ids){
+        var users = [];
+        for (var i = 0; i < this.users.length; i++) {
+            if(ids.includes(this.users[i].id)){
+                users.push(this.users[i]);
+            }
+        }
+        return users;
+    }
+
     getGames(){
         var lib = $.map(this.user['games'], function(value,index){
           return [value];
