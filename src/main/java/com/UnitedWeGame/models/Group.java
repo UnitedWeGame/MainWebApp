@@ -25,7 +25,7 @@ public class Group {
     private Long adminUser;
 
     @ElementCollection(targetClass=Long.class)
-    private List<Long> members = new ArrayList<>();
+    private Set<Long> members = new HashSet<>();
 
     @OneToMany
     private List<GroupPost> groupPost = new ArrayList<>();
@@ -63,14 +63,14 @@ public class Group {
         this.coverPhoto = coverPhoto;
     }
 
-    public List<Long> getMembers() {
+    public Set<Long> getMembers() {
         if(members == null)
-            return new ArrayList<>();
+            return new HashSet<>();
 
         return members;
     }
 
-    public void setMembers(List<Long> members) {
+    public void setMembers(Set<Long> members) {
         this.members = members;
     }
 

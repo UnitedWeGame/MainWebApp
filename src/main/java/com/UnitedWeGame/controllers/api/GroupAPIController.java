@@ -33,7 +33,7 @@ public class GroupAPIController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public Group createGroup(@RequestBody Group group) {
-        List<Long> members = group.getMembers();
+        Set<Long> members = group.getMembers();
         User currentUser = userService.getLoggedInUser();
         members.add(currentUser.getId());
         group.setMembers(members);
@@ -67,6 +67,46 @@ public class GroupAPIController {
     @RequestMapping("/{groupId}")
     public Group getGroup(@PathVariable Long groupId) {
         return groupService.getGroupById(groupId);
+    }
+
+    @RequestMapping("/{groupId}/addMember/{userId}")
+    public Group addMemberToGroup(@PathVariable Long groupId, @PathVariable Long userId)
+    {
+        Group group = groupService.getGroupById(groupId);
+        Set<Long> members = group.getMembers();
+        members.add(userId);
+        group.setMembers(members);
+
+        User user = userService.findById(userId);
+        Set<Long> groups = user.getGroups();
+        groups.add(groupId);
+        user.setGroups(groups);
+
+        groupService.createGroup(group);
+
+        userService.saveUser(user);
+
+        return group;
+    }
+
+    @RequestMapping("/{groupId}/addMember")
+    public Group addCurrentUserToGroup(@PathVariable Long groupId)
+    {
+        Group group = groupService.getGroupById(groupId);
+        Set<Long> members = group.getMembers();
+        members.add(userService.getLoggedInUser().getId());
+        group.setMembers(members);
+
+        User user = userService.getLoggedInUser();
+        Set<Long> groups = user.getGroups();
+        groups.add(groupId);
+        user.setGroups(groups);
+
+        groupService.createGroup(group);
+
+        userService.saveUser(user);
+
+        return group;
     }
 
 }

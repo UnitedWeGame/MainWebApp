@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.UnitedWeGame.models.Group;
+import com.UnitedWeGame.services.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +35,9 @@ public class UsersAPIController {
 	ProfileService profileService;
 
 	@Autowired
+	GroupService groupService;
+
+	@Autowired
 	FriendRequestService requestService;
 
 	@RequestMapping("/users")
@@ -43,6 +48,32 @@ public class UsersAPIController {
 	@RequestMapping("/users/me")
 	public User loggedInUser() {
 		return userService.findById(userService.getLoggedInUser().getId());
+	}
+
+	@RequestMapping("/users/groups")
+	public List<Group> getUsersGroups()
+	{
+		List<Group> groups = new ArrayList<>();
+		User user = userService.getLoggedInUser();
+		Set<Long> userGroups = user.getGroups();
+
+		for(Long groupID : userGroups)
+			groups.add(groupService.getGroupById(groupID));
+
+		return groups;
+	}
+
+	@RequestMapping("/users/groups/{userId}")
+	public List<Group> getUsersGroups(@PathVariable Long userId)
+	{
+		List<Group> groups = new ArrayList<>();
+		User user = userService.findById(userId);
+		Set<Long> userGroups = user.getGroups();
+
+		for(Long groupID : userGroups)
+			groups.add(groupService.getGroupById(groupID));
+
+		return groups;
 	}
 
 	@RequestMapping("/users/{userId}")

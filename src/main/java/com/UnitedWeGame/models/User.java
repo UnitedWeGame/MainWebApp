@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.Fetch;
 
 /**
  * @author logangster
@@ -35,7 +36,7 @@ public class User {
 	private Date lastActivity;
 	private String imageUrl;
 
-	@ElementCollection(targetClass=Long.class)
+	@ElementCollection(fetch = FetchType.EAGER, targetClass=Long.class)
 	private Set<Long> groups = new HashSet<>();
 
 
@@ -217,6 +218,10 @@ public class User {
 	}
 
 	public Set<Long> getGroups() {
+
+		if(groups == null)
+			return new HashSet<>();
+
 		return groups;
 	}
 
