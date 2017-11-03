@@ -47,10 +47,17 @@ class ChatStore extends EventEmitter{
     }
 
     startSoloChat(partner, partnerUrl){
-        this.currentChat.partner = partner;
-        this.currentChat.imageUrl = partnerUrl;
-        this.isOpen = true;
+        for(var i = 0; i < this.allChats.length; i++){
+          if(this.allChats[i].partner === partner)
+            this.currentChat = this.allChats[i];
+        }
+        //this.currentChat.partner = partner;
+        //this.currentChat.imageUrl = partnerUrl;
+        //$( #chatwindow ).click(function(){
+        //}
+        //this.isOpen = true;
         this.emit("change");
+        this.emit("click");
     }
 
     getPartner(members, me) {
@@ -88,9 +95,13 @@ class ChatStore extends EventEmitter{
             var partner = this.getPartner(members, me);
             console.log("getPartner returned: " + partner)
             newConversation.partner = partner;
-            newConversation.messageList = this.decodeMessageList(messageList, me);
+            newConversation.messageList = messageList;
+            for(var i = 0; i < messageList.length; i++){
+              console.log("Loaded message: " + messageList[i].data.text + " , author: " + messageList[i].author);
+            }
+            //newConversation.messageList = this.decodeMessageList(messageList, me);
             newConversation.imageUrl = this.imageUrl // use dummy data for now...
-            console.log("DECODED messageList from chat server was this long: " + newConversation.messageList.length)
+            //console.log("DECODED messageList from chat server was this long: " + newConversation.messageList.length)
             this.allChats.push(newConversation)
         }
         this.currentChat = this.allChats[this.allChats.length-1]
@@ -104,12 +115,15 @@ class ChatStore extends EventEmitter{
     }
 
     receiveMessage(messageList, from) {
-        console.log("Inside receiveMessage, messageList is this long: " + messageList.length)
-        console.log("allChats is this long: " + this.allChats.length)
+        console.log("Inside receiveMessage, messageList length: " + messageList.length)
+        for(var i = 0; i < messageList.length; i++){
+          console.log("message number " + i + ": " + messageList[i].data.text + " author: " + messageList[i].author)
+        }
+
         for (var index in this.allChats) {
             if (this.allChats[index].partner === from) {
-                console.log("Inside the IF statement!!! GOOD")
-                this.allChats[index].messageList = this.decodeMessageList(messageList, UserStore.getUsername());
+                //this.allChats[index].messageList = this.decodeMessageList(messageList, UserStore.getUsername());
+                this.allChats[index].messageList = messageList;
 
             }
         }
