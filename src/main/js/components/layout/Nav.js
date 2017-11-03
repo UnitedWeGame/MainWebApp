@@ -91,7 +91,7 @@ export default class Nav extends React.Component {
     }
 
     else if(eventKey == 4){
-      hashHistory.push("/groups");
+      hashHistory.push("/groupSettings");
     }
   }
 

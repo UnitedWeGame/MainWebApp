@@ -27,14 +27,14 @@ ReactDOM.render(
             <Route path="library" name="library" component={Library}></Route>
             <Route path="notifications" component={Notifications}></Route>
             <Route path="settings" name="settings" component={Settings}></Route>
-            <Route path="groupSettings" name="groupSettings" component={GroupSettings}>
-            </Route>
-                <Route path="groupSettings/:groupID" component={GroupSettings} />
+            <Route path="groupSettings" name="groupSettings" component={GroupSettings}></Route>
+            <Route path="groupSettings/:groupID" component={GroupSettings} />
         </Route>
         <Route component={LayoutNoSideStatus}>
-          <Route path="/game*" component={GameInfo}></Route>
-          <Route path="/profile/:userID" name="profile" component={Profile}></Route>
-          <Route path="groups" name="groups" component={Groups}></Route>
+            <Route path="/game*" component={GameInfo}></Route>
+            <Route path="/profile/:userID" name="profile" component={Profile}></Route>
+            {/*<Route path="groups" name="groups" component={Groups}></Route>*/}
+            <Route path="groups/:groupID" component={Groups} />
         </Route>
     </Router>,
     app);

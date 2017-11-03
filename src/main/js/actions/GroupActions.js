@@ -2,10 +2,11 @@ import dispatcher from "../dispatcher";
 
 export function getGroup(id){
 	const group = { 
+    groupId : 1234,
 		groupName: "El groupo", 
 		description: "Es un muy bueno groupo!",
 		coverPhoto: 'https://s3-us-west-1.amazonaws.com/patreon-reward-images/1300113.jpeg',
-		members: [2222,4444,6666,8888],
+		members: [2222,4444,6666],
 		activityList: [
 			{
 				id: 12,
@@ -29,12 +30,48 @@ export function getGroup(id){
 		type: "GET_GROUP_DATA",
 		group: group
 	});
-	/*$.get( "/api/users/" + id, function( data ){
+	/*$.get( "/api/groups/" + id, function( data ){
 		dispatcher.dispatch({
 			type: "GET_USER_DATA",
 			user: data
 		});
 	});*/
+}
+
+export function joinGroup(groupId, userId){
+  console.log("API hasn't been implemented yet.");
+  return;
+  $.ajax({
+    url: "/api/groups/" + groupId,
+    type:"POST",
+    data: JSON.stringify({"userId": userId }),
+    contentType:"application/json; charset=utf-8",
+    dataType:"json",
+    success: function(response ){
+      dispatcher.dispatch({
+        type: "UPDATE_GROUP",
+        settings: response
+      });
+    }
+  });
+}
+
+export function updateActivityFeed(group){
+  console.log("API hasn't been implemented yet.");
+  return;
+  $.ajax({
+    url: "/api/groups/" + group.groupId,
+    type:"POST",
+    data: JSON.stringify({"activityList": group.activityList }),
+    contentType:"application/json; charset=utf-8",
+    dataType:"json",
+    success: function(response ){
+      dispatcher.dispatch({
+        type: "UPDATE_GROUP",
+        settings: response
+      });
+    }
+  });
 }
 
 export function updateSettings(settings){

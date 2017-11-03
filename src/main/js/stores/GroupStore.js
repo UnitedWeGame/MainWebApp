@@ -12,6 +12,10 @@ class GroupStore extends EventEmitter{
     this.emit("change");
   }
 
+  getGroup(){
+    return this.group;
+  }
+
   getName(){
     return this.group.groupName;
   }

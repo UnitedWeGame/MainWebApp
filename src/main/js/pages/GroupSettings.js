@@ -11,6 +11,7 @@ export default class GroupSettings extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
 
+    var group = {};
 		var groupName = '';
 		var description = '';
     var coverPhoto = '';
@@ -19,11 +20,17 @@ export default class GroupSettings extends React.Component {
 		if(props.params.groupID){
 			isNewGroup = false;
 			GroupActions.getGroup(props.params.groupID);
-			groupName = GroupStore.getName();
+      group = GroupStore.getGroup();
+      groupName = group.groupName;
+      description = group.description;
+      coverPhoto = group.coverPhoto;
+
+			/*groupName = GroupStore.getName();
 			description = GroupStore.getDesc();
-      coverPhoto = GroupStore.getCoverPhoto();
+      coverPhoto = GroupStore.getCoverPhoto();*/
 		}
 		this.state = {
+      group: group,
 			groupName: groupName,
 			description: description,
       coverPhoto: coverPhoto,
@@ -41,9 +48,12 @@ export default class GroupSettings extends React.Component {
   }
 
   setGroup(){
+    const group = GroupStore.getGroup();
     this.setState({ 
-    	groupName: GroupStore.getGroupName(),
-			description: GroupStore.getDesc()
+      group: group,
+    	groupName: group.groupName,
+			description: group.description,
+      coverPhoto: group.coverPhoto
     });
   }
 

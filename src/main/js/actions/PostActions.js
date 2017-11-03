@@ -2,8 +2,6 @@ import dispatcher from "../dispatcher";
 
 export function getFriendsActivity(){
     $.get( "/api/activityFeed/", function( data ) {
-        console.log("data from activity: ");
-        console.log(data);
         dispatcher.dispatch({
             type: "GET_FRIENDS_ACTIVITY",
             activity: data
@@ -23,8 +21,6 @@ export function postStatus(text){
          contentType:"application/json; charset=utf-8",
          dataType:"json",
          success: function(response ){
-         console.log("this is the response: ");
-         console.log(response);
                 dispatcher.dispatch({
                     type: "CREATE_POST",
                     post: response
