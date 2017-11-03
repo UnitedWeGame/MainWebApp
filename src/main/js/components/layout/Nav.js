@@ -89,6 +89,10 @@ export default class Nav extends React.Component {
     else if(eventKey == 3){
       hashHistory.push("/logout");
     }
+
+    else if(eventKey == 4){
+      hashHistory.push("/groupSettings");
+    }
   }
 
 
@@ -151,6 +155,7 @@ export default class Nav extends React.Component {
                   <MenuItem eventKey="2" onSelect={this.onDropdownSelect}>Settings</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey="3" onSelect={this.onDropdownSelect}>Logout</MenuItem>
+                  <MenuItem eventKey="4" onSelect={this.onDropdownSelect}>Create a Group</MenuItem>
                 </DropdownButton>
             </ul>
 

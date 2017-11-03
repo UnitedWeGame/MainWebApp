@@ -45,18 +45,6 @@ export default class ActivityFeed extends React.Component {
     var newActivityList = jQuery.extend(true, [], this.state.activityList);
     var newFriendList = jQuery.extend(true, [], this.state.friendList);
 
-    /*for (var a in newActivityList) {
-      if (newActivityList.hasOwnProperty(a)) {
-        for(var f in newFriendList){
-          if (newFriendList.hasOwnProperty(f)){
-            if(a.userId == f.id){
-                a.imageUrl = f.imageUrl;
-                console.log("lkajsdlfkjasl")
-            }
-          }
-        }
-      }
-    }*/
     newActivityList.forEach((a) => {
         newFriendList.forEach((f) => {
             if(a.userId == f.id){
@@ -64,9 +52,7 @@ export default class ActivityFeed extends React.Component {
             }
         });
     });
-    /*this.state.activityList.forEach(function(a){
-        newActivityList[a.imageUrl] = newFriendList[a.userID].imageUrl;
-    });*/
+    
     var activities = [];
     if(newActivityList){
       activities = this.state.activityList.map((a) => <Item key={a.ID} {...a}/> );
