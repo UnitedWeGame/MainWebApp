@@ -28,13 +28,16 @@
     <link rel="stylesheet" type="text/css" href="css/chatStyles/styles/header.css" />
     <link rel="stylesheet" type="text/css" href="css/chatStyles/styles/message.css" />
     <link rel="stylesheet" type="text/css" href="css/chatStyles/styles/userInput.css" />
-
-
+    <!-- Make sure to grab same version socket.io as chat server -->
+    <script src='http://unitedwechat.herokuapp.com/socket.io/socket.io.js' type='text/javascript'></script>
 
 </head>
 
 <body>
 <div id="app"></div>
+<script>
+  var socket = io.connect('http://unitedwechat.herokuapp.com:80/', {transports: ['websocket', 'polling', 'flashsocket']});
+</script>
 <script src="client.min.js"></script>
 <script>function doPoll(){
     $.post('/api/users/updateTimestamp', function(data) {
@@ -43,6 +46,7 @@
 }
 doPoll();
 </script>
+
 </body>
 
 </html>

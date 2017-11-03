@@ -2,6 +2,7 @@ import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import dummyMessageHistory from "./dummyMessageHistory";
 import FriendStore from "./FriendStore";
+import UserStore from "./UserStore";
 
 
 class ChatStore extends EventEmitter{
@@ -9,13 +10,16 @@ class ChatStore extends EventEmitter{
         super();
         var component = this;
         this.isOpen = true;
-        this.currentChat = {
-          partners: ["logangster"],
+        this.imageUrl = "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png";
+        this.allChats = [
+          {
+          partner: "noName",
           imageUrl: "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png",
           messageList: dummyMessageHistory,
           newMessagesCount: 1
-        }
-        this.allChats = []
+          }
+        ];
+        this.currentChat = this.allChats[0];
     }
 
     getIsOpen(){
@@ -26,8 +30,8 @@ class ChatStore extends EventEmitter{
       return this.currentChat;
     }
 
-    getCurrentPartners(){
-      return this.currentChat.partners;
+    getCurrentPartner(){
+      return this.currentChat.partner;
     }
 
     getCurrentChatImgUrl(){
@@ -43,9 +47,72 @@ class ChatStore extends EventEmitter{
     }
 
     startSoloChat(partner, partnerUrl){
-        this.currentChat.partners = partner;
+        this.currentChat.partner = partner;
         this.currentChat.imageUrl = partnerUrl;
         this.isOpen = true;
+        this.emit("change");
+    }
+
+    getPartner(members, me) {
+      for (var index in members) {
+          var member = members[index];
+          if (member != me) {
+            return member;
+          }
+      }
+    }
+
+    decodeMessageList(messageList, me) {
+        for (var index in messageList) {
+            var message = messageList[index];
+            console.log("Message author is: " + message.author)
+            if (message.author == me) {
+                message.author = "me";
+            } else {
+                message.author = "them";
+            }
+        }
+        return messageList;
+    }
+
+    loadConversations(conversations) {
+        var me = UserStore.getUsername();
+        console.log("in store, load conversations. Me is: " + me)
+        for (var index in conversations) {
+            var conversation = conversations[index];
+            var newConversation = {};
+            var members = conversation.members;
+            var messageList = conversation.messageList;
+            console.log("messageList from chat server was this long: " + messageList.length)
+
+            var partner = this.getPartner(members, me);
+            console.log("getPartner returned: " + partner)
+            newConversation.partner = partner;
+            newConversation.messageList = this.decodeMessageList(messageList, me);
+            newConversation.imageUrl = this.imageUrl // use dummy data for now...
+            console.log("DECODED messageList from chat server was this long: " + newConversation.messageList.length)
+            this.allChats.push(newConversation)
+        }
+        this.currentChat = this.allChats[this.allChats.length-1]
+
+        this.emit("change")
+    }
+
+    updateMessageList(messageList) {
+        this.currentChat.messageList = messageList;
+        this.emit("change")
+    }
+
+    receiveMessage(messageList, from) {
+        console.log("Inside receiveMessage, messageList is this long: " + messageList.length)
+        console.log("allChats is this long: " + this.allChats.length)
+        for (var index in this.allChats) {
+            if (this.allChats[index].partner === from) {
+                console.log("Inside the IF statement!!! GOOD")
+                this.allChats[index].messageList = this.decodeMessageList(messageList, UserStore.getUsername());
+
+            }
+        }
         this.emit("change");
     }
 
@@ -53,6 +120,18 @@ class ChatStore extends EventEmitter{
         switch (action.type) {
             case "START_SOLO_CHAT": {
                 this.startSoloChat(action.partner, action.partnerImg);
+                break;
+            }
+            case "LOAD_CONVERSATIONS": {
+                this.loadConversations(action.conversations);
+                break;
+            }
+            case "WRITE_MESSAGE": {
+                this.updateMessageList(action.messageList);
+                break;
+            }
+            case "RECEIVE_MESSAGE": {
+                this.receiveMessage(action.messageList, action.from);
                 break;
             }
         }
