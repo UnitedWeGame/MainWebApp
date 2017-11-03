@@ -1,4 +1,6 @@
 import React from "react";
+import {Button} from "react-bootstrap";
+import * as ChatActions from "../../actions/ChatActions";
 import OnlineNowStore from "../../stores/OnlineNowStore";
 import * as OnlineNowActions from "../../actions/OnlineNowActions";
 
@@ -29,9 +31,10 @@ export default class OnlineNow extends React.Component {
         });
     }
 
+
     render() {
         var friends = this.state.friendList.map((person) => <FriendOnline key={person.ID} {...person}/> );
-        if(friends.length == 0) friends = "No friends are online...";    
+        if(friends.length == 0) friends = "No friends are online...";
         return (
             <div class="well pre-scrollable">
                 {/*<h3 class="text-center"> Online Now: </h3>*/}
@@ -43,16 +46,26 @@ export default class OnlineNow extends React.Component {
 
 
 class FriendOnline extends React.Component {
-    render() {
-        const {username} = this.props;
-        const {imageUrl} = this.props;
+  constructor(props){
+      super(props);
+      this.startChat = this.startChat.bind(this);
+  }
 
-        return (
-            <div class="autosize-container" id="friend">
-                <p><img src={imageUrl} alt="Profile Picture"/>
-                    <strong>{username}</strong></p>
-                <hr/>
-            </div>
-        );
-    }
+  startChat(username, imageUrl){
+    ChatActions.startSoloChat(username, imageUrl);
+  }
+
+  render() {
+      const {username} = this.props;
+      const {imageUrl} = this.props;
+
+      return (
+          <div class="autosize-container" id="friend">
+              <p><img src={imageUrl} alt="Profile Picture"/>
+              &nbsp;
+              <Button bsStyle="link" onClick={this.startChat.bind(this, username, imageUrl)}><strong>{username}</strong></Button></p>
+              <hr/>
+          </div>
+      );
+  }
 }

@@ -4,45 +4,13 @@ import { Link } from "react-router";
 import Nav from "../components/layout/Nav";
 import OnlineNow from "../components/status/OnlineNow";
 import NowPlaying from "../components/status/NowPlaying";
-//import {Launcher} from "react-chat-window";
+import ChatWindow from "../components/chat/ChatWindow";
 
 
 
 export default class Layout extends React.Component {
     constructor() {
         super();
-        this.state = {
-          messageList: [],
-          newMessagesCount: 0,
-          isOpen: false
-        };
-      }
-
-      onMessageWasSent(message) {
-        this.setState({
-          messageList: [...this.state.messageList, message]
-        })
-      }
-
-      sendMessage(text) {
-        if (text.length > 0) {
-          const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
-          this.setState({
-            newMessagesCount: newMessagesCount,
-            messageList: [...this.state.messageList, {
-              author: 'them',
-              type: 'text',
-              data: { text }
-            }]
-          })
-        }
-      }
-
-      handleClick() {
-        this.setState({
-          isOpen: !this.state.isOpen,
-          newMessagesCount: 0
-        })
       }
 
     render() {
@@ -50,8 +18,12 @@ export default class Layout extends React.Component {
         const entirePageStyle = {
             background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')",
             backgroundSize: "cover",
-            paddingBottom: "300px"
+            paddingBottom: "300px",
+        };
 
+        const chatStyle = {
+          zIndex: "1000000",
+          position: "relative"
         };
 
         const containerStyle = {
@@ -64,11 +36,14 @@ export default class Layout extends React.Component {
             paddingTop: "5px"
         };
 
-        console.log("layout");
         return (
             <div style={entirePageStyle}>
 
                 <Nav location={location} />
+
+                <div style={chatStyle}>
+                  <ChatWindow />
+                </div>
 
                 <div class="container" style={containerStyle}>
                     <div class="row">
@@ -94,9 +69,6 @@ export default class Layout extends React.Component {
                         <div class="col-md-7">
                                 {this.props.children}
                         </div>
-
-                           
-
 
                      </div>
                 </div>
