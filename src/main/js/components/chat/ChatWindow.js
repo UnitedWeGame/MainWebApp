@@ -4,8 +4,6 @@ import ChatStore from "../../stores/ChatStore";
 import UserStore from "../../stores/UserStore";
 import * as ChatActions from "../../actions/ChatActions";
 import { findDOMNode } from "react-dom";
-//import $ from ‘jquery’;
-
 
 export default class ChatWindow extends React.Component {
     constructor() {
@@ -32,13 +30,9 @@ export default class ChatWindow extends React.Component {
 
 
         socket.on('allConvos', function(allConversations) {
-            console.log(allConversations);
             ChatActions.loadAllConversations(allConversations);
         });
         socket.on('newMessage', function(messageInfo) {
-            console.log("Received a message!")
-            console.log("Message was from: " + messageInfo.from)
-            console.log("Message list is this long: " + messageInfo.messageList.length)
             ChatActions.receiveMessage(messageInfo);
         });
       }
@@ -72,7 +66,6 @@ export default class ChatWindow extends React.Component {
       }
 
       updateCurrentChat(){
-        console.log("Update current chat called!")
         this.setState({
           isOpen: ChatStore.getIsOpen(),
           partner: ChatStore.getCurrentPartner(),

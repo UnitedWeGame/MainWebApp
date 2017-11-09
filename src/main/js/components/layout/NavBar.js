@@ -1,6 +1,6 @@
 import React from "react";
 import { hashHistory, IndexLink, Link } from "react-router";
-import {Badge, Button, ButtonToolbar, DropdownButton, FormGroup, Glyphicon, MenuItem, Nav, Navbar, NavDropdown, NavItem} from "react-bootstrap";
+import {Badge, Button, ButtonToolbar, DropdownButton, FormGroup, Glyphicon, MenuItem, Nav, Navbar, NavDropdown, NavItem, Overlay, OverlayTrigger, Tooltip} from "react-bootstrap";
 import * as UserActions from "../../actions/UserActions";
 import * as FriendActions from "../../actions/FriendActions";
 import * as NotificationActions from "../../actions/NotificationActions";
@@ -21,11 +21,14 @@ export default class NavBar extends React.Component {
     const username = UserStore.getUsername();
     const userID = UserStore.getUserID();
     var notificationCount =  NotificationStore.getNotificationCount();
+    var notificationHeadline =  NotificationStore.getHeadline();
+
     this.state = {
         collapsed: true,
         usernameDisplay: username,
         userID: userID,
-        notificationCount: notificationCount
+        notificationCount: notificationCount,
+        notificationHeadline: notificationHeadline
     };
 
     UserActions.getCurrentUserData();
@@ -51,7 +54,8 @@ export default class NavBar extends React.Component {
 
   setNotificationCount(){
     this.setState({
-      notificationCount: NotificationStore.getNotificationCount()
+      notificationCount: NotificationStore.getNotificationCount(),
+      notificationHeadline: NotificationStore.getHeadline()
     });
   }
 
@@ -96,6 +100,10 @@ export default class NavBar extends React.Component {
       fontSize: "16px"
     }
 
+    const tooltipNotifications = (
+      <Tooltip id="tooltip"><strong>{this.state.notificationHeadline}</strong></Tooltip>
+    );
+
     const { location } = this.props;
     const { collapsed } = this.state;
     const activityClass = location.pathname === "/" ? "active" : "";
@@ -124,9 +132,11 @@ export default class NavBar extends React.Component {
             <NavItem eventKey={2} href="/users#/friends">Friends</NavItem>
             <NavItem eventKey={3} href="/users#/library">Library</NavItem>
             <NavItem eventKey={4} href="/users#/profile/${this.state.userID}"><strong>{this.state.usernameDisplay}</strong></NavItem>
-            <NavItem eventKey={5} href="/users#/notifications">
-                <Glyphicon style={glyphBellStyle} glyph="bell" /><Badge>{this.state.notificationCount}</Badge>
-            </NavItem>
+            <OverlayTrigger placement="bottom" overlay={tooltipNotifications}>
+              <NavItem eventKey={5} href="/users#/notifications">
+                  <Glyphicon style={glyphBellStyle} glyph="bell" /><Badge>{this.state.notificationCount}</Badge>
+              </NavItem>
+            </OverlayTrigger>
             <NavDropdown eventKey={6} title="" id="basic-nav-dropdown">
               <MenuItem eventKey={6.1} href="/users#/groupSettings">Create a Group</MenuItem>
               <MenuItem eventKey={6.2} href="/users#/notifications">Notifications</MenuItem>

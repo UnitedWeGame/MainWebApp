@@ -1,5 +1,8 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
+import ChatStore from "./ChatStore";
+import FriendStore from "./FriendStore";
+
 
 class NotificationStore extends EventEmitter{
     constructor(){
@@ -9,9 +12,9 @@ class NotificationStore extends EventEmitter{
           {id: 98, user: "MarioMaster", verb: "wants to be friends!", type: "friendRequest", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
           {id: 99, user: "Game4Life", verb: "wants to be friends!", type: "friendRequest", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"}
         ];
+
+        this.latestHeadline = this.notifications.length + " new notifications";
     }
-
-
 
     getNotifications(){
         return this.notifications;
@@ -21,12 +24,16 @@ class NotificationStore extends EventEmitter{
         return this.notifications.length;
     }
 
+    getHeadline(){
+      return this.latestHeadline;
+    }
+
     removeNotification(id){
       for(var i = this.notifications.length-1; i>=0; i--) {
         if( this.notifications[i].id == id)
           this.notifications.splice(i,1);
       }
-
+      this.latestHeadline = this.notifications.length + " new notifications";
       this.emit("change");
     }
 
@@ -56,9 +63,24 @@ class NotificationStore extends EventEmitter{
           listChanged = true;
         }
       }
-      if(listChanged)
+      if(listChanged){
+        this.latestHeadline = this.notifications.length + " new notifications";
         this.emit("change");
+      }
+    }
 
+    addMsgToNotifications(from){
+      console.log("from: " + from)
+      if(ChatStore.currentChat.partner == from)
+        return;
+      var notification = {};
+      notification.id = this.notifications.length;
+      notification.type = "newMessage";
+      notification.user = from;
+      notification.verb = "sent you a message!";
+      this.notifications.unshift(notification); // add to the front of array
+      this.latestHeadline = "New message from "  + from;
+      this.emit("change");
     }
 
 
@@ -67,6 +89,10 @@ class NotificationStore extends EventEmitter{
         switch (action.type) {
             case "FRIEND_REQUEST_RECEIVED": {
                 this.updateFriendRequests(action.friendRequests);
+                break;
+            }
+            case "RECEIVE_MESSAGE": {
+                this.addMsgToNotifications(action.from);
                 break;
             }
         }

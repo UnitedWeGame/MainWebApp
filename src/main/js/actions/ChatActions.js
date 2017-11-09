@@ -3,19 +3,14 @@ import dispatcher from "../dispatcher";
 function formatMessageList(messageList, me, partner) {
   /*console.log("In formatMessageList")
   console.log("messageList is this long: " + messageList.length)*/
-  console.log("me " + me);
-  console.log("partner " + partner);
     for (var index in messageList) {
         var message = messageList[index];
-        console.log("message: " + message.data.text)
-        console.log("formatMessageList, author: " + message.author);
         if (message.author == "me") {
             message.author = me;
         } else {
             message.author = partner;
         }
     }
-    console.log("after formatMessageList, list is this long: " + messageList.length)
     return messageList;
 }
 
