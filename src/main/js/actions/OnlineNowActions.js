@@ -16,6 +16,6 @@ export function getOnlineNow(){
                 type: "UPDATE_ONLINE_NOW",
                 friends: friends
             });
-    setTimeout(getOnlineNow, 5000);
+    setTimeout(getOnlineNow, 20000);
     });
 }

@@ -41,7 +41,7 @@
 <script src="client.min.js"></script>
 <script>function doPoll(){
     $.post('/api/users/updateTimestamp', function(data) {
-        setTimeout(doPoll,5000);
+        setTimeout(doPoll,20000);
     });
 }
 doPoll();
