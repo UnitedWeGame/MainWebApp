@@ -35,7 +35,7 @@ class FriendReview extends React.Component {
 
     const username = this.props.username;
     const rating = this.props.rating;
-    const headline = this.props.headline;
+    const headline = this.props.reviewTitle;
     const review = this.props.review;
 
     {/*The star rating component shown in the new review modal*/}

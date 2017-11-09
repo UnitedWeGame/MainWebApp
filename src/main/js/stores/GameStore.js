@@ -2,10 +2,12 @@ import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import UserStore from "./UserStore";
 
+/* Information pertaining to a particular game */
 class GameStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
+        // Initialize
         this.game = {
           id: 0,
           title: "Title Not Found",
@@ -19,29 +21,7 @@ class GameStore extends EventEmitter{
             title: "Sweet game!",
             review: "This is one of my favorite games. Great for multiplayer, but also fun playing solo. At first I was a little hesitant to buy because of the big price tag. But I'm glad I did!"
           },
-          friendReviews: [
-            {
-              userID: 2222,
-              username: "kelpaso",
-              rating: 4,
-              headline: "One of the best games this year",
-              review: "There are so many things I love about this game. First, the graphics are just incredible. Way better than the last edition. And the multiplayer has gotten really really good."
-            },
-            {
-              userID: 4444,
-              username: "n00bPwn3r",
-              rating: 2.5,
-              headline: "Meh...",
-              review: "I was pretty disappointed with this one. I had high expectations after the last release, but I just can't stand multiplayer."
-            },
-            {
-              userID: 5555,
-              username: "Salty17",
-              rating: 4.5,
-              headline: "Everything I wanted",
-              review: "Finally. I had been waiting for ages for this game to come out and it did not disappoint. The storyline is amazing. I've been playing this for two weeks straight."
-            }
-          ],
+          friendReviews: [],
           friendsWhoOwn: "No friends own this game",
           screenshots: [{id: 0, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/me0xfxmsvrqihgrfxh9r.jpg"},
            {id: 1, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg"},
@@ -66,8 +46,8 @@ class GameStore extends EventEmitter{
       if(gameInfo.title){
         this.game.title = gameInfo.title;
       }
+      console.log(gameInfo.title + " has id of: " + this.game.id)
 
-      //console.log("number of screenshots: " + gameInfo.screenshots.length)
       if(gameInfo.screenshots.length > 0){
         this.game.screenshots = gameInfo.screenshots;
       }
@@ -102,9 +82,9 @@ class GameStore extends EventEmitter{
         Object.assign(this.game.myReview, this.myDefaultReview);
       }
 
-
-      if(gameInfo.otherReviews){
-        this.game.otherReviews = gameInfo.otherReviews;
+      if(gameInfo.friendsRatings){
+        this.game.friendReviews = gameInfo.friendsRatings;
+        console.log("a friend review looks like this: " + gameInfo.friendsRatings[0])
       }
       if(gameInfo.friendsWhoOwn){
         this.game.friendsWhoOwn = gameInfo.friendsWhoOwn;
