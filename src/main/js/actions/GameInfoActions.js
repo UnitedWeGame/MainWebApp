@@ -4,7 +4,7 @@ import dispatcher from "../dispatcher";
 export function postRating(id, rating){
     var data = {"rating": rating};
     $.ajax({
-       url: "/api/games/" + id + "/addRating/",
+       url: "/api/games/" + id + "/addRating",
        type:"POST",
        data: JSON.stringify({data}),
        contentType:"application/json; charset=utf-8",
@@ -22,7 +22,7 @@ export function postGameReview(id, reviewTitle, review, rating){
     var data = {"rating": rating, "reviewTitle": reviewTitle, "review": review};
     console.log("after json: " + JSON.stringify({data}))
     $.ajax({
-       url: "/api/games/" + id + "/addRating/",
+       url: "/api/games/" + id + "/addRating",
        type:"POST",
        data: JSON.stringify({data}),
        contentType:"application/json; charset=utf-8",
