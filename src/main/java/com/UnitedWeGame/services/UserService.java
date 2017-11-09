@@ -224,6 +224,29 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public List<OnlineFeed> getOldUserFeed() {
+		Session session;
+		try {
+		    session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+		    session = sessionFactory.openSession();
+		}
+		session.beginTransaction();
+		Long userId = getLoggedInUser().getId();
+		Date currentDate = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.HOUR, -7);
+		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed").createAlias("onlineFeed.user", "users")
+				.add(Restrictions.eq("users.id", userId)).add(Restrictions.lt("onlineFeed.lastActivity", cal.getTime()))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<OnlineFeed> feed = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return feed;
+	}
+	
+	//Saving in case we need this later
+	/*public List<OnlineFeed> getOldUserFeed() {
 		StatelessSession session = sessionFactory.openStatelessSession();
 		session.beginTransaction();
 		Long userId = getLoggedInUser().getId();
@@ -240,7 +263,7 @@ public class UserService implements UserDetailsService {
 		session.getTransaction().commit();
 		session.close();
 		return feed;
-	}
+	}*/
 	
 	public boolean isFriend(Long userId) {
 		for (User user : getLoggedInUser().getFriends()) {
