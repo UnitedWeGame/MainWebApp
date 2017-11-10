@@ -90,7 +90,7 @@ export default class Friend extends React.Component {
   		  );
 
         const tooltipChat = (
-  			<Tooltip id="tooltip"><strong>Send/Read messages</strong></Tooltip>
+  			<Tooltip id="tooltip"><strong>Read/Send Message</strong></Tooltip>
   		  );
 
 

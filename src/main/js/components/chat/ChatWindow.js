@@ -5,7 +5,6 @@ import UserStore from "../../stores/UserStore";
 import * as ChatActions from "../../actions/ChatActions";
 import { findDOMNode } from "react-dom";
 
-
 export default class ChatWindow extends React.Component {
     constructor() {
         super();
