@@ -80,6 +80,15 @@ class NotificationStore extends EventEmitter{
       notification.verb = "sent you a message!";
       this.notifications.unshift(notification); // add to the front of array
       this.latestHeadline = "New message from "  + from;
+
+      // get friend's profile picture
+      var friends = FriendStore.getAll();
+      for(var i = 0; i < friends.length; i++){
+        if(friends[i].username === from)
+          notification.imageUrl = friends[i].imageUrl;
+          break;
+      }
+
       this.emit("change");
     }
 
