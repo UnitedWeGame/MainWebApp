@@ -83,6 +83,27 @@ class NotificationStore extends EventEmitter{
       this.emit("change");
     }
 
+    removeMsgNotification(partner){
+      console.log("Notifications are this long:" + this.notifications.length);
+      for(var i = this.notifications.length-1; i>=0; i--) {
+        if(
+          this.notifications[i].type === "newMessage" &&
+          this.notifications[i].user === partner
+        )
+        this.notifications.splice(i,1);
+      }
+      this.latestHeadline = this.notifications.length + " new notifications";
+      this.emit("change");
+    }
+
+    /*
+       When a user opens a chat window or changes their chat window,
+       we want to remove any unread message notifications for their new chat partner
+    */
+    removeMsgNotificationAfterWait(partner){
+      // wait a brief period to allow ChatStore to update .currentChat
+      setTimeout(() => this.removeMsgNotification(partner), 1000);
+    }
 
 
     handleActions(action){
@@ -93,6 +114,10 @@ class NotificationStore extends EventEmitter{
             }
             case "RECEIVE_MESSAGE": {
                 this.addMsgToNotifications(action.from);
+                break;
+            }
+            case "START_SOLO_CHAT": {
+                this.removeMsgNotificationAfterWait(action.partner);
                 break;
             }
         }
