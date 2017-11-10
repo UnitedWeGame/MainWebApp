@@ -92,10 +92,6 @@ export default class NavBar extends React.Component {
 
   render() {
 
-    const logoStyle = {
-      marginBottom: "6px"
-    }
-
     const glyphBellStyle = {
       fontSize: "16px"
     }
@@ -103,15 +99,6 @@ export default class NavBar extends React.Component {
     const tooltipNotifications = (
       <Tooltip id="tooltip"><strong>{this.state.notificationHeadline}</strong></Tooltip>
     );
-
-    const { location } = this.props;
-    const { collapsed } = this.state;
-    const activityClass = location.pathname === "/" ? "active" : "";
-    const friendsClass = location.pathname.match(/^\/friends/) ? "active" : "";
-    const libraryClass = location.pathname.match(/^\/library/) ? "active" : "";
-    const profileClass = location.pathname.match(/^\/profile/) ? "active" : "";
-
-    const navClass = collapsed ? "collapse" : "";
 
     return (
       <Navbar fluid>
@@ -131,7 +118,7 @@ export default class NavBar extends React.Component {
             <NavItem eventKey={1} href="/users#/activity">Activity</NavItem>
             <NavItem eventKey={2} href="/users#/friends">Friends</NavItem>
             <NavItem eventKey={3} href="/users#/library">Library</NavItem>
-            <NavItem eventKey={4} href="/users#/profile/${this.state.userID}"><strong>{this.state.usernameDisplay}</strong></NavItem>
+            <NavItem eventKey={4} href={"/users#/profile/" + this.state.userID}><strong>{this.state.usernameDisplay}</strong></NavItem>
             <OverlayTrigger placement="bottom" overlay={tooltipNotifications}>
               <NavItem eventKey={5} href="/users#/notifications">
                   <Glyphicon style={glyphBellStyle} glyph="bell" /><Badge>{this.state.notificationCount}</Badge>
