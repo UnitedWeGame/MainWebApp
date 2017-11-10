@@ -12,14 +12,14 @@ class GameStore extends EventEmitter{
           id: 0,
           title: "Title Not Found",
           firstReleaseDate: "Release Date Not Found",
-          myRating: 4,
+          myRating: 0,
           communityRating: "No rating found",
           communityRatingCount: "",
           summary: "Game summary not found",
           platforms: "",
           myReview: {
-            title: "Sweet game!",
-            review: "This is one of my favorite games. Great for multiplayer, but also fun playing solo. At first I was a little hesitant to buy because of the big price tag. But I'm glad I did!"
+            title: "",
+            review: ""
           },
           friendReviews: [],
           friendsWhoOwn: "No friends own this game",
@@ -27,12 +27,6 @@ class GameStore extends EventEmitter{
            {id: 1, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/cjg7nanyb1vxzzq1ki9q.jpg"},
            {id: 2, url: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/ka2i4aehuuibfecyaphh.jpg"}]
         };
-
-        this.myDefaultReview = {
-            title: "Sweet game!",
-            review: "This is one of my favorite games. Great for multiplayer, but also fun playing solo. At first I was a little hesitant to buy because of the big price tag. But I'm glad I did!"
-        };
-        this.myDefaultRating = 4;
 
     }
 
@@ -43,52 +37,56 @@ class GameStore extends EventEmitter{
     setGame(gameInfo){
       this.game.id = gameInfo.id;
 
-      if(gameInfo.title){
+      if(gameInfo.title)
         this.game.title = gameInfo.title;
-      }
+
       console.log(gameInfo.title + " has id of: " + this.game.id)
 
-      if(gameInfo.screenshots.length > 0){
+      if(gameInfo.screenshots.length > 0)
         this.game.screenshots = gameInfo.screenshots;
-      }
       else
         this.game.screenshots = [{id: 0, url: "https://i.imgur.com/mACD6Ea.jpg"}]
 
-      if(gameInfo.firstReleaseDate){
+      if(gameInfo.firstReleaseDate)
         this.game.firstReleaseDate = gameInfo.firstReleaseDate;
-      }
+      else
+        this.game.firstReleaseDate = "No release date found."
+
+      if(gameInfo.totalRating)
+        this.game.communityRating = gameInfo.totalRating;
+      else
+        this.game.communityRating = "No community rating found."
+
+      if(gameInfo.totalRatingCount)
+        this.game.communityRatingCount = gameInfo.totalRatingCount;
+      else
+        this.game.communityRatingCount = 0
+
+      if(gameInfo.summary)
+        this.game.summary = gameInfo.summary;
+      else
+        this.game.summary = "No summary was found for this game.";
 
       if(gameInfo.myRating){
-        this.game.myRating = gameInfo.myRating;
+        this.game.myReview.title = gameInfo.myRating.reviewTitle;
+        this.game.myReview.review = gameInfo.myRating.review;
+        this.game.myRating = gameInfo.myRating.rating;
       }
-      else
-        this.game.myRating = this.myDefaultRating;
-
-
-      if(gameInfo.totalRating){
-        this.game.communityRating = gameInfo.totalRating;
-      }
-      if(gameInfo.totalRatingCount){
-        this.game.communityRatingCount = gameInfo.totalRatingCount;
-      }
-      if(gameInfo.summary){
-        this.game.summary = gameInfo.summary;
+      else {
+        this.game.myReview.title = "";
+        this.game.myReview.review = "";
+        this.game.myRating = 0;
       }
 
-      if(gameInfo.myReview){
-        this.game.myReview = gameInfo.myReview;
-      }
-      else{
-        Object.assign(this.game.myReview, this.myDefaultReview);
-      }
-
-      if(gameInfo.friendsRatings){
+      if(gameInfo.friendsRatings)
         this.game.friendReviews = gameInfo.friendsRatings;
-        console.log("a friend review looks like this: " + gameInfo.friendsRatings[0])
-      }
-      if(gameInfo.friendsWhoOwn){
+      else
+        this.game.friendReviews = [];
+
+      if(gameInfo.friendsWhoOwn)
         this.game.friendsWhoOwn = gameInfo.friendsWhoOwn;
-      }
+      else
+        this.game.friendsWhoOwn = "No friends own this game.";
 
 
         this.emit("change");
