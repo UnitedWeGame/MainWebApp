@@ -30,9 +30,11 @@ class GeneralUserStore extends EventEmitter{
 
     getUsers(ids){
         var users = [];
-        for (var i = 0; i < this.users.length; i++) {
-            if(ids.includes(this.users[i].id)){
-                users.push(this.users[i]);
+        if(ids){
+            for (var i = 0; i < this.users.length; i++) {
+                if(ids.includes(this.users[i].id)){
+                    users.push(this.users[i]);
+                }
             }
         }
         return users;

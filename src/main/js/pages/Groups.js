@@ -12,7 +12,7 @@ export default class Groups extends React.Component {
   constructor(props){
     super(props);
 
-    GroupActions.getGroup(props.params.userID);
+    GroupActions.getGroup(props.params.groupID);
     GeneralUserActions.getAllUsers();
 
     this.getGroup = this.getGroup.bind(this);
@@ -37,9 +37,13 @@ export default class Groups extends React.Component {
     var coverPhoto = GroupStore.getCoverPhoto();*/
     const loggedInUserID = UserStore.getUserID();
     const username = UserStore.getUsername();
+    //var members = group.members ? GeneralUserStore.getUsers(group.members) : [];
     var members = GeneralUserStore.getUsers(group.members);
 
-    var showJoinGroupButton = !group.members.includes(loggedInUserID);
+    var showJoinGroupButton = false;
+    if(group.members){
+      showJoinGroupButton = !group.members.includes(loggedInUserID);
+    }
 
     this.state = {
       group: group,
@@ -76,13 +80,17 @@ export default class Groups extends React.Component {
 
   getGroup(){
     const group = GroupStore.getGroup();
+    var showJoinGroupButton = false;
+    if(group.members)
+      showJoinGroupButton = !group.members.includes(this.state.loggedInUserID);
     this.setState({
       group: group,
       groupName: group.groupName,
       description: group.description,
       coverPhoto: group.coverPhoto,
       members : GeneralUserStore.getUsers(group.members),
-      activityList : group.activityList
+      activityList : group.activityList,
+      showJoinGroupButton: showJoinGroupButton
     });
   }
 
@@ -104,8 +112,12 @@ export default class Groups extends React.Component {
       this.setState({ showJoinGroupButton: true});
   }
 
-  onJoinGroupClick(){
-    GroupActions.joinGroup(this.state.group.groupId, this.state.userID);
+  onJoinGroupClick(event){
+    event.preventDefault();
+    console.log("joining group");
+    console.log(this.state.group);
+    console.log(this.state.group.id);
+    GroupActions.joinGroup(this.state.group.id, this.state.loggedInUserID);
     this.openJoinGroupModal();
     this.setState({
       btnText: "Group Joined!",
@@ -139,7 +151,11 @@ export default class Groups extends React.Component {
   render() {
     //const friends = this.state.friendList.map((person) => <Friend key={person.id} {...person}/> );
     var members = this.state.members.map((a) => <MiniUser key={a.ID} {...a}/> );
-    var activities = this.state.activityList.map((a) => <Item key={a.ID} {...a}/> );
+    var activities = [];
+    if(this.state.activityList)
+    {
+      activities = this.state.activityList.map((a) => <Item key={a.ID} {...a}/> );
+    }
 
     {/* Button for sending friend request to user featured on profile, if not yet a friend*/}
     var coverBtnStyle = {display: "none"};
