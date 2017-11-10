@@ -81,9 +81,7 @@ export default class ChatWindow extends React.Component {
         this.setState({
           messageList: messageList
         });
-        console.log("Message List IS EMPTY? " + messageList.length);
         let messageListCopy = JSON.parse(JSON.stringify(messageList));
-        console.log("Message list copy is this long " + messageListCopy.length);
         ChatActions.sendMessage(messageListCopy, UserStore.getUsername(), this.state.partner);
 
 
