@@ -1,7 +1,7 @@
 import dispatcher from "../dispatcher";
 
 export function getGroup(id){
-	const group = { 
+	/*const group = { 
     groupId : 1234,
 		groupName: "El groupo", 
 		description: "Es un muy bueno groupo!",
@@ -29,22 +29,28 @@ export function getGroup(id){
 	dispatcher.dispatch({
 		type: "GET_GROUP_DATA",
 		group: group
-	});
-	/*$.get( "/api/groups/" + id, function( data ){
-		dispatcher.dispatch({
-			type: "GET_USER_DATA",
-			user: data
-		});
 	});*/
+	$.get( "/api/group/" + id, function( data ){
+		dispatcher.dispatch({
+			type: "GET_GROUP_DATA",
+			group: data
+		});
+	});
 }
 
 export function joinGroup(groupId, userId){
   console.log("API hasn't been implemented yet.");
-  return;
+  $.get( "/api/group/" + groupId + "/addMember/" + userId, function( data ){
+		dispatcher.dispatch({
+			type: "UPDATE_GROUP",
+			group: data
+		});
+	});
+  //return;/{groupId}/addMember
+  /*
   $.ajax({
-    url: "/api/groups/" + groupId,
+    url: "/api/" + groupId + "/addMember",
     type:"POST",
-    data: JSON.stringify({"userId": userId }),
     contentType:"application/json; charset=utf-8",
     dataType:"json",
     success: function(response ){
@@ -53,7 +59,7 @@ export function joinGroup(groupId, userId){
         settings: response
       });
     }
-  });
+  });*/
 }
 
 export function updateActivityFeed(group){
