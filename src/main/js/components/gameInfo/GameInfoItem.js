@@ -1,19 +1,32 @@
 import React from "react";
-import Slider from "react-slick";
 import CustomTabs from "../uiPieces/CustomTabs";
-import {Tab} from "react-toolbox";
-import ReactStars from "react-stars";
+import FriendReviews from "./reviews/FriendReviews";
 import GameStore from "../../stores/GameStore";
 import * as GameInfoActions from "../../actions/GameInfoActions";
-import FriendReviews from "./reviews/FriendReviews";
 import MyReview from "./reviews/MyReview";
+import ReactStars from "react-stars";
+import Slider from "react-slick";
+import {Tab} from "react-toolbox";
+import { withRouter } from "react-router";
 
 
 
-export default class GameInfoItem extends React.Component {
+class GameInfoItem extends React.Component {
 
-  constructor(){
-      super();
+  // This class is exported with the "withRouter" higher order component
+  // in order to get access to props.location
+
+  constructor(props){
+      super(props);
+      var location = this.props.location;
+      var section = this.props.location.query.section
+      // if(this.props.location.query.section !== undefined){
+      //   console.log("Got section number: " + this.props.location.query.section)
+      // }
+      // else
+      //   console.log("Did not get info props.location.state")
+
+
       this.getGameInfo = this.getGameInfo.bind(this);
       const gameInfo = GameStore.getGame();
 
@@ -155,3 +168,5 @@ class Screenshot extends React.Component {
     )
   }
 }
+
+export default withRouter(GameInfoItem)
