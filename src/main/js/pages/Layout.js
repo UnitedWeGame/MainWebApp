@@ -80,7 +80,9 @@ export default class Layout extends React.Component {
                   stack={{limit: 3}}
                   effect="slide"
                   position="top-right"
+                  offset={60}
                   timeout={3000}
+
                 />
             </div>
 
