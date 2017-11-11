@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
+import Alert from "react-s-alert";
 import ChatStore from "./ChatStore";
 import FriendStore from "./FriendStore";
 
@@ -88,7 +89,9 @@ class NotificationStore extends EventEmitter{
           notification.imageUrl = friends[i].imageUrl;
           break;
       }
-
+      // show an alert on the screen
+      Alert.success("New message from " + from, {});
+      
       this.emit("change");
     }
 
