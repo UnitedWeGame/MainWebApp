@@ -7,32 +7,20 @@ import MyReview from "./reviews/MyReview";
 import ReactStars from "react-stars";
 import Slider from "react-slick";
 import {Tab} from "react-toolbox";
-import { withRouter } from "react-router";
 
 
-
-class GameInfoItem extends React.Component {
-
-  // This class is exported with the "withRouter" higher order component
-  // in order to get access to props.location
+export default class GameInfoItem extends React.Component {
 
   constructor(props){
       super(props);
-      var location = this.props.location;
-      var section = this.props.location.query.section
-      // if(this.props.location.query.section !== undefined){
-      //   console.log("Got section number: " + this.props.location.query.section)
-      // }
-      // else
-      //   console.log("Did not get info props.location.state")
-
 
       this.getGameInfo = this.getGameInfo.bind(this);
       const gameInfo = GameStore.getGame();
+      var tabIndex = GameStore.getTabIndex();
 
       this.state = {
         gameInfo: gameInfo,
-        index: 0
+        tabIndex: tabIndex
       }
 
   }
@@ -47,13 +35,14 @@ class GameInfoItem extends React.Component {
 
   getGameInfo(){
       this.setState({
-          gameInfo: GameStore.getGame()
+          gameInfo: GameStore.getGame(),
+          tabIndex: GameStore.getTabIndex()
       });
   }
 
 
-  handleTabChange = (index) => {
-    this.setState({index});
+  handleTabChange = (tabIndex) => {
+    this.setState({tabIndex});
   };
 
   // Called when the user makes a new star rating
@@ -114,7 +103,7 @@ class GameInfoItem extends React.Component {
           </div>
             <br/>
             <section>
-              <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
+              <CustomTabs index={this.state.tabIndex} onChange={this.handleTabChange} fixed>
                 <Tab label='Info'>
                   <div class={containerStyle}>
                     <br/>
@@ -168,5 +157,3 @@ class Screenshot extends React.Component {
     )
   }
 }
-
-export default withRouter(GameInfoItem)

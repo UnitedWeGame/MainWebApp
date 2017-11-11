@@ -26,17 +26,12 @@ export default class LibraryItem extends React.Component {
         console.log("inviteSentCount: " + this.state.inviteSentCount);
     }
 
-    getGameInfo(id, event) {
-      LibraryActions.getGameInfo(id);
-    }
-
     // called when any of the buttons (e.g. send a text invite, see game info, etc.)
     // is clicked. Section refers to the different tabs of the game information page.
     handleClick(id, section, event) {
-      LibraryActions.getGameInfo(id);
+      LibraryActions.getGameInfo(id, section);
       hashHistory.push({
-        pathname: "/game",
-        query: { section }
+        pathname: "/game"
       });
     }
 
@@ -74,10 +69,10 @@ export default class LibraryItem extends React.Component {
         const popoverClickRootClose = (
             <Popover id="popover-trigger-click-root-close" title={title}>
                 <ButtonGroup vertical>
-                    <Button bsStyle="success" onClick={this.handleClick.bind(this, id, 3)}>Invite friends via text</Button>
-                    <Button onClick={this.getGameInfo.bind(this, id)}><Link to="game">Game information</Link></Button>
-                    <Button>Write a review</Button>
-                    <Button>Read friend reviews</Button>
+                    <Button bsStyle="success" onClick={this.handleClick.bind(this, id, 3)}>Invite Friends via Text</Button>
+                    <Button onClick={this.handleClick.bind(this, id, 0)}>Game Information</Button>
+                    <Button onClick={this.handleClick.bind(this, id, 1)}>Reviews For This Game</Button>
+                    <Button onClick={this.handleClick.bind(this, id, 2)}>See Friends Who Own</Button>
                     <Button bsStyle="danger" onClick={this.openRemoveGameModal}>Remove game</Button>
                 </ButtonGroup>
             </Popover>

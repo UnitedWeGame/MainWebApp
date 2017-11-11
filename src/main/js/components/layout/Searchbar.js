@@ -88,7 +88,7 @@ export default class Searchbar extends React.Component {
     handleChange(selectedOptions){
 
       if(selectedOptions[0].type == "Games"){
-        LibraryActions.getGameInfo(selectedOptions[0].id)
+        LibraryActions.getGameInfo(selectedOptions[0].id);
         hashHistory.push('/game');
       }
       else if(selectedOptions[0].type == "People"){

@@ -8,6 +8,7 @@ class GameStore extends EventEmitter{
         super();
         var component = this;
         // Initialize
+        this.tabIndex = 0; // the game page tab to show
         this.game = {
           id: 0,
           title: "Title Not Found",
@@ -34,7 +35,11 @@ class GameStore extends EventEmitter{
       return this.game;
     }
 
-    setGame(gameInfo){
+    getTabIndex(){
+      return this.tabIndex;
+    }
+
+    setGame(gameInfo, tabIndex){
       this.game.id = gameInfo.id;
 
       if(gameInfo.title)
@@ -88,6 +93,7 @@ class GameStore extends EventEmitter{
       else
         this.game.friendsWhoOwn = "No friends own this game.";
 
+      this.tabIndex = tabIndex;
 
         this.emit("change");
     }
@@ -104,7 +110,7 @@ class GameStore extends EventEmitter{
     handleActions(action){
         switch (action.type) {
             case "GET_GAME_INFO": {
-                this.setGame(action.gameInfo);
+                this.setGame(action.gameInfo, action.tabIndex);
                 break;
             }
             case "NEW_GAME_REVIEW": {

@@ -1,21 +1,17 @@
 import dispatcher from "../dispatcher";
 import * as UserActions from "./UserActions";
 
+// Retrieves information for a game from our database.
+// Section refers to which tab of the game page should be displayed to the user
+export function getGameInfo(gameId, section){
+    // if section was not provided, set it to 0
+    section = (typeof section !== 'undefined') ?  section : 0;
 
-export function getGameInfo(gameId){
     $.get( "/api/games/" + gameId, function( data ) {
-    // var data = {
-    //   title: "Zelda",
-    //   releaseDate: "October 11, 2016",
-    //   usersRating: 3.5,
-    //   communityRating: 5,
-    //   gameSummary: "An epic game",
-    //   usersReview: false
-    //
-    // }
         dispatcher.dispatch({
                 type: "GET_GAME_INFO",
-                gameInfo: data
+                gameInfo: data,
+                tabIndex: section
             });
     });
 }
