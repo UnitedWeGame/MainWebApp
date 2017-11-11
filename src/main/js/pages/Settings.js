@@ -21,9 +21,9 @@ export default class Settings extends React.Component {
     var smsEnabled = UserStore.getSmsEnabled();
 
   	this.state = { imageURL: imageURL, coverPhoto: coverPhoto,
-  	 steamId: steamId, xboxGamertag: xboxGamertag, psnGamertag: psnGamertag, 
+  	 steamId: steamId, xboxGamertag: xboxGamertag, psnGamertag: psnGamertag,
      email: email, smsEnabled: smsEnabled};
-  
+
   }
 
   componentWillMount() {
@@ -37,13 +37,13 @@ export default class Settings extends React.Component {
   }
 
   setUser(){
-    this.setState({ 
-      imageURL: UserStore.getImageUrl(), 
+    this.setState({
+      imageURL: UserStore.getImageUrl(),
       coverPhoto: UserStore.getCoverPhoto(),
-      steamId: UserStore.getSteamId(), 
-      xboxGamertag: UserStore.getXboxGamertag(), 
-      psnGamertag: UserStore.getPsnGamertag(), 
-      email: UserStore.getEmail(), 
+      steamId: UserStore.getSteamId(),
+      xboxGamertag: UserStore.getXboxGamertag(),
+      psnGamertag: UserStore.getPsnGamertag(),
+      email: UserStore.getEmail(),
       smsEnabled: UserStore.getSmsEnabled()
     });
   }
@@ -142,14 +142,14 @@ export default class Settings extends React.Component {
 
 		    	<h3> Privacy Settings: </h3>
 
-		    	<Checkbox 
+		    	<Checkbox
 		    	onChange={this.handleInputChange}
 		    	checked={this.state.smsEnabled}
 		    	name="smsEnabled">
 		    	Turn on SMS invites.</Checkbox>
 
-		    <Button type="submit">
-		      Submit
+		    <Button bsStyle="success" type="submit">
+		      Update
 		    </Button>
       </form>
       </div>
