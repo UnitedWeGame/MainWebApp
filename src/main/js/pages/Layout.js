@@ -6,6 +6,10 @@ import OnlineNow from "../components/status/OnlineNow";
 import NowPlaying from "../components/status/NowPlaying";
 import ChatWindow from "../components/chat/ChatWindow";
 import Alert from "react-s-alert";
+import marioSound from "../../resources/static/sounds/mario1.WAV";
+// Note: Alert CSS is imported in templates/users/index.html from
+//      static/css/alertStyles
+
 
 export default class Layout extends React.Component {
     constructor() {
@@ -82,6 +86,7 @@ export default class Layout extends React.Component {
                   position="top-right"
                   offset={60}
                   timeout={3000}
+                  beep={marioSound}
 
                 />
             </div>
