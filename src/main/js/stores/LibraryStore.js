@@ -8,6 +8,7 @@ class LibraryStore extends EventEmitter{
         var component = this;
         this.shownGames = [];
         this.allOwnedGames = [];
+        this.shownPlatform = "";
 
     }
 
@@ -15,7 +16,12 @@ class LibraryStore extends EventEmitter{
         return this.shownGames;
     }
 
-    // called when user logs in
+    // Returns a string for the platform that this.shownGames are a part of
+    getCurrentPlatform(){
+        return this.shownPlatform;
+    }
+
+    // called when user logs in, and when user adds a game
     initOwnedGames(games, platform){
         this.allOwnedGames = games;
         if(platform == "PS3" || platform == "PS4")
@@ -39,6 +45,7 @@ class LibraryStore extends EventEmitter{
             }
         }
 
+        this.shownPlatform = "Xbox";
         this.emit("change");
     }
 
@@ -52,6 +59,7 @@ class LibraryStore extends EventEmitter{
                 this.shownGames.push(games[i]);
         }
 
+        this.shownPlatform = "Steam";
         this.emit("change");
     }
 
@@ -66,6 +74,7 @@ class LibraryStore extends EventEmitter{
                 this.shownGames.push(games[i]);
         }
 
+        this.shownPlatform = "PS";
         this.emit("change");
     }
 
