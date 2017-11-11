@@ -36,7 +36,7 @@ export default class GroupSettings extends React.Component {
       coverPhoto: coverPhoto,
 			isNewGroup: isNewGroup
 		};
-		
+
 	}
 
   componentWillMount() {
@@ -49,7 +49,7 @@ export default class GroupSettings extends React.Component {
 
   setGroup(){
     const group = GroupStore.getGroup();
-    this.setState({ 
+    this.setState({
       group: group,
     	groupName: group.groupName,
 			description: group.description,
@@ -72,7 +72,7 @@ export default class GroupSettings extends React.Component {
   }
 
   render() {
-    var buttonText = "Submit";
+    var buttonText = "Update";
     var headerText = "Edit Group Settings";
     if(this.state.isNewGroup){
       buttonText = "Create Group";
@@ -119,7 +119,7 @@ export default class GroupSettings extends React.Component {
           <HelpBlock>Banner Image URL</HelpBlock>
         </FormGroup>
 
-        <Button type="submit">
+        <Button bsStyle="success" type="submit">
           {buttonText}
         </Button>
       </form>

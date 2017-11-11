@@ -1,9 +1,12 @@
 import React from "react";
-import {Launcher} from "react-chat-window";
-import ChatStore from "../../stores/ChatStore";
-import UserStore from "../../stores/UserStore";
-import * as ChatActions from "../../actions/ChatActions";
 import { findDOMNode } from "react-dom";
+import * as ChatActions from "../../actions/ChatActions";
+import ChatStore from "../../stores/ChatStore";
+import {Launcher} from "react-chat-window";
+import UserStore from "../../stores/UserStore";
+
+// Note: react-chat-window CSS is imported in templates/users/index.html
+//      from static/css/chatStyles
 
 export default class ChatWindow extends React.Component {
     constructor() {
