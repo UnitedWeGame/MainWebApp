@@ -24,7 +24,7 @@ export default class ChatWindow extends React.Component {
 
         this.state = {
           messageList: messageList,
-          newMessagesCount: 0,
+          newMessagesCount: 1,
           isOpen: false,
           partner: partner,
           chatImgUrl: chatImgUrl,
