@@ -49,9 +49,12 @@ class ChatStore extends EventEmitter{
     startSoloChat(partner, partnerUrl){
         // Find the chat and set it to the current chat
         for(var i = 0; i < this.allChats.length; i++){
-          if(this.allChats[i].partner === partner)
+          if(this.allChats[i].partner === partner){
             this.currentChat = this.allChats[i];
+            console.log("new chat partner: " + this.currentChat.partner)
+            console.log("last message: " + this.currentChat.messageList.slice(-1)[0])
             break;
+          }
         }
         //this.currentChat.partner = partner;
         this.currentChat.imageUrl = partnerUrl;

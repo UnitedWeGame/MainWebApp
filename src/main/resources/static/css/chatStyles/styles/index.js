@@ -1,13 +1,6 @@
-'use strict';
-
-require('./emojiPicker.css');
-
-require('./index.css');
-
-require('./launcher.css');
-
-require('./header.css');
-
-require('./message.css');
-
-require('./userInput.css');
+import './emojiPicker.css';
+import './index.css';
+import './launcher.css';
+import './header.css';
+import './message.css';
+import './userInput.css';

@@ -11,6 +11,8 @@ export default class ChatWindow extends React.Component {
     constructor() {
         super();
         this.updateCurrentChat = this.updateCurrentChat.bind(this);
+        this._handleClick = this._handleClick.bind(this);
+        this.onMessageWasSent = this.onMessageWasSent.bind(this);
         this.setUsername = this.setUsername.bind(this);
         var isOpen = ChatStore.getIsOpen();
         var partner = ChatStore.getCurrentPartner();
@@ -22,8 +24,8 @@ export default class ChatWindow extends React.Component {
 
         this.state = {
           messageList: messageList,
-          newMessagesCount: newMessagesCount,
-          isOpen: isOpen,
+          newMessagesCount: 0,
+          isOpen: false,
           partner: partner,
           chatImgUrl: chatImgUrl,
           username: username
@@ -68,6 +70,7 @@ export default class ChatWindow extends React.Component {
       }
 
       onMessageWasSent(message) {
+        console.log("onTheMessageWasSent() was called. isOpen: " + this.state.isOpen)
 
         var messageList = [...this.state.messageList, message]
         this.setState({
@@ -93,7 +96,8 @@ export default class ChatWindow extends React.Component {
         }
       }
 
-      handleClick() {
+      _handleClick() {
+        console.log("handleClick() was called. isOpen: " + this.state.isOpen)
         this.setState({
           isOpen: !this.state.isOpen,
           newMessagesCount: 0
@@ -109,10 +113,10 @@ export default class ChatWindow extends React.Component {
                     teamName: this.state.partner,
                     imageUrl: this.state.chatImgUrl
                   }}
-                  onMessageWasSent={this.onMessageWasSent.bind(this)}
+                  onMessageWasSent={this.onMessageWasSent}
                   messageList={this.state.messageList}
                   newMessagesCount={this.state.newMessagesCount}
-                  handleClick={this.handleClick.bind(this)}
+                  handleClick={this._handleClick}
                   isOpen={this.state.isOpen}
               />
             </div>
