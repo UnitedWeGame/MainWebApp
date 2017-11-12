@@ -16,7 +16,7 @@ class ChatStore extends EventEmitter{
           partner: "noName",
           imageUrl: "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png",
           messageList: dummyMessageHistory,
-          newMessagesCount: 1
+          newMessagesCount: 0
           }
         ];
         this.currentChat = this.allChats[0];
@@ -24,6 +24,10 @@ class ChatStore extends EventEmitter{
 
     getIsOpen(){
       return this.isOpen;
+    }
+
+    toggleIsOpen(){
+      this.isOpen = !this.isOpen;
     }
 
     getCurrentChat(){
@@ -51,8 +55,6 @@ class ChatStore extends EventEmitter{
         for(var i = 0; i < this.allChats.length; i++){
           if(this.allChats[i].partner === partner){
             this.currentChat = this.allChats[i];
-            console.log("new chat partner: " + this.currentChat.partner)
-            console.log("last message: " + this.currentChat.messageList.slice(-1)[0])
             break;
           }
         }
@@ -72,22 +74,8 @@ class ChatStore extends EventEmitter{
       }
     }
 
-    decodeMessageList(messageList, me) {
-        for (var index in messageList) {
-            var message = messageList[index];
-            console.log("Message author is: " + message.author)
-            if (message.author == me) {
-                message.author = "me";
-            } else {
-                message.author = "them";
-            }
-        }
-        return messageList;
-    }
-
     loadConversations(conversations) {
         var me = UserStore.getUsername();
-        console.log("in store, load conversations. Me is: " + me)
         for (var index in conversations) {
             var conversation = conversations[index];
             var newConversation = {};
@@ -97,8 +85,8 @@ class ChatStore extends EventEmitter{
             var partner = this.getPartner(members, me);
             newConversation.partner = partner;
             newConversation.messageList = messageList;
-            for(var i = 0; i < messageList.length; i++){
-            }
+            newConversation.newMessagesCount = 0;
+
             newConversation.imageUrl = this.imageUrl // use dummy data for now...
             this.allChats.push(newConversation)
         }
@@ -114,13 +102,9 @@ class ChatStore extends EventEmitter{
 
     receiveMessage(messageList, from) {
         console.log("Inside receiveMessage, messageList length: " + messageList.length)
-        for(var i = 0; i < messageList.length; i++){
-          console.log("message number " + i + ": " + messageList[i].data.text + " author: " + messageList[i].author)
-        }
 
         for (var index in this.allChats) {
             if (this.allChats[index].partner === from) {
-                //this.allChats[index].messageList = this.decodeMessageList(messageList, UserStore.getUsername());
                 this.allChats[index].messageList = messageList;
 
             }

@@ -24,8 +24,8 @@ export default class ChatWindow extends React.Component {
 
         this.state = {
           messageList: messageList,
-          newMessagesCount: 1,
-          isOpen: false,
+          newMessagesCount: newMessagesCount,
+          isOpen: isOpen,
           partner: partner,
           chatImgUrl: chatImgUrl,
           username: username
@@ -79,25 +79,10 @@ export default class ChatWindow extends React.Component {
         let messageListCopy = JSON.parse(JSON.stringify(messageList));
         ChatActions.sendMessage(messageListCopy, UserStore.getUsername(), this.state.partner);
 
-
-      }
-
-      _sendMessage(text) {
-        if (text.length > 0) {
-          const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
-          this.setState({
-            newMessagesCount: newMessagesCount,
-            messageList: [...this.state.messageList, {
-              author: 'them',
-              type: 'text',
-              data: { text }
-            }]
-          })
-        }
       }
 
       _handleClick() {
-        console.log("handleClick() was called. isOpen: " + this.state.isOpen)
+        ChatStore.toggleIsOpen();
         this.setState({
           isOpen: !this.state.isOpen,
           newMessagesCount: 0
