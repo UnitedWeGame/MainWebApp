@@ -1,8 +1,7 @@
 import React from "react";
-import { findDOMNode } from "react-dom";
 import * as ChatActions from "../../actions/ChatActions";
 import ChatStore from "../../stores/ChatStore";
-import {Launcher} from "react-chat-window";
+import Launcher from "../../lib/reactChatWindow/src/components/Launcher";
 import UserStore from "../../stores/UserStore";
 
 // Note: react-chat-window CSS is imported in templates/users/index.html
@@ -13,7 +12,6 @@ export default class ChatWindow extends React.Component {
         super();
         this.updateCurrentChat = this.updateCurrentChat.bind(this);
         this.setUsername = this.setUsername.bind(this);
-        this.clickChatWindow = this.clickChatWindow.bind(this);
         var isOpen = ChatStore.getIsOpen();
         var partner = ChatStore.getCurrentPartner();
         var chatImgUrl = ChatStore.getCurrentChatImgUrl();
@@ -42,23 +40,14 @@ export default class ChatWindow extends React.Component {
 
       componentWillMount(){
         ChatStore.on("change", this.updateCurrentChat);
-        ChatStore.on("click", this.clickChatWindow)
         UserStore.on("change", this.setUsername);
 
       }
 
       componentWillUnmount(){
         ChatStore.removeListener("change", this.updateCurrentChat);
-        ChatStore.removeListener("click", this.clickChatWindow)
         UserStore.removeListener("change", this.setUsername);
 
-      }
-
-      clickChatWindow(){
-        console.log("In the clickChatWindow() !")
-        const el = findDOMNode(this.refs.chatwindow);
-        console.log("Eleement is : " + el);
-        $(el).click();
       }
 
       setUsername(){

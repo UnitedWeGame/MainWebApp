@@ -9,7 +9,7 @@ class ChatStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
-        this.isOpen = true;
+        this.isOpen = false;
         this.imageUrl = "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png";
         this.allChats = [
           {
@@ -47,17 +47,17 @@ class ChatStore extends EventEmitter{
     }
 
     startSoloChat(partner, partnerUrl){
+        // Find the chat and set it to the current chat
         for(var i = 0; i < this.allChats.length; i++){
           if(this.allChats[i].partner === partner)
             this.currentChat = this.allChats[i];
+            break;
         }
         //this.currentChat.partner = partner;
-        //this.currentChat.imageUrl = partnerUrl;
-        //$( #chatwindow ).click(function(){
-        //}
-        //this.isOpen = true;
+        this.currentChat.imageUrl = partnerUrl;
+
+        this.isOpen = true;
         this.emit("change");
-        this.emit("click");
     }
 
     getPartner(members, me) {
@@ -90,18 +90,13 @@ class ChatStore extends EventEmitter{
             var newConversation = {};
             var members = conversation.members;
             var messageList = conversation.messageList;
-            console.log("messageList from chat server was this long: " + messageList.length)
 
             var partner = this.getPartner(members, me);
-            console.log("getPartner returned: " + partner)
             newConversation.partner = partner;
             newConversation.messageList = messageList;
             for(var i = 0; i < messageList.length; i++){
-              console.log("Loaded message: " + messageList[i].data.text + " , author: " + messageList[i].author);
             }
-            //newConversation.messageList = this.decodeMessageList(messageList, me);
             newConversation.imageUrl = this.imageUrl // use dummy data for now...
-            //console.log("DECODED messageList from chat server was this long: " + newConversation.messageList.length)
             this.allChats.push(newConversation)
         }
         this.currentChat = this.allChats[this.allChats.length-1]
