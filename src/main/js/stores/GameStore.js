@@ -7,8 +7,13 @@ class GameStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
-        // Initialize
+
+        // Initialize member variables
         this.tabIndex = 0; // the game page tab to show
+
+        // has properties: id, username, and profilePic
+        this.friendsWhoOwn = [];
+        
         this.game = {
           id: 0,
           title: "Title Not Found",
@@ -37,6 +42,10 @@ class GameStore extends EventEmitter{
 
     getTabIndex(){
       return this.tabIndex;
+    }
+
+    getFriendsWhoOwn(){
+      return this.friendsWhoOwn;
     }
 
     setGame(gameInfo, tabIndex){
@@ -106,6 +115,19 @@ class GameStore extends EventEmitter{
       this.emit("change");
     }
 
+    setFriendsWhoOwn(friends){
+      this.friendsWhoOwn = [];
+      for(var i = 0; i < friends.length; i++){
+        var friend = {};
+        friend.id = friends[i].id;
+        friend.username = friends[i].username;
+        friend.profilePic = friends[i].imageUrl;
+        this.friendsWhoOwn.push(friend);
+      }
+
+      this.emit("change");
+    }
+
 
     handleActions(action){
         switch (action.type) {
@@ -115,6 +137,10 @@ class GameStore extends EventEmitter{
             }
             case "NEW_GAME_REVIEW": {
                 this.handleNewReview(action.headline, action.review, action.rating);
+                break;
+            }
+            case "GET_FRIENDS_WHO_OWN": {
+                this.setFriendsWhoOwn(action.friends);
                 break;
             }
         }

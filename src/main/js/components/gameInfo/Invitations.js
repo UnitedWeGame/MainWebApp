@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, ButtonToolbar, ControlLabel, FormControl, Modal} from "react-bootstrap";
-import ReactStars from "react-stars";
-import * as GameInfoActions from "../../../actions/GameInfoActions"
+import * as GameInfoActions from "../../actions/GameInfoActions"
 
 export default class Invitations extends React.Component {
   constructor(props){

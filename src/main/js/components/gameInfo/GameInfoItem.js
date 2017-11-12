@@ -1,6 +1,7 @@
 import React from "react";
 import CustomTabs from "../uiPieces/CustomTabs";
 import FriendReviews from "./reviews/FriendReviews";
+import FriendsWhoOwn from "./FriendsWhoOwn";
 import GameStore from "../../stores/GameStore";
 import * as GameInfoActions from "../../actions/GameInfoActions";
 import MyReview from "./reviews/MyReview";
@@ -136,7 +137,10 @@ export default class GameInfoItem extends React.Component {
                 </Tab>
 
 
-                <Tab label='Friends Who Own'><large>To do...</large></Tab>
+                <Tab label='Friends Who Own'>
+                  <FriendsWhoOwn />
+                </Tab>
+
                 <Tab label='Invite'><large>Not yet implemented</large></Tab>
               </CustomTabs>
             </section>

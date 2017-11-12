@@ -51,11 +51,6 @@ class ChatStore extends EventEmitter{
           if(this.allChats[i].partner === partner)
             this.currentChat = this.allChats[i];
         }
-        //this.currentChat.partner = partner;
-        //this.currentChat.imageUrl = partnerUrl;
-        //$( #chatwindow ).click(function(){
-        //}
-        //this.isOpen = true;
         this.emit("change");
         this.emit("click");
     }
@@ -69,39 +64,18 @@ class ChatStore extends EventEmitter{
       }
     }
 
-    decodeMessageList(messageList, me) {
-        for (var index in messageList) {
-            var message = messageList[index];
-            console.log("Message author is: " + message.author)
-            if (message.author == me) {
-                message.author = "me";
-            } else {
-                message.author = "them";
-            }
-        }
-        return messageList;
-    }
-
     loadConversations(conversations) {
         var me = UserStore.getUsername();
-        console.log("in store, load conversations. Me is: " + me)
         for (var index in conversations) {
             var conversation = conversations[index];
             var newConversation = {};
             var members = conversation.members;
             var messageList = conversation.messageList;
-            console.log("messageList from chat server was this long: " + messageList.length)
 
             var partner = this.getPartner(members, me);
-            console.log("getPartner returned: " + partner)
             newConversation.partner = partner;
             newConversation.messageList = messageList;
-            for(var i = 0; i < messageList.length; i++){
-              console.log("Loaded message: " + messageList[i].data.text + " , author: " + messageList[i].author);
-            }
-            //newConversation.messageList = this.decodeMessageList(messageList, me);
             newConversation.imageUrl = this.imageUrl // use dummy data for now...
-            //console.log("DECODED messageList from chat server was this long: " + newConversation.messageList.length)
             this.allChats.push(newConversation)
         }
         this.currentChat = this.allChats[this.allChats.length-1]
@@ -115,14 +89,8 @@ class ChatStore extends EventEmitter{
     }
 
     receiveMessage(messageList, from) {
-        console.log("Inside receiveMessage, messageList length: " + messageList.length)
-        for(var i = 0; i < messageList.length; i++){
-          console.log("message number " + i + ": " + messageList[i].data.text + " author: " + messageList[i].author)
-        }
-
         for (var index in this.allChats) {
             if (this.allChats[index].partner === from) {
-                //this.allChats[index].messageList = this.decodeMessageList(messageList, UserStore.getUsername());
                 this.allChats[index].messageList = messageList;
 
             }

@@ -2,6 +2,7 @@ import React from "react";
 import { hashHistory, Link } from "react-router";
 import {Button, ButtonToolbar, ButtonGroup, Modal, Overlay, OverlayTrigger, Popover} from 'react-bootstrap';
 import * as LibraryActions from "../../actions/LibraryActions";
+import * as GameInfoActions from "../../actions/GameInfoActions";
 
 export default class LibraryItem extends React.Component {
     constructor(props){
@@ -29,7 +30,7 @@ export default class LibraryItem extends React.Component {
     // called when any of the buttons (e.g. send a text invite, see game info, etc.)
     // is clicked. Section refers to the different tabs of the game information page.
     handleClick(id, section, event) {
-      LibraryActions.getGameInfo(id, section);
+      GameInfoActions.getGameInfo(id, section);
       hashHistory.push({
         pathname: "/game"
       });
