@@ -36,6 +36,7 @@ export default class ChatWindow extends React.Component {
             ChatActions.loadAllConversations(allConversations);
         });
         socket.on('newMessage', function(messageInfo) {
+            console.log("socket received a new message!");
             ChatActions.receiveMessage(messageInfo);
         });
       }
@@ -83,6 +84,7 @@ export default class ChatWindow extends React.Component {
 
       _handleClick() {
         ChatStore.toggleIsOpen();
+        ChatStore.setCurrentNewMessagesCount(0);
         this.setState({
           isOpen: !this.state.isOpen,
           newMessagesCount: 0
