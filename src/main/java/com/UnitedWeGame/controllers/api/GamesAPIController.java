@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +52,7 @@ public class GamesAPIController {
 		game.setFriendsRatings(gameRatingService.getFriendRatingsByGame(userService.getLoggedInUser(), game));
 		return game;
 	}
-	
+
 	@RequestMapping(value = "/{gameId}/addRating", method = RequestMethod.POST)
 	public GameRating createGameRating(@PathVariable long gameId, @RequestBody GameRating gameRating) {
 		Game game = gameService.findById(gameId);
@@ -60,7 +61,8 @@ public class GamesAPIController {
 		List<GameRating> gameRatings = game.getRatings();
 		List<GameRating> userRatings = user.getGameRatings();
 
-		//If they have already rated the game, don't add a new one, just change previous score
+		// If they have already rated the game, don't add a new one, just change
+		// previous score
 		if (existingRating == null) {
 			gameRating.setGame(game);
 			gameRating.setUser(user);
@@ -76,15 +78,15 @@ public class GamesAPIController {
 			existingRating.setReview(gameRating.getReview());
 			gameRatingService.saveGameRating(existingRating);
 			return existingRating;
-		}	
+		}
 	}
-	
+
 	@RequestMapping("/{gameId}/ratings")
 	public List<GameRating> fetchRatingsForGame(@PathVariable long gameId) {
 		Game game = gameService.findById(gameId);
 		return game.getRatings();
 	}
-	
+
 	@RequestMapping("/{gameId}/friendsRatings")
 	public List<GameRating> fetchRatingsForGameByriends(@PathVariable long gameId) {
 		Game game = gameService.findById(gameId);
@@ -176,6 +178,19 @@ public class GamesAPIController {
 				// Avoid sending multiple text messages
 				userIds.add(user.getId());
 			}
+		}
+		return "Text messages sent.";
+	}
+
+	@RequestMapping("/{gameId}/sendNotification/{userId}")
+	public String friendsGroupNotification(@PathVariable Long gameId, @PathVariable Long userId) {
+		String username = userService.getLoggedInUser().getUsername();
+		Game game = gameService.findById(gameId);
+		User user = userService.findById(userId);
+		String body = String.format("Hello, your friend %s would like to play %s", username, game.getTitle());
+		body += ". Generated SMS sent from United We Game, please do not reply.";
+		if (!StringUtils.isEmpty(user.getPhoneNum()) && user.getProfile().isSmsEnabled()) {
+			textService.sendSMS(user.getPhoneNum(), body);
 		}
 		return "Text messages sent.";
 	}
