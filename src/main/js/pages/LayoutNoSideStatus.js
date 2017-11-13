@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 
-import Nav from "../components/layout/Nav";
+import NavBar from "../components/layout/NavBar";
 
 
 export default class LayoutNoSideStatus extends React.Component {
@@ -20,7 +20,7 @@ export default class LayoutNoSideStatus extends React.Component {
         return (
             <div style={entirePageStyle}>
 
-                <Nav location={location} />
+                <NavBar location={location} />
 
                 <div class="container" style={containerStyle}>
                     <div class="row">

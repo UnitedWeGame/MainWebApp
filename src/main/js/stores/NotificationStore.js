@@ -1,5 +1,9 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
+import Alert from "react-s-alert";
+import ChatStore from "./ChatStore";
+import FriendStore from "./FriendStore";
+
 
 class NotificationStore extends EventEmitter{
     constructor(){
@@ -9,9 +13,9 @@ class NotificationStore extends EventEmitter{
           {id: 98, user: "MarioMaster", verb: "wants to be friends!", type: "friendRequest", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
           {id: 99, user: "Game4Life", verb: "wants to be friends!", type: "friendRequest", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"}
         ];
+
+        this.latestHeadline = this.notifications.length + " new notifications";
     }
-
-
 
     getNotifications(){
         return this.notifications;
@@ -21,12 +25,16 @@ class NotificationStore extends EventEmitter{
         return this.notifications.length;
     }
 
+    getHeadline(){
+      return this.latestHeadline;
+    }
+
     removeNotification(id){
       for(var i = this.notifications.length-1; i>=0; i--) {
         if( this.notifications[i].id == id)
           this.notifications.splice(i,1);
       }
-
+      this.latestHeadline = this.notifications.length + " new notifications";
       this.emit("change");
     }
 
@@ -56,17 +64,72 @@ class NotificationStore extends EventEmitter{
           listChanged = true;
         }
       }
-      if(listChanged)
+      if(listChanged){
+        this.latestHeadline = this.notifications.length + " new notifications";
         this.emit("change");
-
+      }
     }
 
+    addMsgToNotifications(from){
+      console.log("from: " + from)
+      if(ChatStore.currentChat.partner == from)
+        return;
+      var notification = {};
+      notification.id = this.notifications.length;
+      notification.type = "newMessage";
+      notification.user = from;
+      notification.verb = "sent you a message!";
+      this.notifications.unshift(notification); // add to the front of array
+      this.latestHeadline = "New message from "  + from;
+
+      // get friend's profile picture
+      var friends = FriendStore.getAll();
+      for(var i = 0; i < friends.length; i++){
+        if(friends[i].username === from)
+          notification.imageUrl = friends[i].imageUrl;
+          break;
+      }
+      // show an alert on the screen
+      Alert.success("New message from " + from, {});
+      
+      this.emit("change");
+    }
+
+    removeMsgNotification(partner){
+      console.log("Notifications are this long:" + this.notifications.length);
+      for(var i = this.notifications.length-1; i>=0; i--) {
+        if(
+          this.notifications[i].type === "newMessage" &&
+          this.notifications[i].user === partner
+        )
+        this.notifications.splice(i,1);
+      }
+      this.latestHeadline = this.notifications.length + " new notifications";
+      this.emit("change");
+    }
+
+    /*
+       When a user opens a chat window or changes their chat window,
+       we want to remove any unread message notifications for their new chat partner
+    */
+    removeMsgNotificationAfterWait(partner){
+      // wait a brief period to allow ChatStore to update .currentChat
+      setTimeout(() => this.removeMsgNotification(partner), 1000);
+    }
 
 
     handleActions(action){
         switch (action.type) {
             case "FRIEND_REQUEST_RECEIVED": {
                 this.updateFriendRequests(action.friendRequests);
+                break;
+            }
+            case "RECEIVE_MESSAGE": {
+                this.addMsgToNotifications(action.from);
+                break;
+            }
+            case "START_SOLO_CHAT": {
+                this.removeMsgNotificationAfterWait(action.partner);
                 break;
             }
         }

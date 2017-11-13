@@ -1,5 +1,5 @@
 import React from "react";
-import {Button} from "react-bootstrap";
+import {Button, Overlay, OverlayTrigger, Tooltip} from "react-bootstrap";
 import * as ChatActions from "../../actions/ChatActions";
 import OnlineNowStore from "../../stores/OnlineNowStore";
 import * as OnlineNowActions from "../../actions/OnlineNowActions";
@@ -59,11 +59,19 @@ class FriendOnline extends React.Component {
       const {username} = this.props;
       const {imageUrl} = this.props;
 
+      const tooltipChat = (
+      <Tooltip id="tooltip"><strong>Chat</strong></Tooltip>
+      );
+
       return (
           <div class="autosize-container" id="friend">
-              <p><img src={imageUrl} alt="Profile Picture"/>
-              &nbsp;
-              <Button bsStyle="link" onClick={this.startChat.bind(this, username, imageUrl)}><strong>{username}</strong></Button></p>
+              <p>
+                <img src={imageUrl} alt="Profile Picture"/>
+                &nbsp;
+                <OverlayTrigger placement="bottom" overlay={tooltipChat}>
+                  <Button bsStyle="link" onClick={this.startChat.bind(this, username, imageUrl)}><strong>{username}</strong></Button>
+                </OverlayTrigger>
+              </p>
               <hr/>
           </div>
       );
