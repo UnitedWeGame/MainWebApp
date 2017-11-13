@@ -50,6 +50,10 @@ class ChatStore extends EventEmitter{
       return this.currentChat.newMessagesCount;
     }
 
+    setCurrentNewMessagesCount(count){
+      this.currentChat.newMessagesCount = count;
+    }
+
     startSoloChat(partner, partnerUrl){
         // Find the chat and set it to the current chat
         for(var i = 0; i < this.allChats.length; i++){
