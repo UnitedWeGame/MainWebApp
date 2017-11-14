@@ -37,7 +37,6 @@ export default class Groups extends React.Component {
     var coverPhoto = GroupStore.getCoverPhoto();*/
     const loggedInUserID = UserStore.getUserID();
     const username = UserStore.getUsername();
-    //var members = group.members ? GeneralUserStore.getUsers(group.members) : [];
     var members = GeneralUserStore.getUsers(group.members);
 
     var showJoinGroupButton = false;
@@ -75,6 +74,10 @@ export default class Groups extends React.Component {
     GroupStore.removeListener("change", this.updateJoinGroupButton);
     GeneralUserStore.on("change", this.getGroup);
   }
+
+  /*getMembers(){
+
+  }*/
 
   getGroup(){
     const group = GroupStore.getGroup();

@@ -38,14 +38,28 @@ export function getGroup(id){
 	});
 }
 
-export function joinGroup(groupId){
+export function joinGroup(groupId, userId){
   console.log("API hasn't been implemented yet.");
-  $.get( "/api/group/" + groupId + "/addMember", function( data ){
+  $.get( "/api/group/" + groupId + "/addMember/" + userId, function( data ){
 		dispatcher.dispatch({
 			type: "UPDATE_GROUP",
 			group: data
 		});
 	});
+  //return;/{groupId}/addMember
+  /*
+  $.ajax({
+    url: "/api/" + groupId + "/addMember",
+    type:"POST",
+    contentType:"application/json; charset=utf-8",
+    dataType:"json",
+    success: function(response ){
+      dispatcher.dispatch({
+        type: "UPDATE_GROUP",
+        settings: response
+      });
+    }
+  });*/
 }
 // /api/group/{groupId}/createPost
 export function updateActivityFeed(group, groupPost){
@@ -56,8 +70,6 @@ export function updateActivityFeed(group, groupPost){
     contentType:"application/json; charset=utf-8",
     dataType:"json",
     success: function(response ){
-    	console.log("the response from updateActivityFeed:");
-    	console.log(response);
       dispatcher.dispatch({
         type: "UPDATE_GROUP",
         group: response
