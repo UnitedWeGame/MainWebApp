@@ -38,43 +38,29 @@ export function getGroup(id){
 	});
 }
 
-export function joinGroup(groupId, userId){
+export function joinGroup(groupId){
   console.log("API hasn't been implemented yet.");
-  $.get( "/api/group/" + groupId + "/addMember/" + userId, function( data ){
+  $.get( "/api/group/" + groupId + "/addMember", function( data ){
 		dispatcher.dispatch({
 			type: "UPDATE_GROUP",
 			group: data
 		});
 	});
-  //return;/{groupId}/addMember
-  /*
-  $.ajax({
-    url: "/api/" + groupId + "/addMember",
-    type:"POST",
-    contentType:"application/json; charset=utf-8",
-    dataType:"json",
-    success: function(response ){
-      dispatcher.dispatch({
-        type: "UPDATE_GROUP",
-        settings: response
-      });
-    }
-  });*/
 }
-
-export function updateActivityFeed(group){
-  console.log("API hasn't been implemented yet.");
-  return;
+// /api/group/{groupId}/createPost
+export function updateActivityFeed(group, groupPost){
   $.ajax({
-    url: "/api/groups/" + group.groupId,
+    url: "/api/group/" + group.id + "/createPost",
     type:"POST",
-    data: JSON.stringify({"activityList": group.activityList }),
+    data: JSON.stringify({"groupPost": groupPost }),
     contentType:"application/json; charset=utf-8",
     dataType:"json",
     success: function(response ){
+    	console.log("the response from updateActivityFeed:");
+    	console.log(response);
       dispatcher.dispatch({
         type: "UPDATE_GROUP",
-        settings: response
+        group: response
       });
     }
   });

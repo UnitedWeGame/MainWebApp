@@ -6,6 +6,7 @@ class GeneralUserStore extends EventEmitter{
         super();
         this.users = [];
         this.user = [];
+        this.groups = [];
     }
 
     getUsername(){
@@ -47,6 +48,15 @@ class GeneralUserStore extends EventEmitter{
         return lib;
     }
 
+    getGroups(){
+        return this.groups;
+    }
+
+    setGroups(groups){
+        this.groups = groups;
+        this.emit("change");
+    }
+
     getImageUrl(){
         return this.user.imageUrl;
     }
@@ -70,6 +80,10 @@ class GeneralUserStore extends EventEmitter{
             }
             case "GET_USER_DATA": {
                 this.setUser(action.user);
+                break;
+            }
+            case "GET_GROUPS": {
+                this.setGroups(action.groups);
                 break;
             }
         }

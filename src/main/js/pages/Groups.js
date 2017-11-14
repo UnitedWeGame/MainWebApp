@@ -31,7 +31,7 @@ export default class Groups extends React.Component {
     var description = group.description;
     var coverPhoto = group.coverPhoto;
     //var members = group.members;
-    var activityList = group.activityList;
+    var groupPost = group.groupPost;
     /*var groupName = GroupStore.getName();
     var description = GroupStore.getDesc();
     var coverPhoto = GroupStore.getCoverPhoto();*/
@@ -45,13 +45,15 @@ export default class Groups extends React.Component {
       showJoinGroupButton = !group.members.includes(loggedInUserID);
     }
 
+
+
     this.state = {
       group: group,
       groupName: groupName,
       description: description,
       coverPhoto: coverPhoto,
       members: members,
-      activityList: activityList,
+      groupPost: groupPost,
       btnDisabled: false,
       btnText: "Join Group",
       showModal: false,
@@ -74,23 +76,21 @@ export default class Groups extends React.Component {
     GeneralUserStore.on("change", this.getGroup);
   }
 
-  /*getMembers(){
-
-  }*/
-
   getGroup(){
     const group = GroupStore.getGroup();
+    const loggedInUserID = UserStore.getUserID();
     var showJoinGroupButton = false;
     if(group.members)
-      showJoinGroupButton = !group.members.includes(this.state.loggedInUserID);
+      showJoinGroupButton = !group.members.includes(loggedInUserID);
     this.setState({
       group: group,
       groupName: group.groupName,
       description: group.description,
       coverPhoto: group.coverPhoto,
       members : GeneralUserStore.getUsers(group.members),
-      activityList : group.activityList,
-      showJoinGroupButton: showJoinGroupButton
+      groupPost : group.groupPost,
+      showJoinGroupButton: showJoinGroupButton,
+      loggedInUserID: loggedInUserID
     });
   }
 
@@ -114,10 +114,7 @@ export default class Groups extends React.Component {
 
   onJoinGroupClick(event){
     event.preventDefault();
-    console.log("joining group");
-    console.log(this.state.group);
-    console.log(this.state.group.id);
-    GroupActions.joinGroup(this.state.group.id, this.state.loggedInUserID);
+    GroupActions.joinGroup(this.state.group.id);
     this.openJoinGroupModal();
     this.setState({
       btnText: "Group Joined!",
@@ -127,15 +124,17 @@ export default class Groups extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
-    const post = {
+    console.log("this.state.post:");
+    console.log(this.state.post);
+    const groupPost = {
         userId: this.state.loggedInUserID,
         username: this.state.username,
         content: this.state.post,
         imageUrl: UserStore.getImageUrl(),
         timestamp: Date.now()
       };
-    this.state.group.activityList.unshift(post);
-    GroupActions.updateActivityFeed(this.state.group);
+    //this.state.group.groupPost.unshift(post);
+    GroupActions.updateActivityFeed(this.state.group, groupPost);
   }
 
   handleInputChange(event) {
@@ -152,9 +151,9 @@ export default class Groups extends React.Component {
     //const friends = this.state.friendList.map((person) => <Friend key={person.id} {...person}/> );
     var members = this.state.members.map((a) => <MiniUser key={a.ID} {...a}/> );
     var activities = [];
-    if(this.state.activityList)
+    if(this.state.groupPost)
     {
-      activities = this.state.activityList.map((a) => <Item key={a.ID} {...a}/> );
+      activities = this.state.groupPost.map((a) => <Item key={a.ID} {...a}/> );
     }
 
     {/* Button for sending friend request to user featured on profile, if not yet a friend*/}

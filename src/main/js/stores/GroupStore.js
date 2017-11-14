@@ -35,6 +35,12 @@ class GroupStore extends EventEmitter{
         this.setGroup(action.group);
         break;
       }
+      case "UPDATE_GROUP":{
+        console.log("in UPDATE_GROUP, group is:");
+        console.log(action.group);
+        this.setGroup(action.group);
+        break;
+      }
     }
   }
 }
