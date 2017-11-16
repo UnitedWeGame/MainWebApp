@@ -127,8 +127,6 @@ export default class Groups extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
-    console.log("this.state.post:");
-    console.log(this.state.post);
     const groupPost = {
         userId: this.state.loggedInUserID,
         username: this.state.username,
