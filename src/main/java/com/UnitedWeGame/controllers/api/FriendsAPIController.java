@@ -1,5 +1,6 @@
 package com.UnitedWeGame.controllers.api;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +33,30 @@ public class FriendsAPIController {
 	public Set<User> getFriends() {
 		User user = userService.getLoggedInUser();
 		return user.getFriends();
+	}
+
+	@RequestMapping("/{userId}")
+	public Set<User> getFriendsOfOtherUser(@PathVariable long userId){
+		User user = userService.findById(userId);
+		return user.getFriends();
+	}
+
+	@RequestMapping("/suggestedFriends")
+	public Set<User> getSuggestedFriends() {
+		Set<User> suggestedFriends = new HashSet<>();
+
+		User user = userService.getLoggedInUser();
+		long userId = user.getId();
+		Set<User> friends = user.getFriends();
+
+		for(User friend : friends) {
+			for(User friendOfFriend : friend.getFriends()) {
+				if(friendOfFriend.getId() != userId && !friends.contains(friendOfFriend))
+					suggestedFriends.add(friendOfFriend);
+			}
+		}
+
+		return suggestedFriends;
 	}
 
 	@RequestMapping("/online")
