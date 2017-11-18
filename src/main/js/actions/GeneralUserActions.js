@@ -26,3 +26,12 @@ export function getGroups(userId){
         });
     });
 }
+
+export function getFriends(userId){
+    $.get( "/api/friends/" + userId, function( data ){
+        dispatcher.dispatch({
+            type: "GET_FRIENDS",
+            friends: data
+        });
+    });
+}
