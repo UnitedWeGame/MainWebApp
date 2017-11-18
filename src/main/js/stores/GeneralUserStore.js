@@ -7,6 +7,19 @@ class GeneralUserStore extends EventEmitter{
         this.users = [];
         this.user = [];
         this.groups = [];
+        this.friends = [];
+    }
+
+    getAllUsers(){
+        return this.users;
+    }
+
+    getCoverPhoto(){
+        return this.user.profile.coverPhoto;
+    }
+
+    getFriends(){
+        return this.friends;
     }
 
     getUsername(){
@@ -21,13 +34,6 @@ class GeneralUserStore extends EventEmitter{
         return this.user;
     }
 
-    getCoverPhoto(){
-        return this.user.profile.coverPhoto;
-    }
-
-    getAllUsers(){
-        return this.users;
-    }
 
     getUsers(ids){
         var users = [];
@@ -52,9 +58,14 @@ class GeneralUserStore extends EventEmitter{
         return this.groups;
     }
 
+    setFriends(friends){
+        this.friends = friends;
+        this.emit("friendChange");
+    }
+
     setGroups(groups){
         this.groups = groups;
-        this.emit("change");
+        this.emit("groupsChange");
     }
 
     getImageUrl(){
@@ -63,7 +74,7 @@ class GeneralUserStore extends EventEmitter{
 
     setUser(user){
         this.user = user;
-        this.emit("change");
+        this.emit("userChange");
     }
 
     setUsers(users){
@@ -84,6 +95,12 @@ class GeneralUserStore extends EventEmitter{
             }
             case "GET_GROUPS": {
                 this.setGroups(action.groups);
+                break;
+            }
+            case "GET_FRIENDS": {
+                console.log("amigos:");
+                console.log(action.friends);
+                this.setFriends(action.friends);
                 break;
             }
         }
