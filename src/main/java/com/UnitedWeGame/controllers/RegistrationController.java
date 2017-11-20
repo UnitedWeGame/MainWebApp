@@ -2,6 +2,9 @@ package com.UnitedWeGame.controllers;
 
 import java.util.Set;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +46,7 @@ public class RegistrationController {
 		model.addAttribute("gamertag", new GamerIdentifier());
 		return "onboarding/onboard-xbox";
 	}
-	
+
 	@PostMapping("/onboarding-xbox")
 	public String onboardingXbox(@Valid @ModelAttribute GamerIdentifier gamerIdentifier, BindingResult bindingResult) {
 		User user = userService.getLoggedInUser();
@@ -55,13 +58,13 @@ public class RegistrationController {
 		userService.saveUser(user);
 		return "redirect:/onboarding-steam";
 	}
-	
+
 	@GetMapping("/onboarding-steam")
 	public String onboardingSteam(Model model) {
 		model.addAttribute("gamertag", new GamerIdentifier());
 		return "onboarding/onboard-steam";
 	}
-	
+
 	@PostMapping("/onboarding-steam")
 	public String onboardingSteam(@Valid @ModelAttribute GamerIdentifier gamerIdentifier, BindingResult bindingResult) {
 		User user = userService.getLoggedInUser();
@@ -73,7 +76,7 @@ public class RegistrationController {
 		userService.saveUser(user);
 		return "redirect:/users";
 	}
-	
+
 	@GetMapping("/registration")
 	public String registration(Model model) {
 		model.addAttribute("user", new User());
@@ -92,20 +95,28 @@ public class RegistrationController {
 		NewUsers newUser = new NewUsers();
 		newUser.setUserId(user.getId());
 		newUsersService.saveNewUser(newUser);
-		//Manually log user in
+		// Manually log user in
 		UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
 		Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
 				userDetails.getPassword(), userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
-		
+
 		redirectAttrib.addFlashAttribute("success",
 				"You have successfully registered. Feel free to edit your profile now!");
 		return "redirect:/onboarding-xbox";
 	}
-	
+
 	@GetMapping("/logout")
-	public String logout(RedirectAttributes redirectAttrib) {
+	public String logout(RedirectAttributes redirectAttrib, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
 		SecurityContextHolder.clearContext();
+		session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
+		for (Cookie cookie : request.getCookies()) {
+			cookie.setMaxAge(0);
+		}
 		redirectAttrib.addFlashAttribute("success", "You have been successfully logged out.");
 		return "redirect:/login";
 	}
