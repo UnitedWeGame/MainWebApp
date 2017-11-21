@@ -3,6 +3,7 @@ import { hashHistory } from 'react-router';
 import {Menu, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
 import {groupBy, map} from 'lodash';
 import * as LibraryActions from "../../actions/LibraryActions";
+import * as GameInfoActions from "../../actions/GameInfoActions";
 import * as GeneralUserActions from "../../actions/GeneralUserActions";
 import DbGameStore from "../../stores/DbGameStore";
 import GeneralUserStore from "../../stores/GeneralUserStore";
@@ -88,7 +89,7 @@ export default class Searchbar extends React.Component {
     handleChange(selectedOptions){
 
       if(selectedOptions[0].type == "Games"){
-        LibraryActions.getGameInfo(selectedOptions[0].id)
+        GameInfoActions.getGameInfo(selectedOptions[0].id);
         hashHistory.push('/game');
       }
       else if(selectedOptions[0].type == "People"){

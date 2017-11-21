@@ -105,7 +105,6 @@ class ChatStore extends EventEmitter{
     }
 
     receiveMessage(messageList, from) {
-        console.log("Inside receiveMessage, messageList length: " + messageList.length)
         for (var index in this.allChats) {
             if (this.allChats[index].partner === from) {
                 this.allChats[index].messageList = messageList;
