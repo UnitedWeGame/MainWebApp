@@ -6,6 +6,20 @@ class GeneralUserStore extends EventEmitter{
         super();
         this.users = [];
         this.user = [];
+        this.groups = [];
+        this.friends = [];
+    }
+
+    getAllUsers(){
+        return this.users;
+    }
+
+    getCoverPhoto(){
+        return this.user.profile.coverPhoto;
+    }
+
+    getFriends(){
+        return this.friends;
     }
 
     getUsername(){
@@ -20,19 +34,14 @@ class GeneralUserStore extends EventEmitter{
         return this.user;
     }
 
-    getCoverPhoto(){
-        return this.user.profile.coverPhoto;
-    }
-
-    getAllUsers(){
-        return this.users;
-    }
 
     getUsers(ids){
         var users = [];
-        for (var i = 0; i < this.users.length; i++) {
-            if(ids.includes(this.users[i].id)){
-                users.push(this.users[i]);
+        if(ids){
+            for (var i = 0; i < this.users.length; i++) {
+                if(ids.includes(this.users[i].id)){
+                    users.push(this.users[i]);
+                }
             }
         }
         return users;
@@ -45,13 +54,27 @@ class GeneralUserStore extends EventEmitter{
         return lib;
     }
 
+    getGroups(){
+        return this.groups;
+    }
+
+    setFriends(friends){
+        this.friends = friends;
+        this.emit("friendChange");
+    }
+
+    setGroups(groups){
+        this.groups = groups;
+        this.emit("groupsChange");
+    }
+
     getImageUrl(){
         return this.user.imageUrl;
     }
 
     setUser(user){
         this.user = user;
-        this.emit("change");
+        this.emit("userChange");
     }
 
     setUsers(users){
@@ -68,6 +91,16 @@ class GeneralUserStore extends EventEmitter{
             }
             case "GET_USER_DATA": {
                 this.setUser(action.user);
+                break;
+            }
+            case "GET_GROUPS": {
+                this.setGroups(action.groups);
+                break;
+            }
+            case "GET_FRIENDS": {
+                console.log("amigos:");
+                console.log(action.friends);
+                this.setFriends(action.friends);
                 break;
             }
         }

@@ -34,7 +34,7 @@ ReactDOM.render(
             <Route path="/game*" component={GameInfo}></Route>
             <Route path="/profile/:userID" name="profile" component={Profile}></Route>
             {/*<Route path="groups" name="groups" component={Groups}></Route>*/}
-            <Route path="groups/:groupID" component={Groups} />
+            <Route path="group/:groupID" component={Groups} />
         </Route>
     </Router>,
     app);

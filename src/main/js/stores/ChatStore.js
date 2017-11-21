@@ -9,14 +9,14 @@ class ChatStore extends EventEmitter{
     constructor(){
         super();
         var component = this;
-        this.isOpen = true;
+        this.isOpen = false;
         this.imageUrl = "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png";
         this.allChats = [
           {
           partner: "noName",
           imageUrl: "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png",
           messageList: dummyMessageHistory,
-          newMessagesCount: 1
+          newMessagesCount: 0
           }
         ];
         this.currentChat = this.allChats[0];
@@ -24,6 +24,10 @@ class ChatStore extends EventEmitter{
 
     getIsOpen(){
       return this.isOpen;
+    }
+
+    toggleIsOpen(){
+      this.isOpen = !this.isOpen;
     }
 
     getCurrentChat(){
@@ -46,13 +50,23 @@ class ChatStore extends EventEmitter{
       return this.currentChat.newMessagesCount;
     }
 
+    setCurrentNewMessagesCount(count){
+      this.currentChat.newMessagesCount = count;
+    }
+
     startSoloChat(partner, partnerUrl){
+        // Find the chat and set it to the current chat
         for(var i = 0; i < this.allChats.length; i++){
-          if(this.allChats[i].partner === partner)
+          if(this.allChats[i].partner === partner){
             this.currentChat = this.allChats[i];
+            break;
+          }
         }
+        //this.currentChat.partner = partner;
+        this.currentChat.imageUrl = partnerUrl;
+
+        this.isOpen = true;
         this.emit("change");
-        this.emit("click");
     }
 
     getPartner(members, me) {
@@ -75,6 +89,8 @@ class ChatStore extends EventEmitter{
             var partner = this.getPartner(members, me);
             newConversation.partner = partner;
             newConversation.messageList = messageList;
+            newConversation.newMessagesCount = 0;
+
             newConversation.imageUrl = this.imageUrl // use dummy data for now...
             this.allChats.push(newConversation)
         }
@@ -92,9 +108,10 @@ class ChatStore extends EventEmitter{
         for (var index in this.allChats) {
             if (this.allChats[index].partner === from) {
                 this.allChats[index].messageList = messageList;
-
             }
         }
+        if(this.currentChat.partner === from && !this.isOpen)
+          this.currentChat.newMessagesCount++;
         this.emit("change");
     }
 

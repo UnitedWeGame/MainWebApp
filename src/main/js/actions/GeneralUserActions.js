@@ -18,3 +18,20 @@ export function getAllUsers(){
     });
 }
 
+export function getGroups(userId){
+    $.get( "/api/users/groups/" + userId, function( data ){
+        dispatcher.dispatch({
+            type: "GET_GROUPS",
+            groups: data
+        });
+    });
+}
+
+export function getFriends(userId){
+    $.get( "/api/friends/" + userId, function( data ){
+        dispatcher.dispatch({
+            type: "GET_FRIENDS",
+            friends: data
+        });
+    });
+}

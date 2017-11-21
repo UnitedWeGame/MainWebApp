@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import FriendStore from "../stores/FriendStore";
 import GeneralUserStore from "../stores/GeneralUserStore";
 import UserStore from "../stores/UserStore";
@@ -17,6 +18,7 @@ constructor(props){
     this.getFriends = this.getFriends.bind(this);
     this.getUser = this.getUser.bind(this);
     this.getGames = this.getGames.bind(this);
+    this.getGroups = this.getGroups.bind(this);
     this.isFriend = this.isFriend.bind(this);
     this.isUser = this.isUser.bind(this);
     this.onFriendRequestClick = this.onFriendRequestClick.bind(this);
@@ -29,6 +31,7 @@ constructor(props){
     var userID = GeneralUserStore.getUserID();
     var games = GeneralUserStore.getGames();
     const loggedInUserID = UserStore.getUserID();
+    var groups = GeneralUserStore.getGroups();
     var showFriendRequestButton = false;
 
     this.state = {
@@ -41,26 +44,31 @@ constructor(props){
         showFriendRequestButton: showFriendRequestButton,
         showRequestSentModal: false,
         user: user,
-        userID: userID
+        userID: userID,
+        groups: groups
     };
 
     GeneralUserActions.getUserData(props.params.userID);
+    GeneralUserActions.getGroups(props.params.userID);
+    GeneralUserActions.getFriends(props.params.userID);
   }
 
   componentWillMount() {
-    FriendStore.on("change", this.getFriends);
-    GeneralUserStore.on("change", this.getUser);
-    GeneralUserStore.on("change", this.getGames);
+    //FriendStore.on("change", this.getFriends);
+    GeneralUserStore.on("userChange", this.getUser);
+    GeneralUserStore.on("userChange", this.getGames);
     GeneralUserStore.on("change", this.updateFriendRequestButton);
-
+    GeneralUserStore.on("groupsChange", this.getGroups);
+    GeneralUserStore.on("friendChange", this.getFriends);
   }
 
   componentWillUnmount() {
-    FriendStore.removeListener("change", this.getFriends);
-    GeneralUserStore.removeListener("change", this.getUser);
-    GeneralUserStore.removeListener("change", this.getGames);
+    //FriendStore.removeListener("change", this.getFriends);
+    GeneralUserStore.removeListener("userChange", this.getUser);
+    GeneralUserStore.removeListener("userChange", this.getGames);
     GeneralUserStore.removeListener("change", this.updateFriendRequestButton);
-
+    GeneralUserStore.removeListener("groupsChange", this.getGroups);
+    GeneralUserStore.removeListener("friendChange", this.getFriends);
   }
 
   getUser(){
@@ -73,13 +81,19 @@ constructor(props){
 
   getFriends(){
     this.setState({
-      friendList: FriendStore.getAll()
+      friendList: GeneralUserStore.getFriends()
     });
   }
 
   getGames(){
     this.setState({
       games: GeneralUserStore.getGames()
+    });
+  }
+
+  getGroups(){
+    this.setState({
+      groups: GeneralUserStore.getGroups()
     });
   }
 
@@ -105,10 +119,10 @@ constructor(props){
   isFriend(){
     if(!this.state.userID)
       return true;
-    console.log("in the isFriend Function")
+    /*console.log("in the isFriend Function")
     console.log("user: " + this.state.user)
     console.log("userID: " + this.state.userID)
-    console.log("friend list is this long: " + this.state.friendList.length)
+    console.log("friend list is this long: " + this.state.friendList.length)*/
     var alreadyFriends = false;
     var friends = this.state.friendList; // friends of logged-in user
     for(var i = 0; i < friends.length; i++){
@@ -150,6 +164,7 @@ constructor(props){
 
     const friends = this.state.friendList.map((person) => <Friend key={person.id} {...person}/> );
     const library = this.state.games.map((game) => <MinLibraryItem key={game.id} {...game}/> );
+    const groups = this.state.groups.map((group) => <MinGroupItem key={group.id} {...group}/> );
 
     {/* Button for sending friend request to user featured on profile, if not yet a friend*/}
     var coverBtnStyle = {display: "none"};
@@ -179,7 +194,7 @@ constructor(props){
         {library}
       </Tab>
       <Tab label='Friends'><large>{friends}</large></Tab>
-      <Tab label='Groups'><large>To do...</large></Tab>
+      <Tab label='Groups'><large>{groups}</large></Tab>
     </CustomTabs>
     );
 
@@ -219,6 +234,23 @@ class MinLibraryItem extends React.Component {
         <img width="50" src={imageUrl} alt="Profile Picture"/>
           &nbsp;&nbsp;
           <strong>{title}</strong>
+        </span>
+      </div>
+    );
+  }
+}
+
+class MinGroupItem extends React.Component {
+  render(){
+    const {id} = this.props;
+    const {groupName} = this.props;
+    const {coverPhoto} = this.props;
+
+    return(
+      <div>
+        <span>
+          <img width="50" src={coverPhoto} alt="Group Picture"/>
+          <Link to={`group/${id}`}><strong>{groupName}</strong></Link>
         </span>
       </div>
     );
