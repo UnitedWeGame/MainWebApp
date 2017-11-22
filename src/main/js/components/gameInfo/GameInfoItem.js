@@ -4,6 +4,7 @@ import FriendReviews from "./reviews/FriendReviews";
 import FriendsWhoOwn from "./FriendsWhoOwn";
 import GameStore from "../../stores/GameStore";
 import * as GameInfoActions from "../../actions/GameInfoActions";
+import Invitations from "./Invitations";
 import MyReview from "./reviews/MyReview";
 import ReactStars from "react-stars";
 import Slider from "react-slick";
@@ -141,8 +142,11 @@ export default class GameInfoItem extends React.Component {
                   <FriendsWhoOwn />
                 </Tab>
 
-                <Tab label='Invite'><large>Not yet implemented</large></Tab>
+                <Tab label='Invite'>
+                  <Invitations gameInfo={this.state.gameInfo}/>
+                </Tab>
               </CustomTabs>
+
             </section>
 
       </div>

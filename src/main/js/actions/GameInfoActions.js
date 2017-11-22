@@ -60,3 +60,14 @@ export function getFriendsWhoOwn(gameId){
           });
   });
 }
+
+// Sends to the server the ids of the friends the user wants to send an SMS invite
+export function sendSmsInvites(gameId, friendIds){
+  console.log("sendSmsInvites action was called!");
+  for(var i = 0; i < friendIds.length; i++){
+    console.log("get request: /api/games/" + gameId + "/sendNotification/" + friendIds[i]);
+    $.get("/api/games/" + gameId + "/sendNotification/" + friendIds[i], function(data){
+      console.log("sent sms invite to server and got response: " + data);
+    });
+  }
+}
