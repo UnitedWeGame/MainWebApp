@@ -34,13 +34,13 @@ export default class FriendsWhoOwn extends React.Component {
     var text = "";
     if(friends.length == 0)
       text = "No friends own this game..."
-      return(
-        <div>
-          <br/>
-          <h3 class="text-center">{text}</h3>
-          {friends}
-        </div>
-      );
+    return(
+      <div style={{paddingLeft: "10%"}}>
+        <br/>
+        <h3 class="text-center">{text}</h3>
+        {friends}
+      </div>
+    );
 
   }
 }
