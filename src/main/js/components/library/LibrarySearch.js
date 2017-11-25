@@ -2,7 +2,8 @@ import React from "react";
 import { hashHistory } from 'react-router';
 import {Menu, MenuDivider, MenuHeader, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
 import {groupBy, map} from 'lodash';
-import * as LibraryActions from "../../actions/LibraryActions"
+import * as LibraryActions from "../../actions/LibraryActions";
+import * as GameInfoActions from "../../actions/GameInfoActions";
 import DbGameStore from "../../stores/DbGameStore";
 
 
@@ -12,7 +13,6 @@ export default class Searchbar extends React.Component {
       super(props);
       this.setSearchList = this.setSearchList.bind(this);
       this.addGamesToList = this.addGamesToList.bind(this);
-      //this.addPeopleToList = this.addPeopleToList.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.renderMenu = this.renderMenu.bind(this);
 
@@ -93,7 +93,7 @@ export default class Searchbar extends React.Component {
       console.log("this many items selected: "  + selectedOptions)
       console.log(selectedOptions[0])
       if(selectedOptions[0].type == "games"){
-        LibraryActions.getGameInfo(selectedOptions[0].id)
+        GameInfoActions.getGameInfo(selectedOptions[0].id)
         hashHistory.push('/game');
       }
     }

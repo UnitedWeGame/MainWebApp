@@ -46,7 +46,7 @@ export default class Layout extends React.Component {
         return (
             <div style={entirePageStyle}>
 
-                <NavBar style={navStyle}location={location} />
+                <NavBar style={navStyle} location={location} />
 
                 <div style={chatStyle}>
                   <ChatWindow />

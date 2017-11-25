@@ -15,14 +15,19 @@ export default class LibraryItems extends React.Component {
         this.getLibraryItems = this.getLibraryItems.bind(this);
         this.getDbGames = this.getDbGames.bind(this);
 
-        const ownedGameList = LibraryStore.getAll();
+        var ownedGameList = LibraryStore.getAll();
+        var shownPlatform = LibraryStore.getCurrentPlatform();
+        var XboxActive = (shownPlatform == "Xbox") ? "active" : "";
+        var steamActive = (shownPlatform == "Steam") ? "active" : "";
+        var psActive = (shownPlatform == "PS") ? "active" : "";
+
 
         this.state = {
             ownedGameList: ownedGameList,
             dbGameList: "empty",
-            XboxActive: "active",
-            steamActive: "",
-            psActive: "",
+            XboxActive: XboxActive,
+            steamActive: steamActive,
+            psActive: psActive,
             showModal: false,
             addedGameId: "",
             addedGamePlatform: "",
@@ -68,6 +73,7 @@ export default class LibraryItems extends React.Component {
     	this.setState({ showModal: false });
   	}
 
+    // called when user selects a platform in the add-game modal
     handlePlatformChange(event) {
       var gameList = this.state.dbGameList;
 
@@ -110,49 +116,37 @@ export default class LibraryItems extends React.Component {
     }
 
     getLibraryItems(){
+        var platform = LibraryStore.getCurrentPlatform();
+        var XboxActive = (platform == "Xbox") ? "active" : "";
+        var steamActive = (platform == "Steam") ? "active" : "";
+        var psActive = (platform == "PS") ? "active" : "";
         this.setState({
-            ownedGameList: LibraryStore.getAll()
+            ownedGameList: LibraryStore.getAll(),
+            XboxActive: XboxActive,
+            steamActive: steamActive,
+            psActive: psActive
         });
     }
 
-
+    // called when a platform button is clicked
     togglePlatform(platform, event){
-        if(platform == "Xbox"){
+        if(platform == "Xbox")
             LibraryActions.showXboxGames();
-            this.setState({
-                XboxActive: "active",
-                steamActive: "",
-                psActive: ""
-            });
-        }
-        else if(platform == "Steam"){
+        else if(platform == "Steam")
             LibraryActions.showSteamGames();
-            this.setState({
-                XboxActive: "",
-                steamActive: "active",
-                psActive: ""
-            });
-        }
-        else if(platform == "PS"){
+        else if(platform == "PS")
             LibraryActions.showPlaystationGames();
-            this.setState({
-                XboxActive: "",
-                steamActive: "",
-                psActive: "active"
-            });
-        }
-
     }
 
 
     render() {
         const games = this.state.ownedGameList.map((g) => <LibraryItem key={g.id} {...g}/> );
         const gameTitles = this.state.formGameTitles.map((g) => <FormGameTitle key={g.id} {...g}/> );
-        
+
         const spacingStyle = {
         	marginLeft: "10px"
         };
-        
+
         const libraryGameStyle = {
             width:'70%',
             display:'flex',

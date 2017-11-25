@@ -1,25 +1,28 @@
 import React from "react";
-import Slider from "react-slick";
 import CustomTabs from "../uiPieces/CustomTabs";
-import {Tab} from "react-toolbox";
-import ReactStars from "react-stars";
+import FriendReviews from "./reviews/FriendReviews";
+import FriendsWhoOwn from "./FriendsWhoOwn";
 import GameStore from "../../stores/GameStore";
 import * as GameInfoActions from "../../actions/GameInfoActions";
-import FriendReviews from "./reviews/FriendReviews";
+import Invitations from "./Invitations";
 import MyReview from "./reviews/MyReview";
-
+import ReactStars from "react-stars";
+import Slider from "react-slick";
+import {Tab} from "react-toolbox";
 
 
 export default class GameInfoItem extends React.Component {
 
-  constructor(){
-      super();
+  constructor(props){
+      super(props);
+
       this.getGameInfo = this.getGameInfo.bind(this);
       const gameInfo = GameStore.getGame();
+      var tabIndex = GameStore.getTabIndex();
 
       this.state = {
         gameInfo: gameInfo,
-        index: 0
+        tabIndex: tabIndex
       }
 
   }
@@ -34,13 +37,14 @@ export default class GameInfoItem extends React.Component {
 
   getGameInfo(){
       this.setState({
-          gameInfo: GameStore.getGame()
+          gameInfo: GameStore.getGame(),
+          tabIndex: GameStore.getTabIndex()
       });
   }
 
 
-  handleTabChange = (index) => {
-    this.setState({index});
+  handleTabChange = (tabIndex) => {
+    this.setState({tabIndex});
   };
 
   // Called when the user makes a new star rating
@@ -101,7 +105,7 @@ export default class GameInfoItem extends React.Component {
           </div>
             <br/>
             <section>
-              <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
+              <CustomTabs index={this.state.tabIndex} onChange={this.handleTabChange} fixed>
                 <Tab label='Info'>
                   <div class={containerStyle}>
                     <br/>
@@ -134,9 +138,15 @@ export default class GameInfoItem extends React.Component {
                 </Tab>
 
 
-                <Tab label='Friends Who Own'><large>To do...</large></Tab>
-                <Tab label='Invite'><large>Not yet implemented</large></Tab>
+                <Tab label='Friends Who Own'>
+                  <FriendsWhoOwn />
+                </Tab>
+
+                <Tab label='Invite'>
+                  <Invitations gameInfo={this.state.gameInfo}/>
+                </Tab>
               </CustomTabs>
+
             </section>
 
       </div>
