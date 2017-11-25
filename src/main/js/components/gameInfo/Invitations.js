@@ -88,7 +88,7 @@ export default class Invitations extends React.Component {
           <br/>
           <h3 class="text-center">Choose friends to receive an SMS text invitation</h3>
           <br/>
-          <div style={{paddingLeft: "22%"}}>
+          <div style={{paddingLeft: "30%"}}>
             <form onSubmit={this.handleSubmit}>
               <FormGroup>
                 {friends}
