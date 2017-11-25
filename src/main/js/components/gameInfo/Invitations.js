@@ -86,12 +86,16 @@ export default class Invitations extends React.Component {
       return(
         <div>
           <br/>
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup>
-              {friends}
-            </FormGroup>
-            <Button bsStyle="success" type="submit">Send</Button>
-          </form>
+          <h3 class="text-center">Choose friends to receive an SMS text invitation</h3>
+          <br/>
+          <div style={{paddingLeft: "22%"}}>
+            <form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                {friends}
+              </FormGroup>
+              <Button bsStyle="success" type="submit">Send</Button>
+            </form>
+          </div>
         </div>
       );
     }
