@@ -14,12 +14,39 @@ import marioSound from "../../resources/static/sounds/mario1.WAV";
 export default class Layout extends React.Component {
     constructor() {
         super();
-      }
+        this.getRootPath = this.getRootPath.bind(this);
+    }
+
+    // E.g. "/profile/4444" => "profile"
+    getRootPath(pathname){
+      if(pathname === "/") return "";
+      var path = pathname.substring(1);
+      var indexOfSlash = path.indexOf("/");
+      if(indexOfSlash != -1)
+        path = path.substring(0,indexOfSlash);
+      return path;
+    }
+
 
     render() {
         const { location } = this.props;
+
+        // determine whether to show the sidebar containing online/playing statuses
+        const pathname = this.props.location.pathname;
+        var path = this.getRootPath(pathname);
+        // NOTE: add new routes to this array if you want the sidebar to be shown
+        const pagesShowingSidebar = ["", "activity", "friends", "library", "notifications",
+            "settings", "groupSettings"];
+        var showSidebar = false;
+        if(pagesShowingSidebar.includes(path))
+           showSidebar = true;
+
+        var pageBackground = (showSidebar) ?
+            "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')" :
+            "" ;
+
         const entirePageStyle = {
-            background: "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')",
+            background: pageBackground,
             backgroundSize: "cover",
             paddingBottom: "300px",
         };
@@ -43,6 +70,12 @@ export default class Layout extends React.Component {
             width: "100%"
         };
 
+
+        const containerStyleNoSidebar = {
+            marginTop: "20px",
+            marginLeft: "10px",
+        };
+
         return (
             <div style={entirePageStyle}>
 
@@ -51,6 +84,8 @@ export default class Layout extends React.Component {
                 <div style={chatStyle}>
                   <ChatWindow />
                 </div>
+
+                {showSidebar ? (
 
                 <div class="container" style={containerStyle}>
                     <div class="row">
@@ -78,7 +113,19 @@ export default class Layout extends React.Component {
                         </div>
 
                      </div>
-                </div>
+                  </div>
+                ) : (
+
+                  <div class="container" style={containerStyleNoSidebar}>
+                      <div class="row">
+
+                          <div class="col-md-12">
+                                {this.props.children}
+                          </div>
+
+                       </div>
+                  </div>
+                )}
 
                 <Alert
                   stack={{limit: 3}}

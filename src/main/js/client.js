@@ -4,7 +4,6 @@ import { Router, Route, IndexRoute, hashHistory } from "react-router";
 
 
 import Layout from "./pages/Layout";
-import LayoutNoSideStatus from "./pages/LayoutNoSideStatus";
 import Activity from "./pages/Activity";
 import Friends from "./pages/Friends";
 import GameInfo from "./pages/GameInfo";
@@ -25,15 +24,12 @@ ReactDOM.render(
             <Route path="activity" name="activity" component={Activity}></Route>
             <Route path="friends" name="friends" component={Friends}></Route>
             <Route path="library" name="library" component={Library}></Route>
-            <Route path="notifications" component={Notifications}></Route>
+            <Route path="notifications" name="notifications" component={Notifications}></Route>
             <Route path="settings" name="settings" component={Settings}></Route>
             <Route path="groupSettings" name="groupSettings" component={GroupSettings}></Route>
-            <Route path="groupSettings/:groupID" component={GroupSettings} />
-        </Route>
-        <Route component={LayoutNoSideStatus}>
+            <Route path="groupSettings/:groupID" name="groupSettings" component={GroupSettings} />
             <Route path="/game*" component={GameInfo}></Route>
             <Route path="/profile/:userID" name="profile" component={Profile}></Route>
-            {/*<Route path="groups" name="groups" component={Groups}></Route>*/}
             <Route path="group/:groupID" component={Groups} />
         </Route>
     </Router>,
