@@ -22,4 +22,9 @@ public class HomeController {
 		else
 			return "redirect:/users";
 	}
+	
+	@RequestMapping("/about")
+	public String about() {
+		return "about";
+	}
 }
