@@ -6,15 +6,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.hibernate.annotations.Fetch;
 
 /**
  * @author logangster
@@ -26,16 +40,23 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@NotEmpty
+	@Size(min=5, max=20)
+	@Pattern(regexp = "^[\\p{Alnum}]{1,32}$", message = "username should contain letters and numbers only")
 	@Column(unique = true, nullable = false)
 	private String username;
+	@NotEmpty
+	@Email(message = "email should be valid")
 	private String email;
+	@NotEmpty
 	private String password;
 	@OneToOne
 	private Profile profile;
+	@Pattern(regexp = "^$|^[0-9]{10}$", message = "phone number must be in the format of 8881234444")
 	private String phoneNum;
 	private Date lastActivity;
 	private String imageUrl;
-
+	
 	@ElementCollection(fetch = FetchType.EAGER, targetClass=Long.class)
 	private Set<Long> groups = new HashSet<>();
 
