@@ -1,6 +1,8 @@
 import React from "react";
 import * as GameInfoActions from "../../actions/GameInfoActions";
 import GameStore from "../../stores/GameStore";
+import {Image} from "react-bootstrap";
+
 
 export default class FriendsWhoOwn extends React.Component {
   constructor(){
@@ -57,7 +59,7 @@ class FriendWhoOwns extends React.Component {
     return (
       <div class="autosize-container">
         <span>
-          <img src={profilePic} alt="Profile picture"/>
+            <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
           &nbsp;&nbsp;
           <strong>{username}</strong>
         </span>
