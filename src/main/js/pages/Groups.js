@@ -214,10 +214,12 @@ export default class Groups extends React.Component {
               componentClass="textarea"
             />
           </FormGroup>
-          <Button type="submit">
+          <Button bsStyle="success" type="submit">
             Post
           </Button>
         </form>
+        <br/>
+        <br/>
         {activities}
         {/*<Activity/>*/}
       </div>

@@ -251,6 +251,7 @@ class MinGroupItem extends React.Component {
       <div>
         <span>
           <img width="50" src={coverPhoto} alt="Group Picture"/>
+          &nbsp;
           <Link to={`group/${id}`}><strong>{groupName}</strong></Link>
         </span>
       </div>
