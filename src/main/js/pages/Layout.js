@@ -52,7 +52,7 @@ export default class Layout extends React.Component {
            showSidebar = true;
 
         var pageBackground = (showSidebar) ?
-            "url('" + this.getRandomBackgroundImage() + ""') no-repeat center center fixed" :
+            "url('" + this.getRandomBackgroundImage() + "') no-repeat center center fixed" :
             "" ;
 
         const entirePageStyle = {
