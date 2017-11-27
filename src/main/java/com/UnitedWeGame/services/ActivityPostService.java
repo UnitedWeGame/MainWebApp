@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,10 @@ public class ActivityPostService {
 	}
 	
 	public ActivityPost createActivity(ActivityPost activity) {
-		activity.setCreatedDate(new Date());
-		activityFeedRepo.save(activity);
+		if (!StringUtils.isEmpty(activity.getContent())) {
+			activity.setCreatedDate(new Date());
+			activityFeedRepo.save(activity);
+		}
 		return activity;
 	}
 	
