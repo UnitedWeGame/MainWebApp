@@ -2,6 +2,8 @@ import React from "react";
 import {Button, ButtonToolbar} from "react-bootstrap";
 import NotificationStore from "../stores/NotificationStore";
 import * as FriendActions from "../actions/FriendActions";
+import {Image} from "react-bootstrap";
+
 
 export default class Notifications extends React.Component {
 
@@ -89,7 +91,7 @@ class Notification extends React.Component {
     return (
       <div class="autosize-container">
         <span>
-          <img src={imageUrl} alt="Profile picture"/>
+          <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
           &nbsp;&nbsp;
           <strong>{user} {verb}</strong>
           &nbsp;&nbsp;&nbsp;&nbsp;

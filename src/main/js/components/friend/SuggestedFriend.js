@@ -5,6 +5,7 @@ import {Button, ButtonToolbar, ButtonGroup, Overlay, OverlayTrigger, Tooltip, Mo
 import { Link } from "react-router";
 import {Image} from "react-bootstrap";
 
+
 export default class SuggestedFriend extends React.Component {
     constructor(props){
         super(props);

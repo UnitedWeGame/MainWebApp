@@ -7,6 +7,8 @@ import GeneralUserStore from "../stores/GeneralUserStore";
 import { Button, Image, Jumbotron, Modal, FormGroup, FormControl } from "react-bootstrap";
 import Activity from "./Activity";
 import MiniUser from "../components/friend/MiniUser";
+import {Image} from "react-bootstrap";
+
 
 export default class Groups extends React.Component {
   constructor(props){
@@ -248,7 +250,7 @@ class Item extends React.Component {
 
     return (
       <div>
-        <p> <img src={imageUrl} alt="Profile Picture"/> {username} {content} </p>
+        <p> <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/> {username} {content} </p>
       <hr/>
       </div>
     );
