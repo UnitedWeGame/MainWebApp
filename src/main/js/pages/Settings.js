@@ -17,12 +17,10 @@ export default class Settings extends React.Component {
     var coverPhoto = (UserStore.getCoverPhoto()) ? UserStore.getCoverPhoto() : 'http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg'
     var steamId = UserStore.getSteamId();
     var xboxGamertag = UserStore.getXboxGamertag();
-    var psnGamertag = UserStore.getPsnGamertag();
     var smsEnabled = UserStore.getSmsEnabled();
 
   	this.state = { imageURL: imageURL, coverPhoto: coverPhoto,
-  	 steamId: steamId, xboxGamertag: xboxGamertag, psnGamertag: psnGamertag,
-     email: email, smsEnabled: smsEnabled};
+  	 steamId: steamId, xboxGamertag: xboxGamertag, email: email, smsEnabled: smsEnabled};
 
   }
 
@@ -42,7 +40,6 @@ export default class Settings extends React.Component {
       coverPhoto: UserStore.getCoverPhoto(),
       steamId: UserStore.getSteamId(),
       xboxGamertag: UserStore.getXboxGamertag(),
-      psnGamertag: UserStore.getPsnGamertag(),
       email: UserStore.getEmail(),
       smsEnabled: UserStore.getSmsEnabled()
     });
@@ -114,18 +111,6 @@ export default class Settings extends React.Component {
           />
           <FormControl.Feedback />
           <HelpBlock>Xbox Gamertag</HelpBlock>
-        </FormGroup>
-
-        <FormGroup controlId="formBasicText">
-          <FormControl
-            type="text"
-            value={this.state.psnGamertag}
-            placeholder="Enter your PSN Account ID"
-            onChange={this.handleInputChange}
-            name="psnGamertag"
-          />
-          <FormControl.Feedback />
-          <HelpBlock>PSN Account ID</HelpBlock>
         </FormGroup>
 
         <FormGroup controlId="formBasicText">
