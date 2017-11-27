@@ -2,6 +2,8 @@ import React from "react";
 import ActivityStore from "../../stores/ActivityStore";
 import FriendStore from "../../stores/FriendStore";
 import * as PostActions from "../../actions/PostActions";
+import {Image} from "react-bootstrap";
+
 
 export default class ActivityFeed extends React.Component {
     constructor(){
@@ -80,7 +82,7 @@ class Item extends React.Component {
 
         return (
             <div>
-                <p> <img src={imageUrl} alt="Profile Picture"/> {username} {content} </p>
+                <p> <Image src={imageUrl} alt="Profile Picture" thumbnail /> {username} {content} </p>
             <hr/>
             </div>
         );
