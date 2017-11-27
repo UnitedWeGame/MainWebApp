@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -73,7 +74,6 @@ public class User {
 	@OneToMany(cascade = {CascadeType.ALL})
 	private List<GameRating> gameRatings = new ArrayList<GameRating>();
 
-	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_library", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
 	private Set<Game> games = new HashSet<Game>();
