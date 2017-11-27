@@ -75,7 +75,7 @@ public class User {
 	private List<GameRating> gameRatings = new ArrayList<GameRating>();
 
 	@Transient
-	private Set<Game> visibleGames = new HashSet<Game>();
+	private List<Game> visibleGames = new ArrayList<Game>();
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_library", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
@@ -177,11 +177,11 @@ public class User {
 		this.profile = profile;
 	}
 
-	public Set<Game> getGames() {
+	public List<Game> getGames() {
 		return visibleGames;
 	}
 	
-	public void setGames(Set<Game> games) {
+	public void setGames(List<Game> games) {
 		this.visibleGames = games;
 	}
 	

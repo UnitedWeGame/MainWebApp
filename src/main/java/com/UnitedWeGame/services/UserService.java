@@ -205,7 +205,7 @@ public class UserService implements UserDetailsService {
 		Date currentDate = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
-		cal.add(Calendar.HOUR, -7);
+		cal.add(Calendar.HOUR, -10);
 		Criteria query = session.createCriteria(OnlineFeed.class, "onlineFeed")
 				.createAlias("onlineFeed.user", "users")
 				.add(Restrictions.eq("users.id", userId))

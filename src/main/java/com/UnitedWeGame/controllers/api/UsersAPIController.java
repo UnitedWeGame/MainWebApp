@@ -1,14 +1,13 @@
 package com.UnitedWeGame.controllers.api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.UnitedWeGame.models.Group;
-import com.UnitedWeGame.services.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.UnitedWeGame.models.FriendRequest;
+import com.UnitedWeGame.models.Game;
+import com.UnitedWeGame.models.Group;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.User;
 import com.UnitedWeGame.services.FriendRequestService;
+import com.UnitedWeGame.services.GroupService;
 import com.UnitedWeGame.services.ProfileService;
 import com.UnitedWeGame.services.UserService;
 
@@ -49,7 +51,9 @@ public class UsersAPIController {
 	@RequestMapping("/users/me")
 	public User loggedInUser() {
 		User user = userService.findById(userService.getLoggedInUser().getId());
-		user.setGames(user.getHiddenGames());
+		List<Game> games = new ArrayList(user.getHiddenGames());
+		Collections.sort(games, (a, b) -> a.getTitle().compareTo(b.getTitle()));
+		user.setGames(games);
 		return user;
 	}
 
@@ -82,7 +86,9 @@ public class UsersAPIController {
 	@RequestMapping("/users/{userId}")
 	public User getProfile(@PathVariable Long userId) {
 		User user = userService.findById(userId);
-		user.setGames(user.getHiddenGames());
+		List<Game> games = new ArrayList(user.getHiddenGames());
+		Collections.sort(games, (a, b) -> a.getTitle().compareTo(b.getTitle()));
+		user.setGames(games);
 		return user;
 	}
 
