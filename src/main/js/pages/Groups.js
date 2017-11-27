@@ -5,6 +5,7 @@ import GroupStore from "../stores/GroupStore";
 import UserStore from "../stores/UserStore";
 import GeneralUserStore from "../stores/GeneralUserStore";
 import { Button, Image, Jumbotron, Modal, FormGroup, FormControl } from "react-bootstrap";
+import { Link } from "react-router";
 import Activity from "./Activity";
 import MiniUser from "../components/friend/MiniUser";
 
@@ -17,7 +18,7 @@ export default class Groups extends React.Component {
     GeneralUserActions.getAllUsers();
 
     this.getGroup = this.getGroup.bind(this);
-    //this.getMembers = this.getMembers.bind(this);
+    this.getPosts = this.getPosts.bind(this);
     this.openJoinGroupModal = this.openJoinGroupModal.bind(this);
     this.closeJoinGroupModal = this.closeJoinGroupModal.bind(this);
     this.isMember = this.isMember.bind(this);
@@ -66,12 +67,14 @@ export default class Groups extends React.Component {
 
   componentWillMount() {
     GroupStore.on("change", this.getGroup);
+    GroupStore.on("postChange", this.getPosts);
     GroupStore.on("change", this.updateJoinGroupButton);
     GeneralUserStore.on("change", this.getGroup);
   }
 
   componentWillUnmount() {
     GroupStore.removeListener("change", this.getGroup);
+    GroupStore.removeListener("postChange", this.getPosts);
     GroupStore.removeListener("change", this.updateJoinGroupButton);
     GeneralUserStore.on("change", this.getGroup);
   }
@@ -79,6 +82,11 @@ export default class Groups extends React.Component {
   /*getMembers(){
 
   }*/
+  getPosts(){
+    this.setState({
+      groupPost: GroupStore.getPosts()
+    });
+  }
 
   getGroup(){
     const group = GroupStore.getGroup();
@@ -118,7 +126,7 @@ export default class Groups extends React.Component {
 
   onJoinGroupClick(event){
     event.preventDefault();
-    GroupActions.joinGroup(this.state.group.id);
+    GroupActions.joinGroup(this.state.group.id, this.state.loggedInUserID);
     this.openJoinGroupModal();
     this.setState({
       btnText: "Group Joined!",
@@ -128,6 +136,9 @@ export default class Groups extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
+    this.setState({
+      post: ""
+    });
     const groupPost = {
         userId: this.state.loggedInUserID,
         username: this.state.username,
@@ -198,6 +209,7 @@ export default class Groups extends React.Component {
         <h1> {this.state.groupName} </h1>
         <p> {this.state.description}</p>
           <Button bsStyle="success" style={coverBtnStyle} onClick={this.onJoinGroupClick} disabled={this.state.btnDisabled}>{this.state.btnText}</Button>
+          <Link to={`groupSettings/${this.state.group.id}`}><strong>Edit Group</strong></Link>
         </Jumbotron>
         <h2> Group Members: </h2>
         {members}
