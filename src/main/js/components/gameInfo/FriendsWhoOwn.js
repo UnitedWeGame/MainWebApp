@@ -59,7 +59,7 @@ class FriendWhoOwns extends React.Component {
     return (
       <div class="autosize-container">
         <span>
-            <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
+            <Image width="50" src={profilePic} alt="Profile Picture" thumbnail responsive/>
           &nbsp;&nbsp;
           <strong>{username}</strong>
         </span>
