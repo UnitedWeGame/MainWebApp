@@ -11,6 +11,7 @@ import Friend from "../components/friend/Friend";
 import LibrarySearch from "../components/library/LibrarySearch";
 import CustomTabs from "../components/uiPieces/CustomTabs";
 
+
 export default class Profile extends React.Component {
 constructor(props){
     super(props);
@@ -231,7 +232,7 @@ class MinLibraryItem extends React.Component {
     return(
       <div>
         <span>
-        <img width="50" src={imageUrl} alt="Profile Picture"/>
+        <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
           &nbsp;&nbsp;
           <strong>{title}</strong>
         </span>

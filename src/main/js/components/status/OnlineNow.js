@@ -3,6 +3,8 @@ import {Button, Overlay, OverlayTrigger, Tooltip} from "react-bootstrap";
 import * as ChatActions from "../../actions/ChatActions";
 import OnlineNowStore from "../../stores/OnlineNowStore";
 import * as OnlineNowActions from "../../actions/OnlineNowActions";
+import {Image} from "react-bootstrap";
+
 
 export default class OnlineNow extends React.Component {
     constructor(props){
@@ -66,7 +68,7 @@ class FriendOnline extends React.Component {
       return (
           <div class="autosize-container" id="friend">
               <p>
-                <img src={imageUrl} alt="Profile Picture"/>
+                  <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
                 &nbsp;
                 <OverlayTrigger placement="bottom" overlay={tooltipChat}>
                   <Button bsStyle="link" onClick={this.startChat.bind(this, username, imageUrl)}><strong>{username}</strong></Button>

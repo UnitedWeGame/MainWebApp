@@ -7,6 +7,7 @@ import * as ChatActions from "../../actions/ChatActions";
 import {Image} from "react-bootstrap";
 
 
+
 export default class Friend extends React.Component {
     constructor(props){
         super(props);
@@ -100,13 +101,13 @@ export default class Friend extends React.Component {
         return (
             <div class="autosize-container">
                 <span>
-                <Image width="50" src={imageUrl} alt="Profile Picture" responsive thumbnail/>
+               <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
                  &nbsp;&nbsp;
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
       					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>
                  </OverlayTrigger>
-                 
-                 {this.props.isProfilePage == false ? 
+
+                 {this.props.isProfilePage == false ?
                  <ButtonToolbar className="pull-right">
 
                  <OverlayTrigger placement="bottom" overlay={tooltipChat}>
@@ -118,8 +119,8 @@ export default class Friend extends React.Component {
                    <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
                    <Glyphicon glyph="remove" />
                    </Button>
-               </OverlayTrigger> 
-               
+               </OverlayTrigger>
+
                </ButtonToolbar>
                : ""}
                 </span>
