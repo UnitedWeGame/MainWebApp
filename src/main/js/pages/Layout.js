@@ -15,6 +15,11 @@ export default class Layout extends React.Component {
     constructor() {
         super();
         this.getRootPath = this.getRootPath.bind(this);
+        this.backgroundUrls = [
+           "http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg",
+           "https://images3.alphacoders.com/114/114869.jpg",
+           "https://images6.alphacoders.com/532/532666.jpg"
+        ];
     }
 
     // E.g. "/profile/4444" => "profile"
@@ -25,6 +30,11 @@ export default class Layout extends React.Component {
       if(indexOfSlash != -1)
         path = path.substring(0,indexOfSlash);
       return path;
+    }
+    
+    getRandomBackgroundImage() {
+    	var randomNumber = Math.floor(Math.random()*this.backgroundUrls.length);
+    	return this.backgroundUrls[randomNumber];
     }
 
 
@@ -42,7 +52,7 @@ export default class Layout extends React.Component {
            showSidebar = true;
 
         var pageBackground = (showSidebar) ?
-            "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')" :
+            "url('" + this.getRandomBackgroundImage() + ""') no-repeat center center fixed" :
             "" ;
 
         const entirePageStyle = {
