@@ -87,12 +87,12 @@ export default class Searchbar extends React.Component {
   }
 
     handleChange(selectedOptions){
-
-      if(selectedOptions[0].type == "Games"){
+      if(selectedOptions[0] === undefined) return;
+      if(selectedOptions[0].type.toLowerCase() === "games"){
         GameInfoActions.getGameInfo(selectedOptions[0].id);
-        hashHistory.push('/game');
+        hashHistory.push('/game/');
       }
-      else if(selectedOptions[0].type == "People"){
+      else if(selectedOptions[0].type.toLowerCase() === "people"){
         hashHistory.push('/profile/' + selectedOptions[0].id);
       }
     }
