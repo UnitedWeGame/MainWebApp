@@ -162,7 +162,7 @@ constructor(props){
   render() {
     const { params } = this.props;
 
-    const friends = this.state.friendList.map((person) => <Friend key={person.id} {...person}/> );
+    const friends = this.state.friendList.map((person) => <Friend isProfilePage={true} key={person.id} {...person}/> );
     const library = this.state.games.map((game) => <MinLibraryItem key={game.id} {...game}/> );
     const groups = this.state.groups.map((group) => <MinGroupItem key={group.id} {...group}/> );
 

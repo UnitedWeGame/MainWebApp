@@ -41,7 +41,7 @@ export default class Friends extends React.Component {
 
 
     render() {
-        const friends = this.state.friendList.map((person) => <Friend key={person.id} {...person}/> );
+        const friends = this.state.friendList.map((person) => <Friend isProfilePage={false} key={person.id} {...person}/> );
         const suggestedFriends = this.state.suggestedFriendList.map((person) => <SuggestedFriend key={person.id} {...person}/> );
 
 

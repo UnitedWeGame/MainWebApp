@@ -113,11 +113,12 @@ export default class Friend extends React.Component {
                     </Button>
                 </OverlayTrigger>
 
+                {this.props.isProfilePage == false ? 
                 <OverlayTrigger placement="bottom" overlay={tooltipRemove}>
                    <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
                    <Glyphicon glyph="remove" />
                    </Button>
-               </OverlayTrigger>
+               </OverlayTrigger> : ""}
                </ButtonToolbar>
 
                 </span>
