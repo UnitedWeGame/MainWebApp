@@ -12,6 +12,8 @@
 }
 
 .sc-header--img {
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   align-self: center;
   padding: 10px;

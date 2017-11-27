@@ -10,7 +10,10 @@ export function getGroup(id){
 }
 
 export function joinGroup(groupId, userId){
-  $.get( "/api/group/" + groupId + "/addMember/" + userId, function( data ){
+  $.get( "/api/group/" + groupId + "/addMember/" + userId, 
+    function( data ){
+      console.log("the data:");
+      console.log(data);
 		dispatcher.dispatch({
 			type: "UPDATE_GROUP",
 			group: data
@@ -33,8 +36,8 @@ export function updateActivityFeed(group, groupPost){
     dataType:"json",
     success: function(response ){
       dispatcher.dispatch({
-        type: "UPDATE_GROUP",
-        group: response
+        type: "UPDATE_POST",
+        post: response
       });
     }
   });

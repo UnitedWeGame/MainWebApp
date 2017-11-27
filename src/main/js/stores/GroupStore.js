@@ -12,6 +12,15 @@ class GroupStore extends EventEmitter{
     this.emit("change");
   }
 
+  setGroupPosts(post){
+    this.group.groupPost.unshift(post);
+    this.emit("postChange");
+  }
+
+  getPosts(){
+    return this.group.groupPost;
+  }
+
   getGroup(){
     return this.group;
   }
@@ -37,6 +46,10 @@ class GroupStore extends EventEmitter{
       }
       case "UPDATE_GROUP":{
         this.setGroup(action.group);
+        break;
+      }
+      case "UPDATE_POST":{
+        this.setGroupPosts(action.post);
         break;
       }
     }
