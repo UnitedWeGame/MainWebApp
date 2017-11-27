@@ -105,22 +105,23 @@ export default class Friend extends React.Component {
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
       					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>
                  </OverlayTrigger>
-
+                 
+                 {this.props.isProfilePage == false ? 
                  <ButtonToolbar className="pull-right">
+
                  <OverlayTrigger placement="bottom" overlay={tooltipChat}>
                     <Button bsStyle="link" bsSize="small" onClick={this.startChat.bind(this, username, imageUrl)}>
                     <Glyphicon glyph="comment" />
                     </Button>
                 </OverlayTrigger>
-
-                {this.props.isProfilePage == false ? 
                 <OverlayTrigger placement="bottom" overlay={tooltipRemove}>
                    <Button className="pull-right" bsStyle="link" bsSize="small" onClick={this.openRemoveFriendModal}>
                    <Glyphicon glyph="remove" />
                    </Button>
-               </OverlayTrigger> : ""}
+               </OverlayTrigger> 
+               
                </ButtonToolbar>
-
+               : ""}
                 </span>
 
                 <hr style={hrStyle}/>
