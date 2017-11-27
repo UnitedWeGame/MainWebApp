@@ -18,7 +18,7 @@ export default class Layout extends React.Component {
         this.backgroundUrls = [
            "http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg",
            "https://images3.alphacoders.com/114/114869.jpg",
-           "https://images6.alphacoders.com/532/532666.jpg"
+           "http://deskbg.com/s3/wpp/5/5369/mass-effect-city-desktop-background.jpg"
         ];
     }
 
