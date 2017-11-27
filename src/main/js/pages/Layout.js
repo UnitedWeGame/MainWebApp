@@ -16,9 +16,9 @@ export default class Layout extends React.Component {
         super();
         this.getRootPath = this.getRootPath.bind(this);
         this.backgroundUrls = [
-           "http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg",
            "https://images3.alphacoders.com/114/114869.jpg",
-           "http://deskbg.com/s3/wpp/5/5369/mass-effect-city-desktop-background.jpg"
+           "http://deskbg.com/s3/wpp/5/5369/mass-effect-city-desktop-background.jpg",
+           "https://images7.alphacoders.com/423/thumb-1920-423190.jpg"
         ];
     }
 
@@ -52,7 +52,7 @@ export default class Layout extends React.Component {
            showSidebar = true;
 
         var pageBackground = (showSidebar) ?
-            "url('" + this.getRandomBackgroundImage() + "') no-repeat center center fixed" :
+            "url('" + this.getRandomBackgroundImage() + "') no-repeat center fixed" :
             "" ;
 
         const entirePageStyle = {
