@@ -74,6 +74,9 @@ public class User {
 	@OneToMany(cascade = {CascadeType.ALL})
 	private List<GameRating> gameRatings = new ArrayList<GameRating>();
 
+	@Transient
+	private Set<Game> visibleGames = new HashSet<Game>();
+	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_library", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
 	private Set<Game> games = new HashSet<Game>();
@@ -175,10 +178,20 @@ public class User {
 	}
 
 	public Set<Game> getGames() {
+		return visibleGames;
+	}
+	
+	public void setGames(Set<Game> games) {
+		this.visibleGames = games;
+	}
+	
+	@JsonIgnore
+	public Set<Game> getHiddenGames() {
 		return games;
 	}
 
-	public void setGames(Set<Game> games) {
+	@JsonIgnore
+	public void setHiddenGames(Set<Game> games) {
 		this.games = games;
 	}
 

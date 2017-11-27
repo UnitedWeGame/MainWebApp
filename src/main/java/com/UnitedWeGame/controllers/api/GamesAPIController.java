@@ -100,10 +100,10 @@ public class GamesAPIController {
 		Game game = gameService.findByIdAndPlatform(gameId, platform);
 
 		if (game != null) {
-			Set<Game> games = user.getGames();
+			Set<Game> games = user.getHiddenGames();
 			if (!games.contains(game))
 				games.add(game);
-			user.setGames(games);
+			user.setHiddenGames(games);
 			userService.saveUser(user);
 			return "Game has been added";
 		}
@@ -117,9 +117,9 @@ public class GamesAPIController {
 		Game game = gameService.findByIdAndPlatform(gameId, platform);
 
 		if (game != null) {
-			Set<Game> games = user.getGames();
+			Set<Game> games = user.getHiddenGames();
 			games.remove(game);
-			user.setGames(games);
+			user.setHiddenGames(games);
 			userService.saveUser(user);
 			return "Game has been removed.";
 		}

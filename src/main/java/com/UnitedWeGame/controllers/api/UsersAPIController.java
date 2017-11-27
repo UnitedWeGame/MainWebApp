@@ -42,12 +42,15 @@ public class UsersAPIController {
 
 	@RequestMapping("/users")
 	public List<User> index(Model model) {
-		return userService.allUsers();
+		List<User> users = userService.allUsers();
+		return users;
 	}
 
 	@RequestMapping("/users/me")
 	public User loggedInUser() {
-		return userService.findById(userService.getLoggedInUser().getId());
+		User user = userService.findById(userService.getLoggedInUser().getId());
+		user.setGames(user.getHiddenGames());
+		return user;
 	}
 
 	@RequestMapping("/users/groups")
@@ -78,7 +81,9 @@ public class UsersAPIController {
 
 	@RequestMapping("/users/{userId}")
 	public User getProfile(@PathVariable Long userId) {
-		return userService.findById(userId);
+		User user = userService.findById(userId);
+		user.setGames(user.getHiddenGames());
+		return user;
 	}
 
 	@RequestMapping("/users/search/{username}")

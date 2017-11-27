@@ -155,7 +155,7 @@ public class UserService implements UserDetailsService {
 	}
 	
 	@Transactional
-	public List<User> getOnlineFriends() {
+	public Set<User> getOnlineFriends() {
 		StatelessSession session;
 		session = sessionFactory.openStatelessSession();
 		session.beginTransaction();
@@ -168,11 +168,13 @@ public class UserService implements UserDetailsService {
 				.createAlias("users.friends", "friends")
 				.add(Restrictions.eq("users.id", userId))
 				.add(Restrictions.gt("friends.lastActivity", cal.getTime()))
-				.setProjection(Projections.property("friends.id"));
+				.setProjection(Projections.property("friends.id"))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		Criteria query = session.createCriteria(User.class, "users2")
 				.add(Subqueries.propertyIn("users2.id", subquery))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		List<User> users = query.list();
+		List<User> usersList = query.list();
+		Set<User> users = new HashSet(usersList);
 		//session.flush();
 		session.getTransaction().commit();
 		session.close();

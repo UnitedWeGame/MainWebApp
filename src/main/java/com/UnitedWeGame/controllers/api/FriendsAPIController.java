@@ -60,7 +60,7 @@ public class FriendsAPIController {
 	}
 
 	@RequestMapping("/online")
-	public List<User> onlineFriends() {
+	public Set<User> onlineFriends() {
 		return userService.getOnlineFriends();
 	}
 
