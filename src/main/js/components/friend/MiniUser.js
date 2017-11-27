@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, ButtonToolbar, ButtonGroup, Glyphicon, Overlay, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import { Link } from "react-router";
+import {Image} from "react-bootstrap";
 
 export default class MiniUser extends React.Component {
     constructor(props){
@@ -29,7 +30,7 @@ export default class MiniUser extends React.Component {
         return (
             <div class="autosize-container">
                 <span>
-                <img src={imageUrl} alt="Profile Picture"/>
+                <Image width="50" src={imageUrl} alt="Profile Picture" responsive thumbnail/>
                  &nbsp;&nbsp;
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
       					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>

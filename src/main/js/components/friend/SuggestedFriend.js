@@ -3,6 +3,7 @@ import * as FriendActions from "../../actions/FriendActions"
 import FriendStore from "../../stores/FriendStore";
 import {Button, ButtonToolbar, ButtonGroup, Overlay, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import { Link } from "react-router";
+import {Image} from "react-bootstrap";
 
 export default class SuggestedFriend extends React.Component {
     constructor(props){
@@ -57,7 +58,7 @@ export default class SuggestedFriend extends React.Component {
         return (
             <div class="autosize-container">
                 <span>
-                <img src={imageUrl} alt="Profile Picture"/>
+                <Image width="50" src={imageUrl} alt="Profile Picture" responsive thumbnail/>
                  &nbsp;&nbsp;
     				<OverlayTrigger placement="right" overlay={tooltip}>
       					<Link to={`profile/${id}`}><strong>{username}</strong></Link>

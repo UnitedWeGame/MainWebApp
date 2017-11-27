@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import * as FriendActions from "../../actions/FriendActions"
 import FriendStore from "../../stores/FriendStore";
 import * as ChatActions from "../../actions/ChatActions";
+import {Image} from "react-bootstrap";
 
 
 export default class Friend extends React.Component {
@@ -99,7 +100,7 @@ export default class Friend extends React.Component {
         return (
             <div class="autosize-container">
                 <span>
-                <img src={imageUrl} alt="Profile Picture"/>
+                <Image width="50" src={imageUrl} alt="Profile Picture" responsive thumbnail/>
                  &nbsp;&nbsp;
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
       					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>
