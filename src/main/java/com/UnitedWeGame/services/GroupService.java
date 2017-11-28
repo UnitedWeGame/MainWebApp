@@ -18,7 +18,7 @@ public class GroupService {
     @Autowired
     UserService userService;
 
-    public void createGroup(Group group)
+    public void saveGroup(Group group)
     {
         groupRepo.save(group);
     }
