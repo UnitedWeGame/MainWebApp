@@ -263,7 +263,7 @@ class Item extends React.Component {
 
     return (
       <div>
-        <p> <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/> {username} {content} </p>
+        <p> <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/> {username}: {content} </p>
       <hr/>
       </div>
     );
