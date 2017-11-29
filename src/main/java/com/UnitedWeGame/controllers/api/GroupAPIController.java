@@ -1,6 +1,5 @@
 package com.UnitedWeGame.controllers.api;
 
-import com.UnitedWeGame.models.ActivityPost;
 import com.UnitedWeGame.models.Group;
 import com.UnitedWeGame.models.GroupPost;
 import com.UnitedWeGame.models.User;
@@ -17,17 +16,13 @@ import java.util.Set;
  * Author: cweeter
  * Date: 11/2/17
  */
-
 @RestController
 @RequestMapping("/api/group")
 public class GroupAPIController {
-
     @Autowired
     UserService userService;
-
     @Autowired
     GroupService groupService;
-
     @Autowired
     GroupPostService groupPostService;
 
@@ -39,13 +34,16 @@ public class GroupAPIController {
         group.setMembers(members);
         group.setAdminUser(currentUser.getId());
         Set<Long> groups = currentUser.getGroups();
-
-        groupService.createGroup(group);
-
+        groupService.saveGroup(group);
         groups.add(group.getId());
         currentUser.setGroups(groups);
         userService.saveUser(currentUser);
+        return group;
+    }
 
+    @RequestMapping(value = "/saveGroup", method = RequestMethod.POST)
+    public Group editGroup(@RequestBody Group group) {
+        groupService.saveGroup(group);
         return group;
     }
 
@@ -54,13 +52,11 @@ public class GroupAPIController {
         groupPost.setUser(userService.getLoggedInUser());
         groupPost.setGroupId(groupId);
         groupPostService.createGroupPost(groupPost);
-
         Group group = groupService.getGroupById(groupId);
         List<GroupPost> groupPosts = group.getGroupPost();
         groupPosts.add(groupPost);
-
         group.setGroupPost(groupPosts);
-        groupService.createGroup(group);
+        groupService.saveGroup(group);
         return groupPost;
     }
 
@@ -70,43 +66,32 @@ public class GroupAPIController {
     }
 
     @RequestMapping("/{groupId}/addMember/{userId}")
-    public Group addMemberToGroup(@PathVariable Long groupId, @PathVariable Long userId)
-    {
+    public Group addMemberToGroup(@PathVariable Long groupId, @PathVariable Long userId) {
         Group group = groupService.getGroupById(groupId);
         Set<Long> members = group.getMembers();
         members.add(userId);
         group.setMembers(members);
-
         User user = userService.findById(userId);
         Set<Long> groups = user.getGroups();
         groups.add(groupId);
         user.setGroups(groups);
-
-        groupService.createGroup(group);
-
+        groupService.saveGroup(group);
         userService.saveUser(user);
-
         return group;
     }
 
     @RequestMapping("/{groupId}/addMember")
-    public Group addCurrentUserToGroup(@PathVariable Long groupId)
-    {
+    public Group addCurrentUserToGroup(@PathVariable Long groupId) {
         Group group = groupService.getGroupById(groupId);
         Set<Long> members = group.getMembers();
         members.add(userService.getLoggedInUser().getId());
         group.setMembers(members);
-
         User user = userService.getLoggedInUser();
         Set<Long> groups = user.getGroups();
         groups.add(groupId);
         user.setGroups(groups);
-
-        groupService.createGroup(group);
-
+        groupService.saveGroup(group);
         userService.saveUser(user);
-
         return group;
     }
-
 }
