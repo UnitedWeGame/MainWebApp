@@ -20,6 +20,7 @@ a {
 }
 
 #messages {
+  height: 400px;
   overflow: auto;
   background-color: black;
   padding: 10px;

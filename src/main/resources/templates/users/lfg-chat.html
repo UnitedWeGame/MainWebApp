@@ -136,6 +136,7 @@ var Chat = function(socket) {
 	  socket.on('message', function (message) {
 	    var newElement = '<div><span style="color: blue;">' + message.username + ':</span> ' + message.text + '</div>';
 	    $('#messages').append(newElement);
+	    $('#messages').scrollTop($('#messages').prop('scrollHeight'));
 	  });
 	  
 	  socket.on('usersInRoomSummary', function (message) {
