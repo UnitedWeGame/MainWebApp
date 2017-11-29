@@ -50,7 +50,10 @@ export default class LibraryItem extends React.Component {
     	this.setState({ showModal: false });
   	}
 
-
+    openLFGChat(id, event) {
+    	console.log("Entering chat for: " + id);
+    	window.open("/lfg-chat/" + id);
+    }
 
     render() {
         const {imageUrl} = this.props;
@@ -74,7 +77,9 @@ export default class LibraryItem extends React.Component {
                     <Button onClick={this.handleClick.bind(this, id, 0)}>Game Information</Button>
                     <Button onClick={this.handleClick.bind(this, id, 1)}>Reviews For This Game</Button>
                     <Button onClick={this.handleClick.bind(this, id, 2)}>See Friends Who Own</Button>
+                    <Button onClick={this.openLFGChat.bind(this, id)}>LFG Chat</Button>
                     <Button bsStyle="danger" onClick={this.openRemoveGameModal}>Remove game</Button>
+                    
                 </ButtonGroup>
             </Popover>
         );
@@ -82,7 +87,6 @@ export default class LibraryItem extends React.Component {
         return (
 
             <span style={itemStyle}>
-
                     <Modal show={this.state.showModal} onHide={this.closeRemoveGameModal}>
                         <Modal.Header closeButton>
                           <Modal.Title>Are You Sure?</Modal.Title>
