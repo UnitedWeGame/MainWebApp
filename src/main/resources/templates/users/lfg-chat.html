@@ -86,21 +86,10 @@ var Chat = function(socket) {
 
 	function processUserInput(chatApp, socket) {
 	  var message = $('#send-message').val();
-	  var systemMessage;
-
-	  if (message.charAt(0) == '/') {
-	    systemMessage = chatApp.processCommand(message);
-	    if (systemMessage) {
-	      $('#messages').append(divSystemContentElement(systemMessage));
-	    }
-	  } else {
-	    chatApp.sendMessage($('#room').text(), message);
-	    $('#messages').append(ownChatMessage([[${username}]], message));
-	    $('#messages').scrollTop($('#messages').prop('scrollHeight'));
-	  }
-
+	  chatApp.sendMessage($('#room').text(), message);
+	  $('#messages').append(ownChatMessage([[${username}]], message));
+	  $('#messages').scrollTop($('#messages').prop('scrollHeight'));
 	  $('#send-message').val('');
-	  
 	}
 
 	var socket = io.connect('http://unitedwechat.herokuapp.com:80/', {transports: ['websocket', 'polling', 'flashsocket']});
