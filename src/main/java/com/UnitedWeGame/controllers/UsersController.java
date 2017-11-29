@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.UnitedWeGame.models.Game;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.User;
+import com.UnitedWeGame.services.GameService;
 import com.UnitedWeGame.services.ProfileService;
 import com.UnitedWeGame.services.UserService;
 
@@ -22,6 +24,8 @@ public class UsersController {
 	UserService userService;
 	@Autowired
 	ProfileService profileService;
+	@Autowired
+	GameService gameService;
 
 	@RequestMapping("/users")
 	public String index(Model model) {
@@ -53,4 +57,13 @@ public class UsersController {
 		redirectAttrib.addFlashAttribute("success", "Profile has been updated!");
 		return "redirect:/edit-profile";
 	}
+	
+	@GetMapping("/lfg-chat/{gameId}")
+	public String lfgChat(@PathVariable long gameId, Model model) {
+		Game game = gameService.findById(gameId);
+		model.addAttribute("gameTitle", game.getTitle());
+		model.addAttribute("username", userService.getLoggedInUser().getUsername());
+		return "users/lfg-chat";
+	}
+	
 }
