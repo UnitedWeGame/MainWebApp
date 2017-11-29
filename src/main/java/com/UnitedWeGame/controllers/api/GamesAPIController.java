@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.UnitedWeGame.models.ActivityPost;
 import com.UnitedWeGame.models.Game;
 import com.UnitedWeGame.models.GameRating;
 import com.UnitedWeGame.models.Platform;
 import com.UnitedWeGame.models.User;
+import com.UnitedWeGame.services.ActivityPostService;
 import com.UnitedWeGame.services.GameRatingService;
 import com.UnitedWeGame.services.GameService;
 import com.UnitedWeGame.services.PlatformService;
@@ -39,6 +41,8 @@ public class GamesAPIController {
 	TwilioService textService;
 	@Autowired
 	GameRatingService gameRatingService;
+	@Autowired
+	ActivityPostService activityService;
 
 	@RequestMapping("")
 	public List<Game> index() {
@@ -71,6 +75,10 @@ public class GamesAPIController {
 			userRatings.add(gameRating);
 			gameService.saveGame(game);
 			userService.saveUser(user);
+			ActivityPost activityPost = new ActivityPost();
+			activityPost.setUser(user);
+			activityPost.setContent(" reviewed " + game.getTitle() + " and gave it " + gameRating.getRating());
+			activityService.createActivity(activityPost);
 			return gameRating;
 		} else {
 			existingRating.setRating(gameRating.getRating());
@@ -105,6 +113,10 @@ public class GamesAPIController {
 				games.add(game);
 			user.setHiddenGames(games);
 			userService.saveUser(user);
+			ActivityPost activityPost = new ActivityPost();
+			activityPost.setUser(user);
+			activityPost.setContent(" added " + game.getTitle() + " to their library");
+			activityService.createActivity(activityPost);
 			return "Game has been added";
 		}
 		return "Game couldn't be found";

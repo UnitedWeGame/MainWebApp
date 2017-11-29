@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.UnitedWeGame.models.ActivityPost;
 import com.UnitedWeGame.models.Game;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.User;
+import com.UnitedWeGame.services.ActivityPostService;
 import com.UnitedWeGame.services.GameService;
 import com.UnitedWeGame.services.ProfileService;
 import com.UnitedWeGame.services.UserService;
@@ -26,6 +28,8 @@ public class UsersController {
 	ProfileService profileService;
 	@Autowired
 	GameService gameService;
+	@Autowired
+	ActivityPostService activityService;
 
 	@RequestMapping("/users")
 	public String index(Model model) {
@@ -61,8 +65,14 @@ public class UsersController {
 	@GetMapping("/lfg-chat/{gameId}")
 	public String lfgChat(@PathVariable long gameId, Model model) {
 		Game game = gameService.findById(gameId);
+		String username = userService.getLoggedInUser().getUsername();
+		String gameTitle = game.getTitle();
+		ActivityPost activityPost = new ActivityPost();
+		activityPost.setUser(userService.getLoggedInUser());
+		activityPost.setContent(" joined LFG Chat for " + gameTitle);
+		activityService.createActivity(activityPost);
 		model.addAttribute("gameTitle", game.getTitle());
-		model.addAttribute("username", userService.getLoggedInUser().getUsername());
+		model.addAttribute("username", username);
 		return "users/lfg-chat";
 	}
 	
