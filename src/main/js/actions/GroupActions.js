@@ -12,7 +12,7 @@ export function getGroup(id){
 /* Gets all groups contained in the server's database,
 including those user is not a part of */
 export function getAllGroups(){
-	$.get( "/api/group/allGroups/" + id, function( data ){
+	$.get( "/api/group/allGroups/", function( data ){
 		dispatcher.dispatch({
 			type: "GET_ALL_GROUPS",
 			groups: data

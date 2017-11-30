@@ -1,12 +1,14 @@
 import React from "react";
 import { hashHistory } from 'react-router';
 import {Menu, MenuItem, Typeahead} from 'react-bootstrap-typeahead';
-import {groupBy, map} from 'lodash';
+import {groupBy, map, isEmpty } from 'lodash';
 import * as LibraryActions from "../../actions/LibraryActions";
 import * as GameInfoActions from "../../actions/GameInfoActions";
 import * as GeneralUserActions from "../../actions/GeneralUserActions";
+import * as GroupActions from "../../actions/GroupActions";
 import DbGameStore from "../../stores/DbGameStore";
 import GeneralUserStore from "../../stores/GeneralUserStore";
+import GroupStore from "../../stores/GroupStore"
 
 const MenuDivider = props => <li className="divider" role="separator" />;
 const MenuHeader = props => <li {...props} className="dropdown-header" />;
@@ -19,25 +21,29 @@ export default class Searchbar extends React.Component {
       this.setSearchList = this.setSearchList.bind(this);
       this.addGamesToList = this.addGamesToList.bind(this);
       this.addPeopleToList = this.addPeopleToList.bind(this);
+      this.addGroupsToList = this.addGroupsToList.bind(this);
       this.handleChange = this.handleChange.bind(this);
 
       this.state = {
         disabled: false,
         selectHintOnEnter: false,
-        listData: [{id: 1, name: "Games and people not yet loaded", type: "games"}],
+        listData: [{id: 1, name: "Games, groups and people not yet loaded", type: "games"}],
       };
 
       LibraryActions.getAllGames();
       GeneralUserActions.getAllUsers();
+      GroupActions.getAllGroups();
 
     }
 
     componentWillMount() {
         DbGameStore.on("change", this.setSearchList);
+        GroupStore.on("change", this.setSearchList);
     }
 
     componentWillUnmount() {
         DbGameStore.removeListener("change", this.setSearchList);
+        GroupStore.removeListener("change", this.setSearchList);
     }
 
     // used to properly re-render app when redirecting to a game page
@@ -45,19 +51,6 @@ export default class Searchbar extends React.Component {
       this.setState({
         children: nextProps.children
       })
-    }
-
-    addPeopleToList(peopleList, gamesAndPeopleList){
-      for(var i = 0; i < peopleList.length; i++){
-        var person = {
-                    id: peopleList[i].id,
-                    name: peopleList[i].username,
-                    type: "People"
-        };
-        gamesAndPeopleList.push(person);
-      }
-
-      return gamesAndPeopleList;
     }
 
     addGamesToList(games){
@@ -72,19 +65,51 @@ export default class Searchbar extends React.Component {
       return gameList;
     }
 
-    // merge games and people into a single list
-    setSearchList(){
-      var id = 0;
-      var gamesList = DbGameStore.getAll();
-      var gamesAndPeopleList = [];
+    addPeopleToList(peopleList, searchList){
+      for(var i = 0; i < peopleList.length; i++){
+        var person = {
+                    id: peopleList[i].id,
+                    name: peopleList[i].username,
+                    type: "People"
+        };
+        searchList.push(person);
+      }
 
-      gamesAndPeopleList = this.addGamesToList(gamesList)
+      return searchList;
+    }
+
+    addGroupsToList(groupsList, searchList){
+      for(var i = 0; i < groupsList.length; i++){
+        var group = {
+                    id: groupsList[i].id,
+                    name: groupsList[i].groupName,
+                    type: "Groups"
+        };
+        searchList.push(group);
+      }
+
+      return searchList;
+    }
+
+
+
+    // merge games, groups and people into a single list
+    setSearchList(){
+      var gamesList = DbGameStore.getAll();
+      if(_.isEmpty(gamesList)) return;
+      var searchList = [];
+      searchList = this.addGamesToList(gamesList);
 
       var peopleList = GeneralUserStore.getAllUsers();
+      if(peopleList.length === 0) return;
+      searchList = this.addPeopleToList(peopleList, searchList);
 
-    gamesAndPeopleList = this.addPeopleToList(peopleList, gamesAndPeopleList)
-    this.setState({listData: gamesAndPeopleList})
-  }
+      var groupsList = GroupStore.getAllGroups();
+      if(groupsList.length === 0) return;
+      searchList = this.addGroupsToList(groupsList, searchList);
+
+      this.setState({listData: searchList})
+    }
 
     handleChange(selectedOptions){
       if(selectedOptions[0] === undefined) return;
@@ -94,6 +119,9 @@ export default class Searchbar extends React.Component {
       }
       else if(selectedOptions[0].type.toLowerCase() === "people"){
         hashHistory.push('/profile/' + selectedOptions[0].id);
+      }
+      else if(selectedOptions[0].type.toLowerCase() === "groups"){
+        hashHistory.push('/group/' + selectedOptions[0].id);
       }
     }
 
