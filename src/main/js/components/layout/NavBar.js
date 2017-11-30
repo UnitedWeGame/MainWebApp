@@ -96,6 +96,16 @@ export default class NavBar extends React.Component {
       fontSize: "16px"
     }
 
+    const logoStyle = {
+      paddingTop: "8px"
+    }
+
+    const brandStyle = {
+      display: "flex",
+      alignItems: "center"
+    }
+
+
     const tooltipNotifications = (
       <Tooltip id="tooltip"><strong>{this.state.notificationHeadline}</strong></Tooltip>
     );
@@ -103,9 +113,12 @@ export default class NavBar extends React.Component {
     return (
       <Navbar fluid>
         <Navbar.Header>
-          <Navbar.Brand>
-            <a href="#"><img src="http://i.imgur.com/yK9sv5L.png" alt="United We Game"/></a>
-          </Navbar.Brand>
+          <Navbar.Brand style={brandStyle}>
+            <a href="#" style={logoStyle}>
+            <img
+            src="http://i.imgur.com/yK9sv5L.png" alt="United We Game"/>
+            </a>
+          </Navbar.Brand >
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
