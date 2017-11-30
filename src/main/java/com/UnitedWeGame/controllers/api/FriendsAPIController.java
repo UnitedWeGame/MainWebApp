@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.UnitedWeGame.models.FriendRequest;
+import com.UnitedWeGame.services.FriendRequestService;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,9 @@ public class FriendsAPIController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	FriendRequestService friendRequestService;
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -48,11 +53,20 @@ public class FriendsAPIController {
 		User user = userService.getLoggedInUser();
 		long userId = user.getId();
 		Set<User> friends = user.getFriends();
+		Set<FriendRequest> friendRequests = friendRequestService.allRequestsOwned(userId);
+		friendRequests.addAll(friendRequestService.allRequestsToAccept(userId));
 
 		for(User friend : friends) {
 			for(User friendOfFriend : friend.getFriends()) {
 				if(friendOfFriend.getId() != userId && !friends.contains(friendOfFriend))
-					suggestedFriends.add(friendOfFriend);
+					for(FriendRequest request : friendRequests)
+					{
+						if(request.getFriend() != friendOfFriend.getId() && request.getOwner() != friendOfFriend.getId())
+						{
+							suggestedFriends.add(friendOfFriend);
+							break;
+						}
+					}
 			}
 		}
 
