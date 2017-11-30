@@ -84,7 +84,7 @@ class Notification extends React.Component {
       btn1Style = "success";
       btn1Text = "Accept";
       btn2Style = "danger";
-      btn2Text = "Ignore";
+      btn2Text = "Deny";
     }
 
     return (

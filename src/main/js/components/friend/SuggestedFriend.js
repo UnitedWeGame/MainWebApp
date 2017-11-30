@@ -19,8 +19,8 @@ export default class SuggestedFriend extends React.Component {
 
     }
 
-    addFriend(id) {
-      FriendActions.sendFriendRequest(id);
+    addFriend(friendId) {
+      FriendActions.sendFriendRequest(friendId);
       this.openFriendAddedModal();
     }
 
@@ -29,8 +29,9 @@ export default class SuggestedFriend extends React.Component {
       this.setState({ showfriendAddedModal: true });
     }
 
-    closeFriendAddedModal() {
+    closeFriendAddedModal(friendId) {
       this.setState({ showfriendAddedModal: false });
+      FriendActions.removeSuggestedFriend(friendId)
     }
 
     render() {
@@ -73,14 +74,14 @@ export default class SuggestedFriend extends React.Component {
 
 
             {/* Modal shown after user sends a friend request*/}
-            <Modal show={this.state.showfriendAddedModal} onHide={this.closeFriendAddedModal}>
+            <Modal show={this.state.showfriendAddedModal} onHide={this.closeFriendAddedModal.bind(this, id)}>
                 <Modal.Header closeButton>
                   <Modal.Title>A friend request has been sent to {username}!</Modal.Title>
                 </Modal.Header>
 
               <Modal.Footer>
                 <ButtonToolbar>
-                  <Button bsStyle="success" onClick={this.closeFriendAddedModal}>OK</Button>
+                  <Button bsStyle="success" onClick={this.closeFriendAddedModal.bind(this, id)}>OK</Button>
                 </ButtonToolbar>
               </Modal.Footer>
             </Modal>
