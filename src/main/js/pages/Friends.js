@@ -43,7 +43,8 @@ export default class Friends extends React.Component {
     render() {
         const friends = this.state.friendList.map((person) => <Friend isProfilePage={false} key={person.id} {...person}/> );
         const suggestedFriends = this.state.suggestedFriendList.map((person) => <SuggestedFriend key={person.id} {...person}/> );
-
+        var noSuggestedFriendsPlaceholder = "";
+        if (suggestedFriends.length == 0) noSuggestedFriendsPlaceholder = "There are no suggested friends at this time.";
 
         return (
             <div class="well">
@@ -54,6 +55,7 @@ export default class Friends extends React.Component {
                     <div>{friends}</div>
                   </Tab>
                   <Tab label='Suggested'>
+                    <p class="text-center">{noSuggestedFriendsPlaceholder}</p>
                     <div>{suggestedFriends}</div>
                   </Tab>
                 </CustomTabs>

@@ -6,7 +6,7 @@ export function getFriendRequests(){
       console.log("friend request list received: " + data);
       if(data.length > 0){
           dispatcher.dispatch({
-                  type: "FRIEND_REQUEST_RECEIVED",
+                  type: "FRIEND_REQUESTS_RECEIVED",
                   friendRequests: data
           });
       }

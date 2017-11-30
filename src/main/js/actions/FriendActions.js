@@ -1,5 +1,6 @@
 import dispatcher from "../dispatcher";
 
+/* Get user's friends from our server as well as suggested friends */
 export function getAllFriends(){
     var name;
     $.get( "/api/friends", function( data ) {
@@ -9,8 +10,18 @@ export function getAllFriends(){
             });
     });
 
+    $.get( "/api/friends/suggestedFriends", function( data ) {
+        dispatcher.dispatch({
+                type: "GET_SUGGESTED_FRIENDS",
+                suggestedFriends: data
+            });
+    });
+
+
 }
 
+/* Query our server to see which friends are currently gaming.
+  Here friends refer to friends on xbox live or steam, not UWG friends. */
 export function getNowPlaying(){
     $.get( "/api/friends/onlineFeed", function( data ) {
     	var friends = [];
@@ -35,36 +46,44 @@ export function getNowPlaying(){
     });
 }
 
-
-export function removeFriend(id){
-    $.get( "/api/friends/" + id + "/removeFriend", function( data ) {
+/* Unfriends a user */
+export function removeFriend(userId){
+    $.get( "/api/friends/" + userId + "/removeFriend", function( data ) {
       console.log(data);
       dispatcher.dispatch({
               type: "REMOVE_FRIEND",
-              friendId: id
+              friendId: userId
       });
     });
 }
 
-export function sendFriendRequest(id){
-    $.get( "/api/users/" + id + "/requestFriend", function( data ) {
-      console.log(data);
+/* Removes someone from the users's uggested friend list */
+export function removeSuggestedFriend(userId){
+      dispatcher.dispatch({
+              type: "REMOVE_SUGGESTED_FRIEND",
+              friendId: userId
+    });
+}
+
+export function sendFriendRequest(friendId){
+    $.get( "/api/users/" + friendId + "/requestFriend", function( data ) {
       dispatcher.dispatch({
               type: "FRIEND_REQUEST_SENT",
-              friendId: id
+              friendId: friendId
       });
     });
 }
 
 export function acceptFriendRequest(requestId){
-    console.log("except friend request api call")
     $.get( "/api/requests/" + requestId + "/acceptRequest", function( data ) {
-      console.log(data);
+      // we now want to show the accepted friend in our friend list,
+      // as well as get any new suggested friends.
+      getAllFriends();
     });
 }
 
 export function denyFriendRequest(requestId){
     $.get( "/api/requests/" + requestId + "/denyRequest", function( data ) {
-      console.log(data);
+      console.log(data)
     });
 }
