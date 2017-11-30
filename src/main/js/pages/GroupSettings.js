@@ -83,6 +83,8 @@ export default class GroupSettings extends React.Component {
       <form onSubmit={this.handleSubmit}>
 
         <FormGroup controlId="formBasicText">
+				<HelpBlock>Group Name</HelpBlock>
+				<FormControl.Feedback />
           <FormControl
             type="text"
             value={this.state.groupName}
@@ -90,11 +92,12 @@ export default class GroupSettings extends React.Component {
             onChange={this.handleInputChange}
             name="groupName"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Group Name</HelpBlock>
         </FormGroup>
+				<br/>
 
         <FormGroup controlId="formControlsTextarea">
+				<FormControl.Feedback />
+				<HelpBlock>Description</HelpBlock>
           <FormControl
             type="text"
             value={this.state.description}
@@ -103,11 +106,13 @@ export default class GroupSettings extends React.Component {
             name="description"
             componentClass="textarea"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Description</HelpBlock>
         </FormGroup>
+				<br/>
+
 
         <FormGroup controlId="formBasicText">
+				<FormControl.Feedback />
+				<HelpBlock>Banner Image URL</HelpBlock>
           <FormControl
             type="text"
             value={this.state.coverPhoto}
@@ -115,9 +120,8 @@ export default class GroupSettings extends React.Component {
             onChange={this.handleInputChange}
             name="coverPhoto"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Banner Image URL</HelpBlock>
         </FormGroup>
+				<br/>
 
         <Button bsStyle="success" type="submit">
           {buttonText}

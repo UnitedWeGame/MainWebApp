@@ -7,12 +7,7 @@ class FriendStore extends EventEmitter{
         var component = this;
         this.allFriends = [];
         this.friendsPlayingNow = [];
-        this.suggestedFriends = [
-          {id: 1010, username: "TheBeast", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
-          {id: 1011, username: "Prince$$", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"},
-          {id: 1012, username: "PWNER99", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/mjustxpafje74fzjbeuy.jpg"}
-        ];
-
+        this.suggestedFriends = [];
 
     }
 
@@ -31,6 +26,11 @@ class FriendStore extends EventEmitter{
     setAll(friends){
         this.allFriends = friends;
         this.emit("change");
+    }
+
+    setSuggestedFriends(suggestedFriends){
+      this.suggestedFriends = suggestedFriends;
+      this.emit("change");
     }
 
     setPlayingNow(friendsPlayingNow){
@@ -52,10 +52,23 @@ class FriendStore extends EventEmitter{
       this.emit("change");
     }
 
+
+    removeSuggestedFriend(friendId){
+      for(var i = this.suggestedFriends.length-1; i>=0; i--) {
+        if( this.suggestedFriends[i].id == friendId)
+          this.suggestedFriends.splice(i,1);
+      }
+      this.emit("change");
+    }
+
     handleActions(action){
         switch (action.type) {
             case "GET_ALL_FRIENDS_DATA": {
                 this.setAll(action.friends);
+                break;
+            }
+            case "GET_SUGGESTED_FRIENDS": {
+                this.setSuggestedFriends(action.suggestedFriends);
                 break;
             }
             case "UPDATE_NOW_PLAYING":{
@@ -64,6 +77,10 @@ class FriendStore extends EventEmitter{
             }
             case "REMOVE_FRIEND": {
                 this.removeFriend(action.friendId);
+                break;
+            }
+            case "REMOVE_SUGGESTED_FRIEND": {
+                this.removeSuggestedFriend(action.friendId);
                 break;
             }
         }

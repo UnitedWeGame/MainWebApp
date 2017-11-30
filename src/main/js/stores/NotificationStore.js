@@ -9,10 +9,7 @@ class NotificationStore extends EventEmitter{
     constructor(){
         super();
 
-        this.notifications = [
-          {id: 98, user: "MarioMaster", verb: "wants to be friends!", type: "friendRequest", imageUrl: "http://images.igdb.com/igdb/image/upload/t_micro/l3n0zuklmgkloi1udslt.png"},
-          {id: 99, user: "Game4Life", verb: "wants to be friends!", type: "friendRequest", imageUrl: "https://images.igdb.com/igdb/image/upload/t_micro/scutr4p9gytl4txb2soy.jpg"}
-        ];
+        this.notifications = [];
 
         this.latestHeadline = this.notifications.length + " new notifications";
     }
@@ -56,6 +53,8 @@ class NotificationStore extends EventEmitter{
         if(!this.notificationListContains(request)){
           var notification = {};
           notification.id = request.id;
+          console.log("Friend request id is: "+request.id);
+          console.log("Request is from: " + request.ownerUsername);
           notification.type = "friendRequest";
           notification.user = request.ownerUsername;
           notification.imageUrl = request.ownerImageUrl;
@@ -91,7 +90,7 @@ class NotificationStore extends EventEmitter{
       }
       // show an alert on the screen
       Alert.success("New message from " + from, {});
-      
+
       this.emit("change");
     }
 
@@ -120,7 +119,7 @@ class NotificationStore extends EventEmitter{
 
     handleActions(action){
         switch (action.type) {
-            case "FRIEND_REQUEST_RECEIVED": {
+            case "FRIEND_REQUESTS_RECEIVED": {
                 this.updateFriendRequests(action.friendRequests);
                 break;
             }

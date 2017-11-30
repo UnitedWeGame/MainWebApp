@@ -64,8 +64,12 @@ export default class Settings extends React.Component {
     return (
     	<div class="well">
       <form onSubmit={this.handleSubmit}>
+			<h3> General Settings: </h3>
+			<br/>
 
         <FormGroup controlId="formBasicText">
+				<FormControl.Feedback />
+				<HelpBlock>Profile Image URL</HelpBlock>
           <FormControl
             type="text"
             value={this.state.imageURL}
@@ -73,11 +77,12 @@ export default class Settings extends React.Component {
             onChange={this.handleInputChange}
             name="imageURL"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Profile Image URL</HelpBlock>
         </FormGroup>
+				<br/>
 
         <FormGroup controlId="formBasicText">
+				<FormControl.Feedback />
+				<HelpBlock>Banner Image URL</HelpBlock>
           <FormControl
             type="text"
             value={this.state.coverPhoto}
@@ -85,11 +90,12 @@ export default class Settings extends React.Component {
             onChange={this.handleInputChange}
             name="coverPhoto"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Banner Image URL</HelpBlock>
         </FormGroup>
+				<br/>
 
         <FormGroup controlId="formBasicText">
+				<FormControl.Feedback />
+				<HelpBlock>Steam ID</HelpBlock>
           <FormControl
             type="text"
             value={this.state.steamId}
@@ -97,11 +103,12 @@ export default class Settings extends React.Component {
             onChange={this.handleInputChange}
             name="steamId"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Steam ID</HelpBlock>
         </FormGroup>
+				<br/>
 
         <FormGroup controlId="formBasicText">
+				<FormControl.Feedback />
+				<HelpBlock>Xbox Gamertag</HelpBlock>
           <FormControl
             type="text"
             value={this.state.xboxGamertag}
@@ -109,11 +116,12 @@ export default class Settings extends React.Component {
             onChange={this.handleInputChange}
             name="xboxGamertag"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Xbox Gamertag</HelpBlock>
         </FormGroup>
+				<br/>
 
         <FormGroup controlId="formBasicText">
+				<FormControl.Feedback />
+				<HelpBlock>Email</HelpBlock>
           <FormControl
             type="text"
             value={this.state.email}
@@ -121,17 +129,18 @@ export default class Settings extends React.Component {
             onChange={this.handleInputChange}
             name="email"
           />
-          <FormControl.Feedback />
-          <HelpBlock>Email</HelpBlock>
         </FormGroup>
+				<br/>
 
 		    	<h3> Privacy Settings: </h3>
 
 		    	<Checkbox
-		    	onChange={this.handleInputChange}
-		    	checked={this.state.smsEnabled}
-		    	name="smsEnabled">
-		    	Turn on SMS invites.</Checkbox>
+			    	onChange={this.handleInputChange}
+			    	checked={this.state.smsEnabled}
+			    	name="smsEnabled">
+			    	Turn on SMS invites.
+					</Checkbox>
+					<br/>
 
 		    <Button bsStyle="success" type="submit">
 		      Update
