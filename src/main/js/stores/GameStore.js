@@ -13,10 +13,10 @@ class GameStore extends EventEmitter{
 
         // has properties: id, username, and profilePic
         this.friendsWhoOwn = [];
-        
+
         this.game = {
           id: 0,
-          title: "Title Not Found",
+          title: "Loading...",
           firstReleaseDate: "Release Date Not Found",
           myRating: 0,
           communityRating: "No rating found",

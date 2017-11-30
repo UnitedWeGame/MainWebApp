@@ -27,11 +27,11 @@ export default class NowPlaying extends React.Component {
     }
 
     render() {
-        const friends = this.state.friendList.map((person) => <FriendPlaying key={person.ID} {...person}/> );
+        var friends = this.state.friendList.map((person) => <FriendPlaying key={person.ID} {...person}/> );
+        if(friends.length == 0) friends = "Nobody seems to be playing at the moment...";
 
         return (
             <div class="well pre-scrollable">
-                {/*<h3 class="text-center"> Playing Now: </h3>*/}
                 <div>{friends}</div>
             </div>
         );
