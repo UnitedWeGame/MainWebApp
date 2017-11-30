@@ -2,6 +2,7 @@ import React from "react";
 import {Button, ButtonToolbar, Image} from "react-bootstrap";
 import NotificationStore from "../stores/NotificationStore";
 import * as FriendActions from "../actions/FriendActions";
+import * as ChatActions from "../actions/ChatActions";
 
 
 export default class Notifications extends React.Component {
@@ -54,18 +55,31 @@ export default class Notifications extends React.Component {
 
 class Notification extends React.Component {
 
-  btn1onClick(type, requestId){
+  /* Called when the left button is clicked. user is the friend's username,
+  imageUrl is the friend's */
+  btn1onClick(type, notificationId, user, imageUrl){
     if(type == "friendRequest"){
+      const requestId = notificationId;
       NotificationStore.removeNotification(requestId);
       FriendActions.acceptFriendRequest(requestId);
     }
+    else if(type == "newMessage"){
+      NotificationStore.removeNotification(notificationId);
+      ChatActions.startSoloChat(user, imageUrl);
+    }
   }
 
-  btn2onClick(type, requestId){
+  /* Called when the right button is clicked. user is the friend's username,
+  imageUrl is the friend's */
+  btn2onClick(type, notificationId, user, imageUrl){
 
     if(type == "friendRequest"){
+      const requestId = notificationId;
       NotificationStore.removeNotification(requestId);
       FriendActions.denyFriendRequest(requestId);
+    }
+    else if(type == "newMessage"){
+      NotificationStore.removeNotification(notificationId);
     }
   }
 
@@ -86,6 +100,12 @@ class Notification extends React.Component {
       btn2Style = "danger";
       btn2Text = "Deny";
     }
+    else if(type == "newMessage"){
+      btn1Style = "success";
+      btn1Text = "Read";
+      btn2Style = "danger";
+      btn2Text = "Ignore";
+    }
 
     return (
       <div class="autosize-container">
@@ -97,13 +117,13 @@ class Notification extends React.Component {
           <ButtonToolbar className="pull-right">
           <Button
             bsStyle={btn1Style}
-            onClick={this.btn1onClick.bind(this, type, id)}
+            onClick={this.btn1onClick.bind(this, type, id, user, imageUrl)}
             >
               {btn1Text}
           </Button>
           <Button
             bsStyle={btn2Style}
-            onClick={this.btn2onClick.bind(this, type, id)}
+            onClick={this.btn2onClick.bind(this, type, id, user, imageUrl)}
             >
               {btn2Text}
           </Button>
