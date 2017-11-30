@@ -83,7 +83,7 @@ export function acceptFriendRequest(requestId){
 }
 
 export function denyFriendRequest(requestId){
-    $.get( "/api/requests/" + requestId + "/denyRequest", function( data ) {
+    $.get( "/api/requests/" + requestId + "/rejectRequest", function( data ) {
       console.log(data)
     });
 }

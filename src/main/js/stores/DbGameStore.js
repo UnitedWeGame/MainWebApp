@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+/* All the games and our server's database */
 class DbGameStore extends EventEmitter{
     constructor(){
         super();

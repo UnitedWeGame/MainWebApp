@@ -22,6 +22,7 @@ constructor(props){
     this.getGroups = this.getGroups.bind(this);
     this.isFriend = this.isFriend.bind(this);
     this.isUser = this.isUser.bind(this);
+    this.isMeOrFriend = this.isMeOrFriend.bind(this);
     this.onFriendRequestClick = this.onFriendRequestClick.bind(this);
     this.openRequestSentModal = this.openRequestSentModal.bind(this);
     this.closeRequestSentModal = this.closeRequestSentModal.bind(this);
@@ -55,7 +56,7 @@ constructor(props){
   }
 
   componentWillMount() {
-    //FriendStore.on("change", this.getFriends);
+    FriendStore.on("change", this.getFriends);
     GeneralUserStore.on("userChange", this.getUser);
     GeneralUserStore.on("userChange", this.getGames);
     GeneralUserStore.on("change", this.updateFriendRequestButton);
@@ -64,7 +65,7 @@ constructor(props){
   }
 
   componentWillUnmount() {
-    //FriendStore.removeListener("change", this.getFriends);
+    FriendStore.removeListener("change", this.getFriends);
     GeneralUserStore.removeListener("userChange", this.getUser);
     GeneralUserStore.removeListener("userChange", this.getGames);
     GeneralUserStore.removeListener("change", this.updateFriendRequestButton);
@@ -98,6 +99,7 @@ constructor(props){
     });
   }
 
+  /* When a tab is clicked (e.g. games, friends, groups), updates tab state */
   handleTabChange = (index) => {
     this.setState({index});
   };
@@ -115,15 +117,25 @@ constructor(props){
       this.setState({ showFriendRequestButton: true});
   }
 
+  // returns true if the supplied userid belongs to the user or a friend of
+  // the user
+  isMeOrFriend(userID){
+    if(userID === this.state.loggedInUserID)
+      return true;
+    var friends = this.state.friendList; // friends of logged-in user
+    for(var i = 0; i < friends.length; i++){
+      if(userID === friends[i].id){
+        return true;
+      }
+    }
+    return false;
+  }
+
   // returns true if the user featured on the profile page is a friend of
   // the logged-in user
   isFriend(){
     if(!this.state.userID)
       return true;
-    /*console.log("in the isFriend Function")
-    console.log("user: " + this.state.user)
-    console.log("userID: " + this.state.userID)
-    console.log("friend list is this long: " + this.state.friendList.length)*/
     var alreadyFriends = false;
     var friends = this.state.friendList; // friends of logged-in user
     for(var i = 0; i < friends.length; i++){
@@ -162,6 +174,9 @@ constructor(props){
 
   render() {
     const { params } = this.props;
+    console.log("profile page params are: " + params.userID);
+    const userID = params.userID;
+    const showFriendRequestButton = !this.isMeOrFriend(userID);
 
     const friends = this.state.friendList.map((person) => <Friend isProfilePage={true} key={person.id} {...person}/> );
     const library = this.state.games.map((game) => <MinLibraryItem key={game.id} {...game}/> );

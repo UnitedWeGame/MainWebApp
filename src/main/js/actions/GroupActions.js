@@ -9,8 +9,19 @@ export function getGroup(id){
 	});
 }
 
+/* Gets all groups contained in the server's database,
+including those user is not a part of */
+export function getAllGroups(){
+	$.get( "/api/group/allGroups/" + id, function( data ){
+		dispatcher.dispatch({
+			type: "GET_ALL_GROUPS",
+			groups: data
+		});
+	});
+}
+
 export function joinGroup(groupId, userId){
-  $.get( "/api/group/" + groupId + "/addMember/" + userId, 
+  $.get( "/api/group/" + groupId + "/addMember/" + userId,
     function( data ){
       console.log("the data:");
       console.log(data);
@@ -62,4 +73,3 @@ export function updateSettings(settings){
     }
   });
 }
-

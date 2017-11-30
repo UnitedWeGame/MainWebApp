@@ -1,14 +1,23 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+/* Stores all the groups in the server's database, including those user is not a part of */
 class GroupStore extends EventEmitter{
   constructor(){
     super();
-    this.group = [];
+    this.group = []; // the current group of interest
+
+    // all groups in the server's database, including those user is not a part of
+    this.allGroups = [];
   }
 
   setGroup(group){
     this.group = group;
+    this.emit("change");
+  }
+
+  setAllGroups(groups){
+    this.allGroups = groups;
     this.emit("change");
   }
 
@@ -42,6 +51,10 @@ class GroupStore extends EventEmitter{
     switch (action.type) {
       case "GET_GROUP_DATA": {
         this.setGroup(action.group);
+        break;
+      }
+      case "GET_ALL_GROUPS": {
+        this.setAllGroups(action.groups);
         break;
       }
       case "UPDATE_GROUP":{
