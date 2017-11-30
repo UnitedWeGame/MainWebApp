@@ -54,11 +54,13 @@ export default class ActivityFeed extends React.Component {
             }
         });
     });
-    
+
     var activities = [];
     if(newActivityList){
       activities = this.state.activityList.map((a) => <Item key={a.ID} {...a}/> );
     }
+    else { activities = "Loading posts..."}
+
     const textareaStyle = {
         height: 50,
         resize: "none",
