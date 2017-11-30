@@ -27,10 +27,13 @@ public class ActivityFeedAPIController {
 	UserService userService;
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ActivityPost createActivity(@RequestBody ActivityPost activityPost) {	
-		activityPost.setUser(userService.getLoggedInUser());
-		activityPostService.createActivity(activityPost);
-		return activityPost;
+	public ActivityPost createActivity(@RequestBody ActivityPost activityPost) {
+		if(!activityPost.getContent().trim().isEmpty()) {
+			activityPost.setUser(userService.getLoggedInUser());
+			activityPostService.createActivity(activityPost);
+			return activityPost;
+		}
+		return new ActivityPost();
 	}
 
 	@RequestMapping("/friends")

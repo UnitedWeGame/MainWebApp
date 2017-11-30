@@ -13,29 +13,30 @@ export function getFriendsActivity(){
 
 
 export function postStatus(text){
-    text = "said: " + text;
-    $.ajax({
-         url: "/api/activityFeed",
-         type:"POST",
-         data: JSON.stringify({ "content": text }),
-         contentType:"application/json; charset=utf-8",
-         dataType:"json",
-         success: function(response ){
+    if(text.trim().length !== 0) {
+        text = "said: " + text;
+        $.ajax({
+            url: "/api/activityFeed",
+            type: "POST",
+            data: JSON.stringify({"content": text}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
                 dispatcher.dispatch({
                     type: "CREATE_POST",
                     post: response
                 });
-         }
+            }
         })
-    //var data = "{\"content\": \""+text+"\"}";
+        //var data = "{\"content\": \""+text+"\"}";
         //{ content: text }
-    /*$.post("/api/activityFeed/", 
-        JSON.stringify({ "content": text })
-        , 
-        function(response){
-        
-    });*/
-}
+        /*$.post("/api/activityFeed/",
+         JSON.stringify({ "content": text })
+         ,
+         function(response){
+
+         });*/
+    }}
 
 export function createPost(post) {
     /*var ID = Date.now();
