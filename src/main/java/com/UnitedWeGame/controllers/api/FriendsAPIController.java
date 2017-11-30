@@ -59,13 +59,19 @@ public class FriendsAPIController {
 		for(User friend : friends) {
 			for(User friendOfFriend : friend.getFriends()) {
 				if(friendOfFriend.getId() != userId && !friends.contains(friendOfFriend))
-					for(FriendRequest request : friendRequests)
-					{
-						if(request.getFriend() != friendOfFriend.getId() && request.getOwner() != friendOfFriend.getId())
-						{
-							suggestedFriends.add(friendOfFriend);
-							break;
+					if(friendRequests.size() == 0) {
+						suggestedFriends.add(friendOfFriend);
+					}
+				else {
+					boolean requestSent = false;
+						for (FriendRequest request : friendRequests) {
+							if (request.getFriend().compareTo(friendOfFriend.getId()) == 0 || request.getOwner().compareTo(friendOfFriend.getId()) == 0) {
+								requestSent = true;
+								break;
+							}
 						}
+						if(!requestSent)
+							suggestedFriends.add(friendOfFriend);
 					}
 			}
 		}

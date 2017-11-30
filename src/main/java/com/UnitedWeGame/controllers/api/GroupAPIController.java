@@ -94,4 +94,9 @@ public class GroupAPIController {
         userService.saveUser(user);
         return group;
     }
+
+    @RequestMapping("/allGroups")
+    public List<Group> getAllGroups() {
+        return groupService.allGroups();
+    }
 }

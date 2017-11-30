@@ -5,6 +5,8 @@ import com.UnitedWeGame.repos.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Author: cweeter
  * Date: 11/2/17
@@ -24,4 +26,8 @@ public class GroupService {
     }
 
     public Group getGroupById(Long groupId) { return groupRepo.findOne(groupId);}
+
+    public List<Group> allGroups() {
+        return (List<Group>) groupRepo.findAll();
+    }
 }
