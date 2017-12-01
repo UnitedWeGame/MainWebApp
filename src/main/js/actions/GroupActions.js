@@ -23,8 +23,6 @@ export function getAllGroups(){
 export function joinGroup(groupId, userId){
   $.get( "/api/group/" + groupId + "/addMember/" + userId,
     function( data ){
-      console.log("the data:");
-      console.log(data);
 		dispatcher.dispatch({
 			type: "UPDATE_GROUP",
 			group: data
@@ -54,14 +52,36 @@ export function updateActivityFeed(group, groupPost){
   });
 }
 //posting to /api/group
-export function updateSettings(settings){
-	$.ajax({
+export function createGroup(group){
+  $.ajax({
     url: "/api/group/",
     type:"POST",
     data: JSON.stringify({
+      "groupName": group.groupName,
+      "description": group.description,
+      "coverPhoto": group.coverPhoto
+     }),
+    contentType:"application/json; charset=utf-8",
+    dataType:"json",
+    success: function(response ){
+      dispatcher.dispatch({
+        type: "CREATE_GROUP",
+        group: response
+      });
+    }
+  });
+}
+
+export function updateSettings(settings){
+	$.ajax({
+    url: "/api/group/saveGroup",
+    type:"POST",
+    data: JSON.stringify({
+      "id": settings.id,
     	"groupName": settings.groupName,
     	"description": settings.description,
-    	"coverPhoto": settings.coverPhoto
+    	"coverPhoto": settings.coverPhoto,
+      "members": settings.group.members
      }),
     contentType:"application/json; charset=utf-8",
     dataType:"json",

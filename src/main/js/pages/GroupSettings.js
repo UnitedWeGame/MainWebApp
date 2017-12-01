@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import * as GroupActions from "../actions/GroupActions";
 import GroupStore from "../stores/GroupStore";
+import { hashHistory } from 'react-router';
 
 export default class GroupSettings extends React.Component {
 	constructor(props){
@@ -11,25 +12,26 @@ export default class GroupSettings extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
 
+    var id = '';
     var group = {};
 		var groupName = '';
 		var description = '';
     var coverPhoto = '';
 		var isNewGroup = true;
+    var redirectToGroup = false;
 
 		if(props.params.groupID){
+      id = this.props.params.groupID;
 			isNewGroup = false;
 			GroupActions.getGroup(props.params.groupID);
       group = GroupStore.getGroup();
       groupName = group.groupName;
       description = group.description;
       coverPhoto = group.coverPhoto;
-
-			/*groupName = GroupStore.getName();
-			description = GroupStore.getDesc();
-      coverPhoto = GroupStore.getCoverPhoto();*/
 		}
 		this.state = {
+      redirectToGroup: redirectToGroup,
+      id: id,
       group: group,
 			groupName: groupName,
 			description: description,
@@ -50,6 +52,7 @@ export default class GroupSettings extends React.Component {
   setGroup(){
     const group = GroupStore.getGroup();
     this.setState({
+      id: group.id,
       group: group,
     	groupName: group.groupName,
 			description: group.description,
@@ -58,7 +61,16 @@ export default class GroupSettings extends React.Component {
   }
 
   handleSubmit(event){
-    GroupActions.updateSettings(this.state);
+    event.preventDefault();
+    this.setState({
+      redirectToGroup: true
+    });
+    if(this.state.isNewGroup){
+      GroupActions.createGroup(this.state);
+    }
+    else{
+      GroupActions.updateSettings(this.state);
+    }
   }
 
   handleInputChange(event) {
@@ -72,6 +84,10 @@ export default class GroupSettings extends React.Component {
   }
 
   render() {
+    const groupPath = "/group/"+this.state.id;
+    if(this.state.redirectToGroup){
+      hashHistory.push(groupPath);
+    }
     var buttonText = "Update";
     var headerText = "Edit Group Settings";
     if(this.state.isNewGroup){
