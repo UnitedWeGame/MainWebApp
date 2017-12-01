@@ -1,5 +1,7 @@
 import dispatcher from "../dispatcher";
 
+/* NOTE: these actions only apply to "me" and no other user */
+
 export function getCurrentUserData(platform){
 // platform variable optional for specifying which library games should be shown
 // when LibraryStore.initGames() is called
@@ -12,6 +14,7 @@ export function getCurrentUserData(platform){
         platform: platform
       });
     });
+
 }
 
 export function updateSettings(settings){

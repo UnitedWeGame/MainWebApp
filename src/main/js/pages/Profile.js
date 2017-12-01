@@ -16,34 +16,33 @@ export default class Profile extends React.Component {
 constructor(props){
     super(props);
 
-    this.getFriends = this.getFriends.bind(this);
+    this.getMyFriends = this.getMyFriends.bind(this);
+    this.getProfileFriends = this.getProfileFriends.bind(this);
     this.getUser = this.getUser.bind(this);
     this.getGames = this.getGames.bind(this);
     this.getGroups = this.getGroups.bind(this);
-    this.isFriend = this.isFriend.bind(this);
-    this.isUser = this.isUser.bind(this);
     this.isMeOrFriend = this.isMeOrFriend.bind(this);
     this.onFriendRequestClick = this.onFriendRequestClick.bind(this);
     this.openRequestSentModal = this.openRequestSentModal.bind(this);
     this.closeRequestSentModal = this.closeRequestSentModal.bind(this);
-    this.updateFriendRequestButton = this.updateFriendRequestButton.bind(this);
 
-    const friendList = FriendStore.getAll();
+    const myFriendList = FriendStore.getAll();
+    // the friends of whoever's profile is currently showing:
+    const generalFriendList = GeneralUserStore.getFriends();
     var user = GeneralUserStore.getUser();
     var userID = GeneralUserStore.getUserID();
     var games = GeneralUserStore.getGames();
     const loggedInUserID = UserStore.getUserID();
     var groups = GeneralUserStore.getGroups();
-    var showFriendRequestButton = false;
 
     this.state = {
         btnDisabled: false,
         btnText: "Send Friend Request",
-        friendList: friendList,
+        myFriendList: myFriendList,
+        generalFriendList: generalFriendList,
         games: games,
         index: 0,
         loggedInUserID: loggedInUserID,
-        showFriendRequestButton: showFriendRequestButton,
         showRequestSentModal: false,
         user: user,
         userID: userID,
@@ -56,21 +55,19 @@ constructor(props){
   }
 
   componentWillMount() {
-    FriendStore.on("change", this.getFriends);
+    FriendStore.on("change", this.getMyFriends);
+    GeneralUserStore.on("friendChange", this.getProfileFriends);
     GeneralUserStore.on("userChange", this.getUser);
     GeneralUserStore.on("userChange", this.getGames);
-    GeneralUserStore.on("change", this.updateFriendRequestButton);
     GeneralUserStore.on("groupsChange", this.getGroups);
-    GeneralUserStore.on("friendChange", this.getFriends);
   }
 
   componentWillUnmount() {
-    FriendStore.removeListener("change", this.getFriends);
+    FriendStore.removeListener("change", this.getMyFriends);
+    GeneralUserStore.removeListener("friendChange", this.getProfileFriends);
     GeneralUserStore.removeListener("userChange", this.getUser);
     GeneralUserStore.removeListener("userChange", this.getGames);
-    GeneralUserStore.removeListener("change", this.updateFriendRequestButton);
     GeneralUserStore.removeListener("groupsChange", this.getGroups);
-    GeneralUserStore.removeListener("friendChange", this.getFriends);
   }
 
   getUser(){
@@ -81,9 +78,15 @@ constructor(props){
 
   }
 
-  getFriends(){
+  getProfileFriends(){
     this.setState({
-      friendList: GeneralUserStore.getFriends()
+      generalFriendList: GeneralUserStore.getFriends()
+    });
+  }
+
+  getMyFriends(){
+    this.setState({
+      myFriendList: FriendStore.getAll()
     });
   }
 
@@ -112,54 +115,35 @@ constructor(props){
     this.setState({ showModal: false});
   }
 
-  updateFriendRequestButton(){
-    if(!this.isFriend() && !this.isUser())
-      this.setState({ showFriendRequestButton: true});
-  }
 
   // returns true if the supplied userid belongs to the user or a friend of
   // the user
   isMeOrFriend(userID){
-    if(userID === this.state.loggedInUserID)
+    console.log("userID has type: " + typeof userID)
+    if(!this.state.loggedInUserID){
+       console.log("state logged in user id is undefined")
+       return false;
+     }
+    console.log("loggedInUserID has type: " + typeof this.state.loggedInUserID)
+    if(userID === this.state.loggedInUserID){
+      console.log("profile pages mine");
       return true;
-    var friends = this.state.friendList; // friends of logged-in user
+    }
+    var friends = this.state.myFriendList; // friends of logged-in user
+    if(this.state.myFriendList.length === 0) {
+      console.log("state friend list is undefined")
+      return false
+    }
+    console.log("friends id has type: " + typeof friends[0].id)
     for(var i = 0; i < friends.length; i++){
+      console.log("friendly username is: " + friends[i].id)
+      console.log("friend id is: "+friends[i].id)
       if(userID === friends[i].id){
+        console.log("profile page is my friend's");
         return true;
       }
     }
     return false;
-  }
-
-  // returns true if the user featured on the profile page is a friend of
-  // the logged-in user
-  isFriend(){
-    if(!this.state.userID)
-      return true;
-    var alreadyFriends = false;
-    var friends = this.state.friendList; // friends of logged-in user
-    for(var i = 0; i < friends.length; i++){
-      if(this.state.userID == friends[i].id){
-        alreadyFriends = true;
-        break;
-      }
-    }
-    console.log("isFriend returned: " + alreadyFriends)
-    return alreadyFriends;
-  }
-
-  // returns true if the user featured on the profile page is the logged-in user
-  isUser(){
-    if(!this.state.userID)
-      return true;
-    if(this.state.loggedInUserID == this.state.userID){
-    console.log("isUser returned: true")
-      return true;
-    }
-    else{
-      console.log("isUser returned: false")
-      return false;
-    }
   }
 
   onFriendRequestClick(){
@@ -174,17 +158,19 @@ constructor(props){
 
   render() {
     const { params } = this.props;
-    console.log("profile page params are: " + params.userID);
-    const userID = params.userID;
+    console.log("user id is: " + params.userID);
+    console.log("my user id is: " + this.state.loggedInUserID)
+    const userID = parseInt(params.userID); // convert to int
     const showFriendRequestButton = !this.isMeOrFriend(userID);
+    console.log("is me or friend: " + !showFriendRequestButton);
 
-    const friends = this.state.friendList.map((person) => <Friend isProfilePage={true} key={person.id} {...person}/> );
+    const friends = this.state.generalFriendList.map((person) => <Friend isProfilePage={true} key={person.id} {...person}/> );
     const library = this.state.games.map((game) => <MinLibraryItem key={game.id} {...game}/> );
     const groups = this.state.groups.map((group) => <MinGroupItem key={group.id} {...group}/> );
 
     {/* Button for sending friend request to user featured on profile, if not yet a friend*/}
     var coverBtnStyle = {display: "none"};
-    if(this.state.showFriendRequestButton)
+    if(showFriendRequestButton)
         coverBtnStyle = { display: "initial" };
 
     var coverPhotoUrl = "url('http://cdn.wccftech.com/wp-content/uploads/2016/07/the-legend-of-zelda-breath-of-the-wild-horizon.jpg')";

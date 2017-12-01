@@ -1,4 +1,5 @@
 import dispatcher from "../dispatcher";
+/* NOTE: these actions are used for an arbitrary user and not necessarily "me "*/
 
 export function getUserData(id){
 	$.get( "/api/users/" + id, function( data ){
