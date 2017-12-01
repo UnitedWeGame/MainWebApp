@@ -1,6 +1,8 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+/* Friends belonging to "me". For friends belonging to someone else, see
+  GeneralUserStore */
 class FriendStore extends EventEmitter{
     constructor(){
         super();

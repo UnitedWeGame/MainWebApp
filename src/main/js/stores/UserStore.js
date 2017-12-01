@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+/* Contains information about the logged-in user (me) */
 class UserStore extends EventEmitter{
     constructor(){
         super();
