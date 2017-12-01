@@ -98,8 +98,6 @@ class GeneralUserStore extends EventEmitter{
                 break;
             }
             case "GET_FRIENDS": {
-                console.log("amigos:");
-                console.log(action.friends);
                 this.setFriends(action.friends);
                 break;
             }

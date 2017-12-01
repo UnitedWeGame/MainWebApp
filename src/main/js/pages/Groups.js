@@ -32,13 +32,10 @@ export default class Groups extends React.Component {
     var groupName = group.groupName;
     var description = group.description;
     var coverPhoto = group.coverPhoto;
-    //var members = group.members;
     var groupPost = group.groupPost;
-    /*var groupName = GroupStore.getName();
-    var description = GroupStore.getDesc();
-    var coverPhoto = GroupStore.getCoverPhoto();*/
     const loggedInUserID = UserStore.getUserID();
     const username = UserStore.getUsername();
+
     var members = GeneralUserStore.getUsers(group.members);
 
     var showJoinGroupButton = false;
@@ -79,9 +76,6 @@ export default class Groups extends React.Component {
     GeneralUserStore.on("change", this.getGroup);
   }
 
-  /*getMembers(){
-
-  }*/
   getPosts(){
     this.setState({
       groupPost: GroupStore.getPosts()
