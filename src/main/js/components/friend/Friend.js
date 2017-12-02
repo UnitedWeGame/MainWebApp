@@ -58,8 +58,6 @@ export default class Friend extends React.Component {
 
     navToFriend(id){
       GeneralUserActions.getUserData(id);
-      console.log('innavToFriend!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:')
-      console.log(id);
       const profPath = "/profile/"+id;
       hashHistory.push(profPath);
     }
