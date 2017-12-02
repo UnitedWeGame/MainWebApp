@@ -5,23 +5,29 @@ import * as FriendActions from "../../actions/FriendActions"
 import FriendStore from "../../stores/FriendStore";
 import * as ChatActions from "../../actions/ChatActions";
 import {Image} from "react-bootstrap";
+import { hashHistory } from 'react-router';
+import * as GeneralUserActions from "../../actions/GeneralUserActions";
 
 
 
 export default class Friend extends React.Component {
     constructor(props){
-        super(props);
+      super(props);
 
-        this.state = {
-            showUserInfoModal: false,
-            showRemoveFriendModal: false
-        };
+      const userID = this.props;
 
-		this.openInfoModal = this.openInfoModal.bind(this);
-		this.closeInfoModal = this.closeInfoModal.bind(this);
-    this.openRemoveFriendModal = this.openRemoveFriendModal.bind(this);
-    this.closeRemoveFriendModal = this.closeRemoveFriendModal.bind(this);
-    this.startChat = this.startChat.bind(this);
+      this.state = {
+          showUserInfoModal: false,
+          showRemoveFriendModal: false,
+          userID: userID
+      };
+
+  		this.openInfoModal = this.openInfoModal.bind(this);
+  		this.closeInfoModal = this.closeInfoModal.bind(this);
+      this.openRemoveFriendModal = this.openRemoveFriendModal.bind(this);
+      this.closeRemoveFriendModal = this.closeRemoveFriendModal.bind(this);
+      this.startChat = this.startChat.bind(this);
+      this.navToFriend = this.navToFriend.bind(this);
 
     }
 
@@ -48,6 +54,14 @@ export default class Friend extends React.Component {
 
     startChat(username, imageUrl){
       ChatActions.startSoloChat(username, imageUrl);
+    }
+
+    navToFriend(id){
+      GeneralUserActions.getUserData(id);
+      console.log('innavToFriend!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:')
+      console.log(id);
+      const profPath = "/profile/"+id;
+      hashHistory.push(profPath);
     }
 
     render() {
@@ -95,8 +109,10 @@ export default class Friend extends React.Component {
   			<Tooltip id="tooltip"><strong>Read/Send Message</strong></Tooltip>
   		  );
 
-
-
+        const location = {
+          pathname: '/profile/'+id,
+          state: { userID: id }
+        }
 
         return (
             <div class="autosize-container">
@@ -104,7 +120,7 @@ export default class Friend extends React.Component {
                <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
                  &nbsp;&nbsp;
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
-      					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>
+                      <Button bsStyle="link" bsSize="small" onClick={this.navToFriend.bind(this, id)}>{username}</Button>
                  </OverlayTrigger>
 
                  {this.props.isProfilePage == false ?
