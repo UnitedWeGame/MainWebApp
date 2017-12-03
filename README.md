@@ -44,9 +44,10 @@ The system comprises the following components:
 2. Clone UnitedWeGame/ApiWebApp and start it
 3. Clone chat server and start it up
 4. Clone this repository and navigate to its root directory from the command line
-5. From the root directory, run `$ webpack --watch` 
-6. Open a new Terminal tab, and again from the root directory, run `$ gradle build -continuous`
-7. Open yet another Terminal tab, and again from the root directory, run `$ gradle bootRun`
+5. From the root directory, run `$ npm install` to install all library dependencies 
+6. When this is finished, run `webpack --watch` 
+7. Open a new Terminal tab, and again from the root directory, run `$ gradle build -continuous`
+8. Open yet another Terminal tab, and again from the root directory, run `$ gradle bootRun`
     Wait a few moments (typically 15-45 seconds) until a line is printed to the console saying the app has started running on localhost:8080
-8. Visit `localhost:8080` in your browser and you will get the homepage
+9. Visit `localhost:8080` in your browser and you will get the homepage
     
