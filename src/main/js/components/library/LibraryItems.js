@@ -76,33 +76,35 @@ export default class LibraryItems extends React.Component {
     // called when user selects a platform in the add-game modal
     handlePlatformChange(event) {
       var gameList = this.state.dbGameList;
-
       if(event.target.value == "Steam"){
         this.setState({ formGameTitles: gameList.Steam});
         this.setState({ addedGamePlatform: "Steam"});
-
       }
+
       else if(event.target.value == "PS3"){
         this.setState({ formGameTitles: gameList.PS3});
         this.setState({ addedGamePlatform: "PS3"});
-
       }
+
       else if(event.target.value == "PS4"){
         this.setState({ formGameTitles: gameList.PS4});
         this.setState({ addedGamePlatform: "PS4"});
-
       }
+
       else if(event.target.value == "Xbox 360"){
         this.setState({ formGameTitles: gameList.Xbox360});
         this.setState({ addedGamePlatform: "Xbox360"});
-
       }
+
       else if(event.target.value == "Xbox One"){
         this.setState({ formGameTitles: gameList.XboxOne});
         this.setState({ addedGamePlatform: "XboxOne"});
-
       }
 
+      else if(event.target.value == "select"){
+        this.setState({ formGameTitles:  [{title: "...", id: 1}]});
+        this.setState({ addedGamePlatform: ""});
+      }
     }
 
     handleTitleChange(event){
