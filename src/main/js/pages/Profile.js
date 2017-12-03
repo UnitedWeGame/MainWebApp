@@ -19,8 +19,6 @@ constructor(props){
     this.getMyFriends = this.getMyFriends.bind(this);
     this.getProfileFriends = this.getProfileFriends.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.getGames = this.getGames.bind(this);
-    this.getGroups = this.getGroups.bind(this);
     this.isMeOrFriend = this.isMeOrFriend.bind(this);
     this.onFriendRequestClick = this.onFriendRequestClick.bind(this);
     this.openRequestSentModal = this.openRequestSentModal.bind(this);
@@ -58,24 +56,21 @@ constructor(props){
     FriendStore.on("change", this.getMyFriends);
     GeneralUserStore.on("friendChange", this.getProfileFriends);
     GeneralUserStore.on("userChange", this.getUser);
-    GeneralUserStore.on("userChange", this.getGames);
-    GeneralUserStore.on("groupsChange", this.getGroups);
   }
 
   componentWillUnmount() {
     FriendStore.removeListener("change", this.getMyFriends);
     GeneralUserStore.removeListener("friendChange", this.getProfileFriends);
     GeneralUserStore.removeListener("userChange", this.getUser);
-    GeneralUserStore.removeListener("userChange", this.getGames);
-    GeneralUserStore.removeListener("groupsChange", this.getGroups);
   }
 
   getUser(){
     this.setState({
       user: GeneralUserStore.getUser(),
-      userID: GeneralUserStore.getUserID()
+      userID: GeneralUserStore.getUserID(),
+      games: GeneralUserStore.getGames(),
+      groups: GeneralUserStore.getGroups()
     });
-
   }
 
   getProfileFriends(){
@@ -87,18 +82,6 @@ constructor(props){
   getMyFriends(){
     this.setState({
       myFriendList: FriendStore.getAll()
-    });
-  }
-
-  getGames(){
-    this.setState({
-      games: GeneralUserStore.getGames()
-    });
-  }
-
-  getGroups(){
-    this.setState({
-      groups: GeneralUserStore.getGroups()
     });
   }
 
