@@ -58,8 +58,8 @@ export default class Friend extends React.Component {
 
     navToFriend(id){
       GeneralUserActions.getUserData(id);
-      console.log('innavToFriend!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:')
-      console.log(id);
+      GeneralUserActions.getGroups(id);
+      GeneralUserActions.getFriends(id);
       const profPath = "/profile/"+id;
       hashHistory.push(profPath);
     }
@@ -81,10 +81,7 @@ export default class Friend extends React.Component {
         var gamesStr = "";
         for(var i = 0; i < games.length; i++){
         	gamesStr += (games[i].title + " for " + games[i].platform.title + "\n");
-		}
-
-
-
+		    }
 
         const spacingStyle = {
         	display: "inlineBlock",
@@ -108,11 +105,6 @@ export default class Friend extends React.Component {
         const tooltipChat = (
   			<Tooltip id="tooltip"><strong>Read/Send Message</strong></Tooltip>
   		  );
-
-        const location = {
-          pathname: '/profile/'+id,
-          state: { userID: id }
-        }
 
         return (
             <div class="autosize-container">

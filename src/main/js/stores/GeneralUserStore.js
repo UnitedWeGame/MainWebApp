@@ -65,7 +65,7 @@ class GeneralUserStore extends EventEmitter{
 
     setGroups(groups){
         this.groups = groups;
-        this.emit("groupsChange");
+        this.emit("userChange");
     }
 
     getImageUrl(){
