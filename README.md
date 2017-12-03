@@ -13,6 +13,7 @@ Team members:
 ## Instructions to build and run locally
 
 The following instructions are specific to OSX, but will probably also work with most Linux systems.
+Also note that you will need to obtain API keys from the team in order to run the secondary server.
 
 The system comprises the following components: 
 - Postgres Database
