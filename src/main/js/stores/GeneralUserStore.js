@@ -65,7 +65,7 @@ class GeneralUserStore extends EventEmitter{
 
     setGroups(groups){
         this.groups = groups;
-        this.emit("groupsChange");
+        this.emit("userChange");
     }
 
     getImageUrl(){
@@ -98,8 +98,6 @@ class GeneralUserStore extends EventEmitter{
                 break;
             }
             case "GET_FRIENDS": {
-                console.log("amigos:");
-                console.log(action.friends);
                 this.setFriends(action.friends);
                 break;
             }

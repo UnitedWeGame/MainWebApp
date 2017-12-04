@@ -5,23 +5,29 @@ import * as FriendActions from "../../actions/FriendActions"
 import FriendStore from "../../stores/FriendStore";
 import * as ChatActions from "../../actions/ChatActions";
 import {Image} from "react-bootstrap";
+import { hashHistory } from 'react-router';
+import * as GeneralUserActions from "../../actions/GeneralUserActions";
 
 
 
 export default class Friend extends React.Component {
     constructor(props){
-        super(props);
+      super(props);
 
-        this.state = {
-            showUserInfoModal: false,
-            showRemoveFriendModal: false
-        };
+      const userID = this.props;
 
-		this.openInfoModal = this.openInfoModal.bind(this);
-		this.closeInfoModal = this.closeInfoModal.bind(this);
-    this.openRemoveFriendModal = this.openRemoveFriendModal.bind(this);
-    this.closeRemoveFriendModal = this.closeRemoveFriendModal.bind(this);
-    this.startChat = this.startChat.bind(this);
+      this.state = {
+          showUserInfoModal: false,
+          showRemoveFriendModal: false,
+          userID: userID
+      };
+
+  		this.openInfoModal = this.openInfoModal.bind(this);
+  		this.closeInfoModal = this.closeInfoModal.bind(this);
+      this.openRemoveFriendModal = this.openRemoveFriendModal.bind(this);
+      this.closeRemoveFriendModal = this.closeRemoveFriendModal.bind(this);
+      this.startChat = this.startChat.bind(this);
+      this.navToFriend = this.navToFriend.bind(this);
 
     }
 
@@ -50,6 +56,14 @@ export default class Friend extends React.Component {
       ChatActions.startSoloChat(username, imageUrl);
     }
 
+    navToFriend(id){
+      GeneralUserActions.getUserData(id);
+      GeneralUserActions.getGroups(id);
+      GeneralUserActions.getFriends(id);
+      const profPath = "/profile/"+id;
+      hashHistory.push(profPath);
+    }
+
     render() {
         const {username} = this.props;
         const {id} = this.props;
@@ -67,10 +81,7 @@ export default class Friend extends React.Component {
         var gamesStr = "";
         for(var i = 0; i < games.length; i++){
         	gamesStr += (games[i].title + " for " + games[i].platform.title + "\n");
-		}
-
-
-
+		    }
 
         const spacingStyle = {
         	display: "inlineBlock",
@@ -95,16 +106,13 @@ export default class Friend extends React.Component {
   			<Tooltip id="tooltip"><strong>Read/Send Message</strong></Tooltip>
   		  );
 
-
-
-
         return (
             <div class="autosize-container">
                 <span>
                <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
                  &nbsp;&nbsp;
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
-      					      <Link to={`profile/${id}`}><strong>{username}</strong></Link>
+                      <Button bsStyle="link" bsSize="small" onClick={this.navToFriend.bind(this, id)}>{username}</Button>
                  </OverlayTrigger>
 
                  {this.props.isProfilePage == false ?

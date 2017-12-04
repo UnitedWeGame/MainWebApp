@@ -118,9 +118,14 @@ export default class Searchbar extends React.Component {
         hashHistory.push('/game/');
       }
       else if(selectedOptions[0].type.toLowerCase() === "people"){
-        hashHistory.push('/profile/' + selectedOptions[0].id);
+        var id = selectedOptions[0].id;
+        GeneralUserActions.getUserData(id);
+        GeneralUserActions.getGroups(id);
+        GeneralUserActions.getFriends(id);
+        hashHistory.push('/profile/' + id);
       }
       else if(selectedOptions[0].type.toLowerCase() === "groups"){
+        GroupActions.getGroup(selectedOptions[0].id);
         hashHistory.push('/group/' + selectedOptions[0].id);
       }
     }

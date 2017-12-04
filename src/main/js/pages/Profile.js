@@ -19,8 +19,6 @@ constructor(props){
     this.getMyFriends = this.getMyFriends.bind(this);
     this.getProfileFriends = this.getProfileFriends.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.getGames = this.getGames.bind(this);
-    this.getGroups = this.getGroups.bind(this);
     this.isMeOrFriend = this.isMeOrFriend.bind(this);
     this.onFriendRequestClick = this.onFriendRequestClick.bind(this);
     this.openRequestSentModal = this.openRequestSentModal.bind(this);
@@ -58,24 +56,21 @@ constructor(props){
     FriendStore.on("change", this.getMyFriends);
     GeneralUserStore.on("friendChange", this.getProfileFriends);
     GeneralUserStore.on("userChange", this.getUser);
-    GeneralUserStore.on("userChange", this.getGames);
-    GeneralUserStore.on("groupsChange", this.getGroups);
   }
 
   componentWillUnmount() {
     FriendStore.removeListener("change", this.getMyFriends);
     GeneralUserStore.removeListener("friendChange", this.getProfileFriends);
     GeneralUserStore.removeListener("userChange", this.getUser);
-    GeneralUserStore.removeListener("userChange", this.getGames);
-    GeneralUserStore.removeListener("groupsChange", this.getGroups);
   }
 
   getUser(){
     this.setState({
       user: GeneralUserStore.getUser(),
-      userID: GeneralUserStore.getUserID()
+      userID: GeneralUserStore.getUserID(),
+      games: GeneralUserStore.getGames(),
+      groups: GeneralUserStore.getGroups()
     });
-
   }
 
   getProfileFriends(){
@@ -87,18 +82,6 @@ constructor(props){
   getMyFriends(){
     this.setState({
       myFriendList: FriendStore.getAll()
-    });
-  }
-
-  getGames(){
-    this.setState({
-      games: GeneralUserStore.getGames()
-    });
-  }
-
-  getGroups(){
-    this.setState({
-      groups: GeneralUserStore.getGroups()
     });
   }
 
@@ -119,27 +102,27 @@ constructor(props){
   // returns true if the supplied userid belongs to the user or a friend of
   // the user
   isMeOrFriend(userID){
-    console.log("userID has type: " + typeof userID)
+    //console.log("userID has type: " + typeof userID)
     if(!this.state.loggedInUserID){
-       console.log("state logged in user id is undefined")
+       //console.log("state logged in user id is undefined")
        return false;
      }
-    console.log("loggedInUserID has type: " + typeof this.state.loggedInUserID)
+    //console.log("loggedInUserID has type: " + typeof this.state.loggedInUserID)
     if(userID === this.state.loggedInUserID){
-      console.log("profile pages mine");
+      //console.log("profile pages mine");
       return true;
     }
     var friends = this.state.myFriendList; // friends of logged-in user
     if(this.state.myFriendList.length === 0) {
-      console.log("state friend list is undefined")
+      //console.log("state friend list is undefined")
       return false
     }
-    console.log("friends id has type: " + typeof friends[0].id)
+    //console.log("friends id has type: " + typeof friends[0].id)
     for(var i = 0; i < friends.length; i++){
-      console.log("friendly username is: " + friends[i].id)
-      console.log("friend id is: "+friends[i].id)
+      //console.log("friendly username is: " + friends[i].id)
+      //console.log("friend id is: "+friends[i].id)
       if(userID === friends[i].id){
-        console.log("profile page is my friend's");
+        //console.log("profile page is my friend's");
         return true;
       }
     }
@@ -158,11 +141,11 @@ constructor(props){
 
   render() {
     const { params } = this.props;
-    console.log("user id is: " + params.userID);
-    console.log("my user id is: " + this.state.loggedInUserID)
+    //console.log("user id is: " + params.userID);
+    //console.log("my user id is: " + this.state.loggedInUserID)
     const userID = parseInt(params.userID); // convert to int
     const showFriendRequestButton = !this.isMeOrFriend(userID);
-    console.log("is me or friend: " + !showFriendRequestButton);
+    //console.log("is me or friend: " + !showFriendRequestButton);
 
     const friends = this.state.generalFriendList.map((person) => <Friend isProfilePage={true} key={person.id} {...person}/> );
     const library = this.state.games.map((game) => <MinLibraryItem key={game.id} {...game}/> );
