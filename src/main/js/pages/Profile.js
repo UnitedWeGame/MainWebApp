@@ -8,7 +8,6 @@ import * as FriendActions from "../actions/FriendActions";
 import { Button, Image, Jumbotron, Modal } from "react-bootstrap";
 import {Tab} from "react-toolbox";
 import Friend from "../components/friend/Friend";
-import LibrarySearch from "../components/library/LibrarySearch";
 import CustomTabs from "../components/uiPieces/CustomTabs";
 
 
@@ -172,7 +171,6 @@ constructor(props){
     const controlPanel = (
     <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
       <Tab label='Library'>
-        <LibrarySearch/>
         {library}
       </Tab>
       <Tab label='Friends'><large>{friends}</large></Tab>
@@ -204,19 +202,16 @@ constructor(props){
 class MinLibraryItem extends React.Component {
   render(){
     const {title} = this.props;
-    const {imageUrl} = this.props;
-
-    const resize = {
-      height:50
-    };
+    const platform = this.props.platform.title;
+    const text = title + " (" + platform + ")";
 
     return(
       <div>
         <span>
-        <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
-          &nbsp;&nbsp;
-          <strong>{title}</strong>
+          <large><strong>{text}</strong></large>
         </span>
+        <br/>
+        <br/>
       </div>
     );
   }
