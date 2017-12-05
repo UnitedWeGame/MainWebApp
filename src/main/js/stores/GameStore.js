@@ -67,13 +67,11 @@ class GameStore extends EventEmitter{
         this.game.firstReleaseDate = "No release date found."
 
       if(gameInfo.userRating){
-        console.log("Got my rating from the server")
         this.game.myReview.title = gameInfo.userRating.reviewTitle;
         this.game.myReview.review = gameInfo.userRating.review;
         this.game.myRating = gameInfo.userRating.rating;
       }
       else {
-        console.log("Didn't get my rating from the server")
         this.game.myReview.title = "";
         this.game.myReview.review = "";
         this.game.myRating = 0;
