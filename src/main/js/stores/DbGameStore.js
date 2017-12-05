@@ -7,8 +7,12 @@ class DbGameStore extends EventEmitter{
         super();
         var component = this;
         this.sortFcn = this.sortFcn.bind(this);
-
         this.allGames = {};
+
+        // Exclude the items in our database that aren't actually games
+        this.nonGames = new Set();
+        this.nonGames.add("Netflix").add("Xbox Home").add(
+          "Amazon Instant Video").add("YouTube");
     }
 
     getAll(){
@@ -25,6 +29,9 @@ class DbGameStore extends EventEmitter{
       this.allGames.XboxOne = [];
 
       for(var i = 0; i < games.length; i++){
+          // if game isn't actually a game, exclude it
+          if(this.nonGames.has(games[i].title))
+              continue;
 
           if(games[i].platform.title == "PS3")
               this.allGames.PS3.push(games[i]);
