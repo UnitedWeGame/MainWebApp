@@ -19,6 +19,7 @@ constructor(props){
     this.getMyFriends = this.getMyFriends.bind(this);
     this.getProfileFriends = this.getProfileFriends.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.getLoggedInUser = this.getLoggedInUser.bind(this);
     this.isMeOrFriend = this.isMeOrFriend.bind(this);
     this.onFriendRequestClick = this.onFriendRequestClick.bind(this);
     this.openRequestSentModal = this.openRequestSentModal.bind(this);
@@ -56,12 +57,20 @@ constructor(props){
     FriendStore.on("change", this.getMyFriends);
     GeneralUserStore.on("friendChange", this.getProfileFriends);
     GeneralUserStore.on("userChange", this.getUser);
+    UserStore.on("change", this.getLoggedInUser);
   }
 
   componentWillUnmount() {
     FriendStore.removeListener("change", this.getMyFriends);
     GeneralUserStore.removeListener("friendChange", this.getProfileFriends);
     GeneralUserStore.removeListener("userChange", this.getUser);
+    UserStore.removeListener("change", this.getLoggedInUser);
+  }
+
+  getLoggedInUser(){
+    this.setState({
+      loggedInUserID: UserStore.getUserID()
+    });
   }
 
   getUser(){
@@ -102,27 +111,18 @@ constructor(props){
   // returns true if the supplied userid belongs to the user or a friend of
   // the user
   isMeOrFriend(userID){
-    //console.log("userID has type: " + typeof userID)
     if(!this.state.loggedInUserID){
-       //console.log("state logged in user id is undefined")
        return false;
      }
-    //console.log("loggedInUserID has type: " + typeof this.state.loggedInUserID)
     if(userID === this.state.loggedInUserID){
-      //console.log("profile pages mine");
       return true;
     }
     var friends = this.state.myFriendList; // friends of logged-in user
     if(this.state.myFriendList.length === 0) {
-      //console.log("state friend list is undefined")
       return false
     }
-    //console.log("friends id has type: " + typeof friends[0].id)
     for(var i = 0; i < friends.length; i++){
-      //console.log("friendly username is: " + friends[i].id)
-      //console.log("friend id is: "+friends[i].id)
       if(userID === friends[i].id){
-        //console.log("profile page is my friend's");
         return true;
       }
     }
@@ -141,11 +141,8 @@ constructor(props){
 
   render() {
     const { params } = this.props;
-    //console.log("user id is: " + params.userID);
-    //console.log("my user id is: " + this.state.loggedInUserID)
     const userID = parseInt(params.userID); // convert to int
     const showFriendRequestButton = !this.isMeOrFriend(userID);
-    //console.log("is me or friend: " + !showFriendRequestButton);
 
     const friends = this.state.generalFriendList.map((person) => <Friend isProfilePage={true} key={person.id} {...person}/> );
     const library = this.state.games.map((game) => <MinLibraryItem key={game.id} {...game}/> );
