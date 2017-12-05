@@ -34,7 +34,6 @@ export default class GroupSettings extends React.Component {
       description = group.description;
       coverPhoto = group.coverPhoto;
       adminUser = group.adminUser;
-      //canEdit = userID == adminUser;
 		}
     canEdit = isNewGroup ? true : userID == adminUser;
 		this.state = {
@@ -69,7 +68,6 @@ export default class GroupSettings extends React.Component {
   setGroup(){
     const group = GroupStore.getGroup();
     var canEdit = this.state.isNewGroup ? true : this.state.userID == this.state.adminUser;
-    //var canEdit = this.state.userID == group.adminUser;
     this.setState({
       id: group.id,
       group: group,
@@ -116,9 +114,6 @@ export default class GroupSettings extends React.Component {
       headerText = "Create New Group";
     }
     var buttonDisabled = !this.state.canEdit;
-    /*if(this.state.adminUser){
-      buttonDisabled = this.state.adminUser != this.state.userID;
-    }*/
     return (
       <div class="well">
       <form onSubmit={this.handleSubmit}>
