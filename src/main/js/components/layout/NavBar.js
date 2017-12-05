@@ -111,7 +111,7 @@ export default class NavBar extends React.Component {
     );
 
     return (
-      <Navbar fluid>
+      <Navbar fluid fixedTop>
         <Navbar.Header>
           <Navbar.Brand style={brandStyle}>
             <a href="#" style={logoStyle}>

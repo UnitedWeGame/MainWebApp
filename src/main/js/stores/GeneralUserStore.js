@@ -48,10 +48,11 @@ class GeneralUserStore extends EventEmitter{
     }
 
     getGames(){
-        var lib = $.map(this.user['games'], function(value,index){
+        // extract the games owned by a user
+        var library = $.map(this.user['games'], function(value,index){
           return [value];
         });
-        return lib;
+        return library;
     }
 
     getGroups(){
