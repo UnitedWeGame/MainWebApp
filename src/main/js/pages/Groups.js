@@ -22,7 +22,7 @@ export default class Groups extends React.Component {
     this.openJoinGroupModal = this.openJoinGroupModal.bind(this);
     this.closeJoinGroupModal = this.closeJoinGroupModal.bind(this);
     this.isMember = this.isMember.bind(this);
-    this.updateJoinGroupButton = this.updateJoinGroupButton.bind(this);
+    this.updateMemberStatus = this.updateMemberStatus.bind(this);
     this.onJoinGroupClick = this.onJoinGroupClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -39,9 +39,9 @@ export default class Groups extends React.Component {
 
     var members = GeneralUserStore.getUsers(group.members);
 
-    var showJoinGroupButton = false;
+    var isNotMember = false;
     if(group.members){
-      showJoinGroupButton = !group.members.includes(loggedInUserID);
+      isNotMember = !group.members.includes(loggedInUserID);
     }
 
 
@@ -57,7 +57,7 @@ export default class Groups extends React.Component {
       btnText: "Join Group",
       showModal: false,
       loggedInUserID: loggedInUserID,
-      showJoinGroupButton: showJoinGroupButton,
+      isNotMember: isNotMember,
       post: "",
       username: username,
       adminUser: adminUser
@@ -67,14 +67,14 @@ export default class Groups extends React.Component {
   componentWillMount() {
     GroupStore.on("change", this.getGroup);
     GroupStore.on("postChange", this.getPosts);
-    GroupStore.on("change", this.updateJoinGroupButton);
+    GroupStore.on("change", this.updateMemberStatus);
     GeneralUserStore.on("change", this.getGroup);
   }
 
   componentWillUnmount() {
     GroupStore.removeListener("change", this.getGroup);
     GroupStore.removeListener("postChange", this.getPosts);
-    GroupStore.removeListener("change", this.updateJoinGroupButton);
+    GroupStore.removeListener("change", this.updateMemberStatus);
     GeneralUserStore.on("change", this.getGroup);
   }
 
@@ -87,9 +87,9 @@ export default class Groups extends React.Component {
   getGroup(){
     const group = GroupStore.getGroup();
     const loggedInUserID = UserStore.getUserID();
-    var showJoinGroupButton = false;
+    var isNotMember = false;
     if(group.members)
-      showJoinGroupButton = !group.members.includes(loggedInUserID);
+      isNotMember = !group.members.includes(loggedInUserID);
     this.setState({
       group: group,
       groupName: group.groupName,
@@ -97,7 +97,7 @@ export default class Groups extends React.Component {
       coverPhoto: group.coverPhoto,
       members : GeneralUserStore.getUsers(group.members),
       groupPost : group.groupPost,
-      showJoinGroupButton: showJoinGroupButton,
+      isNotMember: isNotMember,
       loggedInUserID: loggedInUserID,
       adminUser: group.adminUser
     });
@@ -116,9 +116,9 @@ export default class Groups extends React.Component {
     return this.state.members.includes(this.state.loggedInUserID);
   }
 
-  updateJoinGroupButton(){
+  updateMemberStatus(){
     if(!this.isMember())
-      this.setState({ showJoinGroupButton: true});
+      this.setState({ isNotMember: true});
   }
 
   onJoinGroupClick(event){
@@ -168,7 +168,7 @@ export default class Groups extends React.Component {
 
     {/* Button for sending friend request to user featured on profile, if not yet a friend*/}
     var coverBtnStyle = {display: "none"};
-    if(this.state.showJoinGroupButton)
+    if(this.state.isNotMember)
         coverBtnStyle = { display: "initial" };
 
     var styleLink = {display: "none"};
@@ -227,7 +227,7 @@ export default class Groups extends React.Component {
               componentClass="textarea"
             />
           </FormGroup>
-          <Button bsStyle="success" type="submit">
+          <Button bsStyle="success" type="submit"  disabled={this.state.isNotMember}>
             Post
           </Button>
         </form>
