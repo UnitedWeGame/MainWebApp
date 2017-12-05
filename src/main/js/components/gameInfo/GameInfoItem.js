@@ -115,7 +115,9 @@ export default class GameInfoItem extends React.Component {
 
                      </Slider>
                      <br/>
-                    <h3>Release Date:  </h3> <medium>{this.state.gameInfo.firstReleaseDate}</medium>
+                     <h3>Platform:  </h3> <medium>{this.state.gameInfo.platform}</medium>
+                     <br/>
+                     <h3>Release Date:  </h3> <medium>{this.state.gameInfo.firstReleaseDate}</medium>
                      <br/>
                      <h3>Your Rating:  </h3>
                      <ReactStars {...starSettings} onChange={this.ratingChanged}/>
