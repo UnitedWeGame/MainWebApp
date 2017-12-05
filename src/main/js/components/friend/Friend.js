@@ -112,7 +112,7 @@ export default class Friend extends React.Component {
                <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
                  &nbsp;&nbsp;
                  <OverlayTrigger placement="right" overlay={tooltipProfile}>
-                      <Button bsStyle="link" bsSize="small" onClick={this.navToFriend.bind(this, id)}>{username}</Button>
+                      <Button bsStyle="link" onClick={this.navToFriend.bind(this, id)}><strong>{username}</strong></Button>
                  </OverlayTrigger>
 
                  {this.props.isProfilePage == false ?
