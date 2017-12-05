@@ -10,6 +10,12 @@ class LibraryStore extends EventEmitter{
         this.allOwnedGames = [];
         this.shownPlatform = "";
 
+        // some non-games automatically pulled in with user's Xbox and Steam libraries.
+        // Exclude them.
+        this.nonGames = new Set();
+        this.nonGames.add("Netflix").add("Xbox Home").add(
+          "Amazon Instant Video").add("YouTube");
+
     }
 
     getAll(){
@@ -23,7 +29,12 @@ class LibraryStore extends EventEmitter{
 
     // called when user logs in, and when user adds a game
     initOwnedGames(games, platform){
-        this.allOwnedGames = games;
+        for(var i = 0; i < games.length; i++){
+          if(this.isNonGame(games[i].title))
+            continue;
+          this.allOwnedGames.push(games[i])
+        }
+
         if(platform == "PS3" || platform == "PS4")
           this.setPlaystationGames();
         else if(platform == "Steam")
@@ -32,12 +43,19 @@ class LibraryStore extends EventEmitter{
           this.setXboxGames();
     }
 
+    // Returns true if gameTitle is something like "Amazon Instant Video", etc.
+    isNonGame(gameTitle){
+      if(this.nonGames.has(gameTitle))
+        return true;
+      else
+        return false;
+    }
+
 
     setXboxGames(){
         this.shownGames = [];
         var games = this.allOwnedGames;
         for(var i = 0; i < games.length; i++){
-
             if(games[i].platform.title == "Xbox360"
                 || games[i].platform.title == "XboxLive"
                 || games[i].platform.title == "XboxOne"){
@@ -54,7 +72,6 @@ class LibraryStore extends EventEmitter{
         var games = this.allOwnedGames;
 
         for(var i = 0; i < games.length; i++){
-
             if(games[i].platform.title == "Steam")
                 this.shownGames.push(games[i]);
         }
@@ -68,7 +85,6 @@ class LibraryStore extends EventEmitter{
         var games = this.allOwnedGames;
 
         for(var i = 0; i < games.length; i++){
-
             if(games[i].platform.title == "PS3"
                 || games[i].platform.title == "PS4")
                 this.shownGames.push(games[i]);
