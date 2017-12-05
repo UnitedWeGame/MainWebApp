@@ -5,7 +5,7 @@ import GeneralUserStore from "../stores/GeneralUserStore";
 import UserStore from "../stores/UserStore";
 import * as GeneralUserActions from "../actions/GeneralUserActions";
 import * as FriendActions from "../actions/FriendActions";
-import { Button, Image, Jumbotron, Modal } from "react-bootstrap";
+import { Button, Image, Jumbotron, Modal, ListGroup } from "react-bootstrap";
 import {Tab} from "react-toolbox";
 import Friend from "../components/friend/Friend";
 import CustomTabs from "../components/uiPieces/CustomTabs";
@@ -171,7 +171,7 @@ constructor(props){
     const controlPanel = (
     <CustomTabs index={this.state.index} onChange={this.handleTabChange} fixed>
       <Tab label='Library'>
-        {library}
+        <ListGroup componentClass="ul"> {library} </ListGroup>
       </Tab>
       <Tab label='Friends'><large>{friends}</large></Tab>
       <Tab label='Groups'><large>{groups}</large></Tab>
@@ -204,15 +204,17 @@ class MinLibraryItem extends React.Component {
     const {title} = this.props;
     const platform = this.props.platform.title;
     const text = title + " (" + platform + ")";
+    const {imageUrl} = this.props;
 
     return(
-      <div>
-        <span>
-          <large><strong>{text}</strong></large>
-        </span>
-        <br/>
-        <br/>
-      </div>
+      <li
+        className="list-group-item"
+        onClick={() => {}}
+      >
+        <Image width="50" src={imageUrl} alt="Profile Picture" thumbnail responsive/>
+          &nbsp;&nbsp;
+          <strong>{text}</strong>
+      </li>
     );
   }
 }
