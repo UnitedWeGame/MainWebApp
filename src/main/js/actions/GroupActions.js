@@ -59,7 +59,8 @@ export function createGroup(group){
     data: JSON.stringify({
       "groupName": group.groupName,
       "description": group.description,
-      "coverPhoto": group.coverPhoto
+      "coverPhoto": group.coverPhoto,
+      "adminUser": group.adminUser
      }),
     contentType:"application/json; charset=utf-8",
     dataType:"json",
@@ -81,7 +82,8 @@ export function updateSettings(settings){
     	"groupName": settings.groupName,
     	"description": settings.description,
     	"coverPhoto": settings.coverPhoto,
-      "members": settings.group.members
+      "members": settings.group.members,
+      "adminUser": settings.group.adminUser
      }),
     contentType:"application/json; charset=utf-8",
     dataType:"json",

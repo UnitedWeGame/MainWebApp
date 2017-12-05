@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import * as GroupActions from "../actions/GroupActions";
 import GroupStore from "../stores/GroupStore";
+import UserStore from "../stores/UserStore";
 import { hashHistory } from 'react-router';
 
 export default class GroupSettings extends React.Component {
@@ -9,6 +10,7 @@ export default class GroupSettings extends React.Component {
 		super(props);
 
     this.setGroup = this.setGroup.bind(this);
+    this.setUser = this.setUser.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
 
@@ -19,6 +21,9 @@ export default class GroupSettings extends React.Component {
     var coverPhoto = '';
 		var isNewGroup = true;
     var redirectToGroup = false;
+    var userID = UserStore.getUserID();
+    var adminUser = null;
+    var canEdit = true;
 
 		if(props.params.groupID){
       id = this.props.params.groupID;
@@ -28,7 +33,10 @@ export default class GroupSettings extends React.Component {
       groupName = group.groupName;
       description = group.description;
       coverPhoto = group.coverPhoto;
+      adminUser = group.adminUser;
+      //canEdit = userID == adminUser;
 		}
+    canEdit = isNewGroup ? true : userID == adminUser;
 		this.state = {
       redirectToGroup: redirectToGroup,
       id: id,
@@ -36,27 +44,40 @@ export default class GroupSettings extends React.Component {
 			groupName: groupName,
 			description: description,
       coverPhoto: coverPhoto,
-			isNewGroup: isNewGroup
+			isNewGroup: isNewGroup,
+      userID: userID,
+      adminUser: adminUser,
+      canEdit: canEdit
 		};
 
 	}
 
   componentWillMount() {
     GroupStore.on("change", this.setGroup);
+    UserStore.on("change", this.setUser);
   }
 
   componentWillUnmount() {
     GroupStore.removeListener("change", this.setGroup);
+    UserStore.removeListener("change", this.setUser);
+  }
+
+  setUser(){
+    this.setState({userID: UserStore.getUserID()});
   }
 
   setGroup(){
     const group = GroupStore.getGroup();
+    var canEdit = this.state.isNewGroup ? true : this.state.userID == this.state.adminUser;
+    //var canEdit = this.state.userID == group.adminUser;
     this.setState({
       id: group.id,
       group: group,
     	groupName: group.groupName,
 			description: group.description,
-      coverPhoto: group.coverPhoto
+      coverPhoto: group.coverPhoto,
+      adminUser: group.adminUser,
+      canEdit: canEdit
     });
   }
 
@@ -94,6 +115,10 @@ export default class GroupSettings extends React.Component {
       buttonText = "Create Group";
       headerText = "Create New Group";
     }
+    var buttonDisabled = !this.state.canEdit;
+    /*if(this.state.adminUser){
+      buttonDisabled = this.state.adminUser != this.state.userID;
+    }*/
     return (
       <div class="well">
       <form onSubmit={this.handleSubmit}>
@@ -139,7 +164,7 @@ export default class GroupSettings extends React.Component {
         </FormGroup>
 				<br/>
 
-        <Button bsStyle="success" type="submit">
+        <Button bsStyle="success" type="submit" disabled={buttonDisabled}>
           {buttonText}
         </Button>
       </form>

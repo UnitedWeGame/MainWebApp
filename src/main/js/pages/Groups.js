@@ -33,6 +33,7 @@ export default class Groups extends React.Component {
     var description = group.description;
     var coverPhoto = group.coverPhoto;
     var groupPost = group.groupPost;
+    var adminUser = group.adminUser;
     const loggedInUserID = UserStore.getUserID();
     const username = UserStore.getUsername();
 
@@ -58,7 +59,8 @@ export default class Groups extends React.Component {
       loggedInUserID: loggedInUserID,
       showJoinGroupButton: showJoinGroupButton,
       post: "",
-      username: username
+      username: username,
+      adminUser: adminUser
     };
   }
 
@@ -96,7 +98,8 @@ export default class Groups extends React.Component {
       members : GeneralUserStore.getUsers(group.members),
       groupPost : group.groupPost,
       showJoinGroupButton: showJoinGroupButton,
-      loggedInUserID: loggedInUserID
+      loggedInUserID: loggedInUserID,
+      adminUser: group.adminUser
     });
   }
 
@@ -168,6 +171,10 @@ export default class Groups extends React.Component {
     if(this.state.showJoinGroupButton)
         coverBtnStyle = { display: "initial" };
 
+    var styleLink = {display: "none"};
+    if(this.state.adminUser == this.state.loggedInUserID)
+        styleLink = { display: "initial" };
+
     const coverPhotoUrl = "url('"+this.state.coverPhoto+"')";
 
     const headerStyle = {
@@ -203,7 +210,7 @@ export default class Groups extends React.Component {
         <h1> {this.state.groupName} </h1>
         <p> {this.state.description}</p>
           <Button bsStyle="success" style={coverBtnStyle} onClick={this.onJoinGroupClick} disabled={this.state.btnDisabled}>{this.state.btnText}</Button>
-          <Link to={`groupSettings/${this.state.group.id}`}><strong>Edit Group</strong></Link>
+          <Link to={`groupSettings/${this.state.group.id}`} style={styleLink}><strong>Edit Group</strong></Link>
         </Jumbotron>
         <h2> Group Members: </h2>
         {members}
