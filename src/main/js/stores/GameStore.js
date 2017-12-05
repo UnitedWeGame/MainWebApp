@@ -116,7 +116,7 @@ class GameStore extends EventEmitter{
       this.game.myReview.title = headline;
       this.game.myReview.review = review;
       this.game.myRating = rating;
-
+      this.tabIndex = 1; // show the reviews tab
       this.emit("change");
     }
 
