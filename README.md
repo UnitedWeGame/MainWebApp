@@ -54,6 +54,6 @@ The system comprises the following components:
 ## Building and Running ApiWebApp
 1. Clone UnitedWeGame/ApiWebApp
 2. Navigate to ApiWebApp project directory
-3. Run the following command for Mac to compile the project: javac -cp "libs/*" src/com/UnitedWeGame/Utils/*.java src/com/UnitedWeGame/APIServer/*.java src/com/UnitedWeGame/InformationObjects/*.java src/com/UnitedWeGame/UserClasses/*.java src/com/UnitedWeGame/Main.java 
-4. Run the following command to run the project: java -cp ".:libs/*:com/UnitedWeGame" com.UnitedWeGame.Main
+3. Run the following command for Mac to compile the project: javac -d . -cp "libs/*" src/com/UnitedWeGame/Utils/*.java src/com/UnitedWeGame/APIServer/*.java src/com/UnitedWeGame/InformationObjects/*.java src/com/UnitedWeGame/UserClasses/*.java src/com/UnitedWeGame/Main.java
+4. Run the following command to start the server: java -cp ".:libs/*:com/UnitedWeGame" com.UnitedWeGame.Main
 Note: In order to run this, you will need to put in the Postgres DB credentials into the Property file, along with API tokens for http://xboxapi.com, https://steamcommunity.com/dev, and https://api.igdb.com/.
