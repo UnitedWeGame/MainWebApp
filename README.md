@@ -42,7 +42,7 @@ The system comprises the following components:
 
 1. Make sure your Postgres app is up and running
 2. Clone UnitedWeGame/ApiWebApp and start it. See "Building and Running ApiWebApp" below.
-3. Clone chat server and start it up
+3. Clone UnitedWeGame/ and start it up
 4. Clone this repository and navigate to its root directory from the command line
 5. From the root directory, run `$ npm install` to install all library dependencies 
 6. When this is finished, run `webpack --watch` 
@@ -67,3 +67,15 @@ java -cp ".:libs/*:com/UnitedWeGame" com.UnitedWeGame.Main
 ```
 
 Note: In order to run this, you will need to put in the Postgres DB credentials into the Property file, along with API tokens for http://xboxapi.com, https://steamcommunity.com/dev, and https://api.igdb.com/.
+
+# Building and Running ChatServer
+Chat Server For United We Game
+
+To Run, make sure you have npm installed:
+
+```
+npm install
+```
+```
+npm server.js
+```
