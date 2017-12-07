@@ -10,7 +10,9 @@ import {Tab} from "react-toolbox";
 import Friend from "../components/friend/Friend";
 import CustomTabs from "../components/uiPieces/CustomTabs";
 
-
+/*
+* Page component that displays a user's info. Can see friends, library, and groups.
+*/
 export default class Profile extends React.Component {
 constructor(props){
     super(props);

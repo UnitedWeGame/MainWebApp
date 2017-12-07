@@ -5,6 +5,11 @@ import GroupStore from "../stores/GroupStore";
 import UserStore from "../stores/UserStore";
 import { hashHistory } from 'react-router';
 
+/*
+* Form where a group admin can change the group's data.
+* A groups page is navigated to by .../users/group/{id} the id is pulled
+* from these params
+*/
 export default class GroupSettings extends React.Component {
 	constructor(props){
 		super(props);
@@ -25,6 +30,8 @@ export default class GroupSettings extends React.Component {
     var adminUser = null;
     var canEdit = true;
 
+    //if group id is passed through params get that group's data.
+    //Otherwise data fields are empty
 		if(props.params.groupID){
       id = this.props.params.groupID;
 			isNewGroup = false;

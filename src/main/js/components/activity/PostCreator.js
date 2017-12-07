@@ -2,6 +2,9 @@ import React from "react";
 import * as PostActions from "../../actions/PostActions"
 import UserStore from "../../stores/UserStore";
 
+/*
+* Component on main page that allows user to create a new post.
+*/
 export default class PostCreator extends React.Component {
     constructor(props) {
         super(props);
@@ -16,8 +19,6 @@ export default class PostCreator extends React.Component {
     }
 
     handleSubmit(event) {
-        /*const name = PostActions.getUser();
-        console.log("user name: " + name);*/
         const login = UserStore.getUsername();
         const ID = Date.now();
         const newPost = { 
@@ -28,7 +29,6 @@ export default class PostCreator extends React.Component {
             imageUrl: UserStore.getImageUrl()
         };
         
-        //PostActions.createPost(newPost);
         PostActions.postStatus(this.state.value);
         event.preventDefault();
         this.setState({value: ''});

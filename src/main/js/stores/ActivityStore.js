@@ -1,6 +1,9 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+/*
+* React store for all activity-feed data.
+*/
 class ActivityStore extends EventEmitter{
     constructor(){
         super();

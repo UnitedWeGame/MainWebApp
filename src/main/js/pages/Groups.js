@@ -9,7 +9,9 @@ import { Link } from "react-router";
 import Activity from "./Activity";
 import MiniUser from "../components/friend/MiniUser";
 
-
+/*
+* Page component that displays group data. 
+*/
 export default class Groups extends React.Component {
   constructor(props){
     super(props);
@@ -143,7 +145,6 @@ export default class Groups extends React.Component {
         imageUrl: UserStore.getImageUrl(),
         timestamp: Date.now()
       };
-    //this.state.group.groupPost.unshift(post);
     GroupActions.updateActivityFeed(this.state.group, groupPost);
   }
 
@@ -256,6 +257,7 @@ class NewActivity extends React.Component {
   }
 }
 
+//individual activity item to be displayed in the group's activity feed
 class Item extends React.Component {
   render(){
     const {username} = this.props;

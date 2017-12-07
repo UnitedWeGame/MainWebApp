@@ -1,6 +1,9 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+/*
+* Store of user's friends currently online.
+*/
 class OnlineNowStore extends EventEmitter{
     constructor(){
         super();
