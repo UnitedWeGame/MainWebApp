@@ -68,7 +68,7 @@ java -cp ".:libs/*:com/UnitedWeGame" com.UnitedWeGame.Main
 
 Note: In order to run this, you will need to put in the Postgres DB credentials into the Property file, along with API tokens for http://xboxapi.com, https://steamcommunity.com/dev, and https://api.igdb.com/.
 
-# Building and Running ChatServer
+## Building and Running ChatServer
 
 To Run, make sure you have npm installed:
 
