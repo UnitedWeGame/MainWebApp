@@ -1,15 +1,21 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+/*
+* General purpose flux store to handle data of any user, not just 
+* currently logged-in user.
+* this.user is whichever user was specified in the call to GeneralUserActions
+*/
 class GeneralUserStore extends EventEmitter{
     constructor(){
         super();
-        this.users = [];
-        this.user = [];
-        this.groups = [];
-        this.friends = [];
+        this.users = []; //current list of users of interest
+        this.user = []; //current user of interest
+        this.groups = []; //current groups of interest
+        this.friends = []; //friends of current user of interest
     }
 
+    //returns all users
     getAllUsers(){
         return this.users;
     }
@@ -34,7 +40,8 @@ class GeneralUserStore extends EventEmitter{
         return this.user;
     }
 
-
+    //get list of users' data in json for all users in ids
+    //parameter: ids list of user ids
     getUsers(ids){
         var users = [];
         if(ids){

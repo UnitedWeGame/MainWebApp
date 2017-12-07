@@ -5,7 +5,10 @@ import OnlineNowStore from "../../stores/OnlineNowStore";
 import * as OnlineNowActions from "../../actions/OnlineNowActions";
 import {Image} from "react-bootstrap";
 
-
+/*
+* Component that appears throughout the site and displays a list of the user's 
+* friends who are currently logged in to UnitedWeGame.
+*/
 export default class OnlineNow extends React.Component {
     constructor(props){
         super(props);
@@ -46,7 +49,9 @@ export default class OnlineNow extends React.Component {
     }
 }
 
-
+/*
+* Individual friend component that appears in the Online now component
+*/
 class FriendOnline extends React.Component {
   constructor(props){
       super(props);

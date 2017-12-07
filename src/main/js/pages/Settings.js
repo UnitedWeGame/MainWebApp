@@ -3,6 +3,9 @@ import {Button, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock} from 
 import * as UserActions from "../actions/UserActions";
 import UserStore from "../stores/UserStore";
 
+/*
+* Form where the logged-in user can change his data and user settings.
+*/
 export default class Settings extends React.Component {
 	constructor(props, context) {
     super(props, context);
@@ -26,12 +29,10 @@ export default class Settings extends React.Component {
 
   componentWillMount() {
     UserStore.on("change", this.setUser);
-
   }
 
   componentWillUnmount() {
     UserStore.removeListener("change", this.setUser);
-
   }
 
   setUser(){
@@ -46,7 +47,6 @@ export default class Settings extends React.Component {
   }
 
 	handleSubmit(event){
-		//event.preventDefault();
     UserActions.updateSettings(this.state);
 	}
 
@@ -148,25 +148,5 @@ export default class Settings extends React.Component {
       </form>
       </div>
     );
-  }
-
-
-
-}
-//Delete me!!!!!!!
-class FieldGroup extends React.Component {
-  render(){
-    const {id} = this.props;
-    const {label} = this.props;
-    const {help} = this.props;
-    const {props} = this.props;
-
-    return (
-	    <FormGroup controlId={id}>
-	      <ControlLabel>{label}</ControlLabel>
-	      <FormControl {...props} />
-	      {help && <HelpBlock>{help}</HelpBlock>}
-	    </FormGroup>
-	  );
   }
 }

@@ -8,7 +8,10 @@ import UserStore from "../../stores/UserStore";
 import NotificationStore from "../../stores/NotificationStore";
 import Searchbar from "./Searchbar.js";
 
-
+/*
+* Navigation toolbar that appears throughout the entire site. Allows user to 
+* navigate the site.
+*/
 export default class NavBar extends React.Component {
 
   constructor() {
@@ -74,11 +77,9 @@ export default class NavBar extends React.Component {
   toggleCollapse() {
     const collapsed = !this.state.collapsed;
     this.setState({collapsed});
-    console.log("toggled");
   }
 
   onDropdownSelect(eventKey) {
-    console.log("Drop down items selected: " + eventKey)
     if(eventKey == 5.1){
     }
     else if(eventKey == 5.2){
