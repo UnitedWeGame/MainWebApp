@@ -47,13 +47,6 @@ export default class GameInfoItem extends React.Component {
     this.setState({tabIndex});
   };
 
-  // Called when the user makes a new star rating
-   ratingChanged = (newRating) => {
-     this.state.gameInfo.myRating = newRating;
-     GameInfoActions.postRating(this.state.gameInfo.id, newRating);
-     console.log(newRating);
-  };
-
 
     render() {
 
@@ -74,6 +67,7 @@ export default class GameInfoItem extends React.Component {
 
       var starSettings = {
         count: 5,
+        edit: false,
         value: this.state.gameInfo.myRating,
         size: 24,
         color2: "#ffd700"
@@ -120,7 +114,7 @@ export default class GameInfoItem extends React.Component {
                      <h3>Release Date:  </h3> <medium>{this.state.gameInfo.firstReleaseDate}</medium>
                      <br/>
                      <h3>Your Rating:  </h3>
-                     <ReactStars {...starSettings} onChange={this.ratingChanged}/>
+                     <ReactStars {...starSettings}/>
                      <br/>
                      <h3>Community Rating:  </h3>
                      <medium>{this.state.gameInfo.communityRating}</medium>
