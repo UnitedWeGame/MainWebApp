@@ -31,7 +31,7 @@ export default class Layout extends React.Component {
         path = path.substring(0,indexOfSlash);
       return path;
     }
-    
+
     getRandomBackgroundImage() {
     	var randomNumber = Math.floor(Math.random()*this.backgroundUrls.length);
     	return this.backgroundUrls[randomNumber];
@@ -90,6 +90,7 @@ export default class Layout extends React.Component {
             <div style={entirePageStyle}>
 
                 <NavBar style={navStyle} location={location} />
+                <br/>
 
                 <div style={chatStyle}>
                   <ChatWindow />
