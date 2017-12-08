@@ -38,7 +38,6 @@ export function postGameReview(id, reviewTitle, review, rating){
        contentType:"application/json; charset=utf-8",
        dataType:"json",
        success: function(response ){
-         console.log("Response after posting new game review:" + response);
        }
     })
 
@@ -52,7 +51,6 @@ export function postGameReview(id, reviewTitle, review, rating){
 
 // Returns a list of friends who own a particular game
 export function getFriendsWhoOwn(gameId){
-  console.log("getFriendsWhoOwn action was called!")
   $.get( "/api/games/" + gameId + "/friendsOwn", function( data ) {
       dispatcher.dispatch({
               type: "GET_FRIENDS_WHO_OWN",
@@ -63,11 +61,8 @@ export function getFriendsWhoOwn(gameId){
 
 // Sends to the server the ids of the friends the user wants to send an SMS invite
 export function sendSmsInvites(gameId, friendIds){
-  console.log("sendSmsInvites action was called!");
   for(var i = 0; i < friendIds.length; i++){
-    console.log("get request: /api/games/" + gameId + "/sendNotification/" + friendIds[i]);
     $.get("/api/games/" + gameId + "/sendNotification/" + friendIds[i], function(data){
-      console.log("sent sms invite to server and got response: " + data);
     });
   }
 }

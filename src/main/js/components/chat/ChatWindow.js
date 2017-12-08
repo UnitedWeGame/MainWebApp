@@ -36,7 +36,6 @@ export default class ChatWindow extends React.Component {
             ChatActions.loadAllConversations(allConversations);
         });
         socket.on('newMessage', function(messageInfo) {
-            console.log("socket received a new message!");
             ChatActions.receiveMessage(messageInfo);
         });
       }
@@ -71,8 +70,6 @@ export default class ChatWindow extends React.Component {
       }
 
       onMessageWasSent(message) {
-        console.log("onTheMessageWasSent() was called. isOpen: " + this.state.isOpen)
-
         var messageList = [...this.state.messageList, message]
         this.setState({
           messageList: messageList

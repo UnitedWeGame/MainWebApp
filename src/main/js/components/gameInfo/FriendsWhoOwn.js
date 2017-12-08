@@ -25,7 +25,6 @@ export default class FriendsWhoOwn extends React.Component {
   }
 
   updateFriendList(){
-    console.log("Calling GameStore.getFriendsWhoOwn() inside FriendsWhoOwn Class")
     this.setState({
       friendList: GameStore.getFriendsWhoOwn()
     });

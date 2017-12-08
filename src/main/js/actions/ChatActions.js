@@ -21,7 +21,6 @@ export function loadAllConversations(allConversations) {
 export function sendMessage(messageList, me, partner) {
   var messageInfo = {to: partner, from: me, messageList: messageList};
   socket.emit("chatMessage", messageInfo);
-  console.log("In Send Message Action: Sent message!!!!")
   dispatcher.dispatch({
     type: "WRITE_MESSAGE",
     messageList: messageList

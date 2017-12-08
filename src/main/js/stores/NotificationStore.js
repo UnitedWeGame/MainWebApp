@@ -53,8 +53,6 @@ class NotificationStore extends EventEmitter{
         if(!this.notificationListContains(request)){
           var notification = {};
           notification.id = request.id;
-          console.log("Friend request id is: "+request.id);
-          console.log("Request is from: " + request.ownerUsername);
           notification.type = "friendRequest";
           notification.user = request.ownerUsername;
           notification.imageUrl = request.ownerImageUrl;
@@ -70,7 +68,6 @@ class NotificationStore extends EventEmitter{
     }
 
     addMsgToNotifications(from){
-      console.log("from: " + from)
       if(ChatStore.currentChat.partner == from)
         return;
       var notification = {};
@@ -95,7 +92,6 @@ class NotificationStore extends EventEmitter{
     }
 
     removeMsgNotification(partner){
-      console.log("Notifications are this long:" + this.notifications.length);
       for(var i = this.notifications.length-1; i>=0; i--) {
         if(
           this.notifications[i].type === "newMessage" &&

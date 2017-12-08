@@ -49,7 +49,6 @@ export function getNowPlaying(){
 /* Unfriends a user */
 export function removeFriend(userId){
     $.get( "/api/friends/" + userId + "/removeFriend", function( data ) {
-      console.log(data);
       dispatcher.dispatch({
               type: "REMOVE_FRIEND",
               friendId: userId
@@ -84,6 +83,5 @@ export function acceptFriendRequest(requestId){
 
 export function denyFriendRequest(requestId){
     $.get( "/api/requests/" + requestId + "/rejectRequest", function( data ) {
-      console.log(data)
     });
 }

@@ -24,7 +24,6 @@ export default class LibraryItem extends React.Component {
           showModal: false
         };
 
-        console.log("inviteSentCount: " + this.state.inviteSentCount);
     }
 
     // called when any of the buttons (e.g. send a text invite, see game info, etc.)
@@ -51,7 +50,6 @@ export default class LibraryItem extends React.Component {
   	}
 
     openLFGChat(id, event) {
-    	console.log("Entering chat for: " + id);
     	window.open("/lfg-chat/" + id);
     }
 
@@ -79,7 +77,7 @@ export default class LibraryItem extends React.Component {
                     <Button onClick={this.handleClick.bind(this, id, 2)}>See Friends Who Own</Button>
                     <Button onClick={this.openLFGChat.bind(this, id)}>LFG Chat</Button>
                     <Button bsStyle="danger" onClick={this.openRemoveGameModal}>Remove game</Button>
-                    
+
                 </ButtonGroup>
             </Popover>
         );

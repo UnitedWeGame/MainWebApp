@@ -12,7 +12,6 @@ export function getAllGames(){
 
 export function addGame(id, platform){
     $.get( "/api/games/" + id + "/" + platform + "/addToLibrary/", function( data ) {
-      console.log(data);
       UserActions.getCurrentUserData(platform);
     });
 }

@@ -39,7 +39,6 @@ export default class Invitations extends React.Component {
     var friendsToInvite = this.state.friendsToInvite;
     if(friendsToInvite.includes(friendId)) return;
     friendsToInvite.push(friendId);
-    console.log("friend added to invite list: " + friendId);
     this.setState({
       friendsToInvite: friendsToInvite
     });
@@ -51,7 +50,6 @@ export default class Invitations extends React.Component {
       if( friendsToInvite[i] === friendId)
         friendsToInvite.splice(i,1);
     }
-    console.log("friend removed from invite list: " + friendId);
     this.setState({
       friendsToInvite: friendsToInvite
     });
@@ -60,7 +58,6 @@ export default class Invitations extends React.Component {
 
 
   handleSubmit(event){
-    console.log("sending invite to this many friends: " + this.state.friendsToInvite.length);
     event.preventDefault();
     GameInfoActions.sendSmsInvites(this.state.gameId, this.state.friendsToInvite);
   }
