@@ -107,6 +107,7 @@ public class GamesAPIController {
 		Platform platform = platformService.findPlatform(platformTitle);
 		Game game = gameService.findByIdAndPlatform(gameId, platform);
 
+		// We set hide games as we don't always want to display games on the user json to save on resources
 		if (game != null) {
 			Set<Game> games = user.getHiddenGames();
 			if (!games.contains(game))
@@ -128,6 +129,7 @@ public class GamesAPIController {
 		Platform platform = platformService.findPlatform(platformTitle);
 		Game game = gameService.findByIdAndPlatform(gameId, platform);
 
+		// Remove the game from the hidden games
 		if (game != null) {
 			Set<Game> games = user.getHiddenGames();
 			games.remove(game);
@@ -180,6 +182,7 @@ public class GamesAPIController {
 		String username = userService.getLoggedInUser().getUsername();
 		Game game = gameService.findById(gameId);
 		List<User> users = userService.gameOwnedByFriends(gameId);
+		// We use the twilio serviice with our own custom message to send out a notification
 		String body = String.format("Hello, your friend %s would like to play %s", username, game.getTitle());
 		body += ". Generated SMS sent from United We Game, please do not reply.";
 		List<Long> userIds = new ArrayList<>();

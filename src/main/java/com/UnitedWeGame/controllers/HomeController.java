@@ -27,4 +27,9 @@ public class HomeController {
 	public String about() {
 		return "about";
 	}
+	
+	@RequestMapping("/tutorial")
+	public String tutorial() {
+		return "tutorial";
+	}
 }
