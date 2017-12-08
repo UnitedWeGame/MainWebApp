@@ -51,6 +51,22 @@ class LibraryStore extends EventEmitter{
         return false;
     }
 
+    // removes a game from the user's library
+    removeGame(gameId, platform){
+      for(var i = this.allOwnedGames.length-1; i>=0; i--) {
+        if(this.allOwnedGames[i].id === gameId){
+          this.allOwnedGames.splice(i,1);
+        }
+      }
+
+      if(platform == "PS3" || platform == "PS4")
+        this.setPlaystationGames();
+      else if(platform == "Steam")
+        this.setSteamGames();
+      else
+        this.setXboxGames();
+  }
+
 
     setXboxGames(){
         this.shownGames = [];
@@ -98,6 +114,10 @@ class LibraryStore extends EventEmitter{
         switch (action.type) {
             case "GET_CURRENT_USER_DATA": {
                 this.initOwnedGames(action.user.games, action.platform);
+                break;
+            }
+            case "REMOVE_GAME": {
+                this.removeGame(action.gameId, action.platform);
                 break;
             }
             case "SHOW_XBOX_GAMES": {
