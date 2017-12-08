@@ -98,7 +98,7 @@ class GameStore extends EventEmitter{
         this.game.summary = "No summary was found for this game.";
 
       if(gameInfo.totalRating)
-        setCommunityRating(gameInfo.totalRating);
+        this.setCommunityRating(gameInfo.totalRating);
         //this.game.communityRating = gameInfo.totalRating;
       else
         this.game.communityRating = "No community rating found."
