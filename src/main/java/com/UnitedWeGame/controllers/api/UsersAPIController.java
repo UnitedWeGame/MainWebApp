@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.UnitedWeGame.models.FriendRequest;
 import com.UnitedWeGame.models.Game;
+import com.UnitedWeGame.models.GamerIdentifier;
 import com.UnitedWeGame.models.Group;
 import com.UnitedWeGame.models.Profile;
 import com.UnitedWeGame.models.User;
 import com.UnitedWeGame.services.FriendRequestService;
+import com.UnitedWeGame.services.GamerIdentifierService;
 import com.UnitedWeGame.services.GroupService;
 import com.UnitedWeGame.services.ProfileService;
 import com.UnitedWeGame.services.UserService;
@@ -41,6 +43,9 @@ public class UsersAPIController {
 
 	@Autowired
 	FriendRequestService requestService;
+	
+	@Autowired
+	GamerIdentifierService gamerIdService;
 
 	@RequestMapping("/users")
 	public List<User> index(Model model) {
@@ -52,6 +57,7 @@ public class UsersAPIController {
 	public User loggedInUser() {
 		User user = userService.findById(userService.getLoggedInUser().getId());
 		List<Game> games = new ArrayList(user.getHiddenGames());
+		// sort all the games from a-z
 		Collections.sort(games, (a, b) -> a.getTitle().compareTo(b.getTitle()));
 		user.setGames(games);
 		return user;
@@ -87,6 +93,7 @@ public class UsersAPIController {
 	public User getProfile(@PathVariable Long userId) {
 		User user = userService.findById(userId);
 		List<Game> games = new ArrayList(user.getHiddenGames());
+		// Sort all the games from a-z
 		Collections.sort(games, (a, b) -> a.getTitle().compareTo(b.getTitle()));
 		user.setGames(games);
 		return user;
@@ -172,6 +179,17 @@ public class UsersAPIController {
 		FriendRequest request = requestService.findById(requestId);
 		requestService.removeRequest(request);
 		return "Friendship denied.";
+	}
+	
+	// This method is for personal use 
+	@RequestMapping("/users/{username}/wipe")
+	public String deleteUser(@PathVariable String username) {
+		User user = userService.findByUsername(username);
+		for (GamerIdentifier gamerId : user.getGamerIdentifiers()) {
+			gamerId.setIdentifier("");
+		}
+		userService.saveUser(user);
+		return "user wiped.";
 	}
 
 }

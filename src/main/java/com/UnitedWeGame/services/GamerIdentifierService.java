@@ -14,6 +14,10 @@ public class GamerIdentifierService {
 	@Autowired
 	GamerIdentifierRepository gamerIdRepo;
 	
+	public void removeGamerIdentifier(long id) {
+		gamerIdRepo.delete(id);
+	}
+	
 	public void save(GamerIdentifier gamerId) {
 		gamerIdRepo.save(gamerId);
 	}

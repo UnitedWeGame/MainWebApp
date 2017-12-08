@@ -54,6 +54,10 @@ public class UserService implements UserDetailsService {
 		return (List<User>) userRepo.findAll();
 	}
 	
+	public User findByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
+	
 	public User getLoggedInUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) loadUserByUsername(auth.getName());

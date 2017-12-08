@@ -60,7 +60,6 @@ public class User {
 	@ElementCollection(fetch = FetchType.EAGER, targetClass=Long.class)
 	private Set<Long> groups = new HashSet<>();
 
-
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -261,5 +260,9 @@ public class User {
 
 	public void setGroups(Set<Long> groups) {
 		this.groups = groups;
+	}
+	
+	public void clearGamerIdentifiers() {
+		this.gamerIdentifiers.clear();
 	}
 }

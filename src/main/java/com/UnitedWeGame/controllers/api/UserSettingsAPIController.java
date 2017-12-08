@@ -27,6 +27,8 @@ public class UserSettingsAPIController {
 		User loggedInUser = userService.getLoggedInUser();
 		Set<GamerIdentifier> identifiers = loggedInUser.getGamerIdentifiers();
 		
+		// First validate they changed fields before updating them
+		
 		if (!StringUtils.isEmpty(userSettings.getEmail()))
 			loggedInUser.setEmail(userSettings.getEmail());
 		

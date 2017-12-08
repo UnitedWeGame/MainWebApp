@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsService userService;
 	
-	// For some reason configureAuth requires a bean? Cool bro, here's a bean
+	// For some reason configureAuth requires a bean?
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 
+		// ignore csrf on api calls as they don't require csrf
 		http
 			.csrf().ignoringAntMatchers("/api/**")
 				.and()
