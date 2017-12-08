@@ -17,9 +17,15 @@ export function addGame(id, platform){
     });
 }
 
+// Remove a game from the user's library
 export function removeGame(id, platform){
     $.get( "/api/games/" + id + "/" + platform + "/removeFromLibrary/", function( data ) {
-      UserActions.getCurrentUserData(platform);
+
+      dispatcher.dispatch({
+          type: "REMOVE_GAME",
+          gameId: id,
+          platform: platform
+      });
     });
 }
 
@@ -31,6 +37,7 @@ export function sendTextInvite(gameId){
 
 }
 
+// Tell store that all xbox games should be displayed
 export function showXboxGames(){
 	dispatcher.dispatch({
             type: "SHOW_XBOX_GAMES"
@@ -38,6 +45,7 @@ export function showXboxGames(){
 
 }
 
+// Tell store that all steam games should be displayed
 export function showSteamGames(){
 	dispatcher.dispatch({
             type: "SHOW_STEAM_GAMES"
@@ -45,6 +53,7 @@ export function showSteamGames(){
 
 }
 
+// Tell store that all playstation games should be displayed
 export function showPlaystationGames(){
 	dispatcher.dispatch({
             type: "SHOW_PLAYSTATION_GAMES"
