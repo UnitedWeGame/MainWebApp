@@ -53,13 +53,14 @@ export default class Searchbar extends React.Component {
       })
     }
 
+    // Add ALL games in the server's database to the searchbar list
     addGamesToList(games){
       var gameList = [];
 
       gameList = games.PS3.concat(games.PS4).concat(games.Steam).concat(games.Xbox360).concat(games.XboxOne);
       for(var i = 0; i < gameList.length; i++){
         gameList[i].name = gameList[i].title;
-        gameList[i].type = "Games";
+        gameList[i].type = gameList[i].platform.title + " Games"; // e.g. "Xbox360 Games"
       }
 
       return gameList;
@@ -111,9 +112,10 @@ export default class Searchbar extends React.Component {
       this.setState({listData: searchList})
     }
 
+    // Note: selectedOptions[0] is the searchbar item that was selected
     handleChange(selectedOptions){
       if(selectedOptions[0] === undefined) return;
-      if(selectedOptions[0].type.toLowerCase() === "games"){
+      if(selectedOptions[0].type.toLowerCase().indexOf("games") !== -1){
         GameInfoActions.getGameInfo(selectedOptions[0].id);
         hashHistory.push('/game/');
       }

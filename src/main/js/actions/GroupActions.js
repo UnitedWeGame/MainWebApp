@@ -1,5 +1,6 @@
 import dispatcher from "../dispatcher";
 
+//gets group with id
 export function getGroup(id){
 	$.get( "/api/group/" + id, function( data ){
 		dispatcher.dispatch({
@@ -20,6 +21,7 @@ export function getAllGroups(){
 	});
 }
 
+//adds userId to group with groupId
 export function joinGroup(groupId, userId){
   $.get( "/api/group/" + groupId + "/addMember/" + userId,
     function( data ){
@@ -30,6 +32,7 @@ export function joinGroup(groupId, userId){
 	});
 }
 
+//adds a post made by a group member to that group's activity feed
 export function updateActivityFeed(group, groupPost){
   $.ajax({
     url: "/api/group/" + group.id + "/createPost",
@@ -51,7 +54,7 @@ export function updateActivityFeed(group, groupPost){
     }
   });
 }
-//posting to /api/group
+//creates a new group
 export function createGroup(group){
   $.ajax({
     url: "/api/group/",
@@ -59,7 +62,8 @@ export function createGroup(group){
     data: JSON.stringify({
       "groupName": group.groupName,
       "description": group.description,
-      "coverPhoto": group.coverPhoto
+      "coverPhoto": group.coverPhoto,
+      "adminUser": group.adminUser
      }),
     contentType:"application/json; charset=utf-8",
     dataType:"json",
@@ -72,6 +76,7 @@ export function createGroup(group){
   });
 }
 
+//edits an existing groups settings
 export function updateSettings(settings){
 	$.ajax({
     url: "/api/group/saveGroup",
@@ -81,7 +86,8 @@ export function updateSettings(settings){
     	"groupName": settings.groupName,
     	"description": settings.description,
     	"coverPhoto": settings.coverPhoto,
-      "members": settings.group.members
+      "members": settings.group.members,
+      "adminUser": settings.group.adminUser
      }),
     contentType:"application/json; charset=utf-8",
     dataType:"json",

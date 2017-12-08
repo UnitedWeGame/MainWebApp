@@ -1,6 +1,10 @@
 import React from "react";
 import FriendStore from "../../stores/FriendStore";
 
+/*
+* Component that appears throughout the site and displays a list of the user's 
+* friends who are currently gaming on platforms the user owns.
+*/
 export default class NowPlaying extends React.Component {
     constructor(){
         super();

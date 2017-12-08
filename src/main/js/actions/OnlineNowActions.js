@@ -1,5 +1,5 @@
 import dispatcher from "../dispatcher";
-
+//gets list of a user's friends who are currently logged in to UnitedWeGame
 export function getOnlineNow(){
     $.get( "/api/friends/online", function( data ) {
     	var friends = [];

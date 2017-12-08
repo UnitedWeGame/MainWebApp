@@ -4,7 +4,10 @@ import FriendStore from "../../stores/FriendStore";
 import * as PostActions from "../../actions/PostActions";
 import {Image} from "react-bootstrap";
 
-
+/*
+* Activity feed component that is on the main page. Displays the logged-in
+* user's friend's activity.
+*/
 export default class ActivityFeed extends React.Component {
     constructor(){
         super();
@@ -47,6 +50,7 @@ export default class ActivityFeed extends React.Component {
     var newActivityList = jQuery.extend(true, [], this.state.activityList);
     var newFriendList = jQuery.extend(true, [], this.state.friendList);
 
+    //associates a user's image with their id
     newActivityList.forEach((a) => {
         newFriendList.forEach((f) => {
             if(a.userId == f.id){

@@ -6,7 +6,7 @@
 			<h2>Onboarding</h2>
 			<form action="#" th:action="@{/onboarding-steam}" th:object="${gamertag}" method="post">
 				<div class="form-group">
-					<label for="identifier">Steam 64-bit ID (You can find this using http://www.steam64.com/)</label>
+					<label for="identifier">Steam 64-bit ID (You can find this using <a href="https://steamidfinder.com/">Steam ID Finder</a>)</label>
 					<input id="identifier" type="text" th:field="*{identifier}" class="form-control"></input>
 				</div>
 				<input type="submit" class="btn btn-success"></input>

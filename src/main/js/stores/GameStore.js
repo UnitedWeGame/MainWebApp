@@ -22,7 +22,7 @@ class GameStore extends EventEmitter{
           communityRating: "No rating found",
           communityRatingCount: "",
           summary: "Game summary not found",
-          platforms: "",
+          platform: "",
           myReview: {
             title: "",
             review: ""
@@ -66,25 +66,10 @@ class GameStore extends EventEmitter{
       else
         this.game.firstReleaseDate = "No release date found."
 
-      if(gameInfo.totalRating)
-        this.game.communityRating = gameInfo.totalRating;
-      else
-        this.game.communityRating = "No community rating found."
-
-      if(gameInfo.totalRatingCount)
-        this.game.communityRatingCount = gameInfo.totalRatingCount;
-      else
-        this.game.communityRatingCount = 0
-
-      if(gameInfo.summary)
-        this.game.summary = gameInfo.summary;
-      else
-        this.game.summary = "No summary was found for this game.";
-
-      if(gameInfo.myRating){
-        this.game.myReview.title = gameInfo.myRating.reviewTitle;
-        this.game.myReview.review = gameInfo.myRating.review;
-        this.game.myRating = gameInfo.myRating.rating;
+      if(gameInfo.userRating){
+        this.game.myReview.title = gameInfo.userRating.reviewTitle;
+        this.game.myReview.review = gameInfo.userRating.review;
+        this.game.myRating = gameInfo.userRating.rating;
       }
       else {
         this.game.myReview.title = "";
@@ -102,6 +87,26 @@ class GameStore extends EventEmitter{
       else
         this.game.friendsWhoOwn = "No friends own this game.";
 
+      if(gameInfo.platform.title)
+        this.game.platform = gameInfo.platform.title;
+      else
+        this.game.platform = "Platform information cannot be found"
+
+      if(gameInfo.summary)
+        this.game.summary = gameInfo.summary;
+      else
+        this.game.summary = "No summary was found for this game.";
+
+      if(gameInfo.totalRating)
+        this.game.communityRating = gameInfo.totalRating;
+      else
+        this.game.communityRating = "No community rating found."
+
+      if(gameInfo.totalRatingCount)
+        this.game.communityRatingCount = gameInfo.totalRatingCount;
+      else
+        this.game.communityRatingCount = 0
+
       this.tabIndex = tabIndex;
 
         this.emit("change");
@@ -111,7 +116,7 @@ class GameStore extends EventEmitter{
       this.game.myReview.title = headline;
       this.game.myReview.review = review;
       this.game.myRating = rating;
-
+      this.tabIndex = 1; // show the reviews tab
       this.emit("change");
     }
 

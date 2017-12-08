@@ -4,11 +4,10 @@ import OnlineNow from "../components/status/OnlineNow";
 import PostCreator from "../components/activity/PostCreator";
 import ActivityFeed from "../components/activity/ActivityFeed";
 
-
+/*
+* Activity page. Parent of Post and Activity Feed.
+*/
 export default class Activity extends React.Component {
-
-
-
     render() {
 
         const activitySectionStyle = {
