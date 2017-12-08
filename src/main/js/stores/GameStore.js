@@ -98,7 +98,8 @@ class GameStore extends EventEmitter{
         this.game.summary = "No summary was found for this game.";
 
       if(gameInfo.totalRating)
-        this.game.communityRating = gameInfo.totalRating;
+        this.setCommunityRating(gameInfo.totalRating);
+        //this.game.communityRating = gameInfo.totalRating;
       else
         this.game.communityRating = "No community rating found."
 
@@ -131,6 +132,11 @@ class GameStore extends EventEmitter{
       }
 
       this.emit("change");
+    }
+
+    // Rounds the community rating (float) received from the server and sets it.
+    setCommunityRating(rating){
+      this.game.communityRating = "" + Math.round(rating) + "/100";
     }
 
 

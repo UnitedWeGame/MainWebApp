@@ -1,4 +1,5 @@
 import React from "react";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import CustomTabs from "../uiPieces/CustomTabs";
 import FriendReviews from "./reviews/FriendReviews";
 import FriendsWhoOwn from "./FriendsWhoOwn";
@@ -6,7 +7,6 @@ import GameStore from "../../stores/GameStore";
 import * as GameInfoActions from "../../actions/GameInfoActions";
 import Invitations from "./Invitations";
 import MyReview from "./reviews/MyReview";
-import ReactStars from "react-stars";
 import Slider from "react-slick";
 import {Tab} from "react-toolbox";
 
@@ -65,19 +65,9 @@ export default class GameInfoItem extends React.Component {
         autoplay: true
       }
 
-      var starSettings = {
-        count: 5,
-        edit: false,
-        value: this.state.gameInfo.myRating,
-        size: 24,
-        color2: "#ffd700"
-      }
-
       const titleStyle = {
         textAlign: "center"
       };
-
-
 
       const containerStyle = {
         height: 300,
@@ -90,7 +80,6 @@ export default class GameInfoItem extends React.Component {
         filter: "brightness(50%)",
         margin: "auto"
       };
-
 
       return (
         <div>
@@ -113,10 +102,7 @@ export default class GameInfoItem extends React.Component {
                      <br/>
                      <h3>Release Date:  </h3> <medium>{this.state.gameInfo.firstReleaseDate}</medium>
                      <br/>
-                     <h3>Your Rating:  </h3>
-                     <ReactStars {...starSettings}/>
-                     <br/>
-                     <h3>Community Rating:  </h3>
+                     <h3>Average IGDB.com Rating:  </h3>
                      <medium>{this.state.gameInfo.communityRating}</medium>
                      <br/>
                      <h3>Summary:  </h3>
